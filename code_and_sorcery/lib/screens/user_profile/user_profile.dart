@@ -8,23 +8,15 @@ class UserProfile extends StatelessWidget {
         appBar: AppBar(
           title: Text("Profile page"),
         ),
+        body: _buildBody(context),
+      floatingActionButton: FloatingActionButton(
+        child:Text("Guild"),
+        onPressed: () {
+          Navigator.pushNamed(context, '/guild');
+        },
+      ),
 
-        body:_buildBody(context)
-        // Column(children: <Widget>[
-        //   ElevatedButton(
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, '/guild');
-        //     },
-        //     child: Text('Go to guild view'),
-        //   ),
-        //   ElevatedButton(
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //     child: Text('Go to homepage'),
-        //   ),
-        //
-        // ]),
+
     );
   }
 }
