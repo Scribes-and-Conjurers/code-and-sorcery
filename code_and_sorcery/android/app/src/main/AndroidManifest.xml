@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.the_conjuring_scribes.code_and_sorcery">
+        package="com.the_conjuring_scribes.code_and_sorcery">
    <application
         android:label="code_and_sorcery"
         android:icon="@mipmap/ic_launcher">
