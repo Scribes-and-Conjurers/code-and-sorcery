@@ -6,6 +6,7 @@ import './screens/game_end/game_end.dart';
 import './screens/game_lobby/game_lobby.dart';
 import './screens/game_session/game_session.dart';
 import './screens/join_game/join_game.dart';
+import './screens/login/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -14,9 +15,10 @@ void main() {
     title: 'Code&Sorcery',
     // Start the app with the "/" named route. In this case, the app starts
     // on the FirstScreen widget.
-    initialRoute: '/',
+    initialRoute: '/login',
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
+      '/login': (context) => LoginPage(),
       '/': (context) => Homepage(),
       '/lobby': (context) => GameLobby(),
       '/join': (context) => JoinGame(),
