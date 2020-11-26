@@ -8,6 +8,7 @@ class UserProfile extends StatelessWidget {
         appBar: AppBar(
           title: Text("Profile page"),
         ),
+
         body:_buildBody(context)
         // Column(children: <Widget>[
         //   ElevatedButton(
@@ -84,4 +85,3 @@ class Record {
   @override
   String toString() => "Record<$username:$points>";
 }
-
