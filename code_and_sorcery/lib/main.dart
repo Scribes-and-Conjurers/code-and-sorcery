@@ -6,7 +6,6 @@ import './screens/game_end/game_end.dart';
 import './screens/game_lobby/game_lobby.dart';
 import './screens/game_session/game_session.dart';
 import './screens/join_game/join_game.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 void main() {
