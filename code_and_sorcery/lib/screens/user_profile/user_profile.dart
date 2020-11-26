@@ -15,6 +15,8 @@ class UserProfile extends StatelessWidget {
           Navigator.pushNamed(context, '/guild');
         },
       ),
+
+
     );
   }
 }
@@ -75,4 +77,3 @@ class Record {
   @override
   String toString() => "Record<$username:$points>";
 }
-
