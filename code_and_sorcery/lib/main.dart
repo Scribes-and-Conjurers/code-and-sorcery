@@ -25,7 +25,7 @@ void main() {
       // When navigating to the "/second" route, build the SecondScreen widget.
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => InGame(),
+      '/ingame': (context) => Game1(),
       '/guild': (context) => GuildView(),
     },
   ));
