@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Homepage extends StatelessWidget {
+  final databaseReference = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +25,7 @@ class Homepage extends StatelessWidget {
               // Navigate back to the first screen by popping the current route
               // off the stack.
               Navigator.pushNamed(context, '/lobby');
+              createRecord();
             },
             child: Text('Create a game'),
           ),
@@ -36,4 +40,18 @@ class Homepage extends StatelessWidget {
         ])
     );
   }
+
+  void createRecord() async {
+    await databaseReference.collection("games")
+        .document("testGame")
+        .setData({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'player1': ("Clay"),
+    });
+  }
 }
+
+
+
+
