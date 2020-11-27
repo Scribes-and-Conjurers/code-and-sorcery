@@ -23,11 +23,11 @@ class UserProfile extends StatelessWidget {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('users').snapshots(),
+    stream: FirebaseFirestore.instance.collection('users').snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 
-      return _buildList(context, snapshot.data.documents);
+      return _buildList(context, snapshot.data.docs);
     },
   );
 }
