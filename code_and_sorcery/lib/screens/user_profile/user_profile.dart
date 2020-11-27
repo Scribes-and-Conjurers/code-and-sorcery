@@ -15,13 +15,15 @@ class UserProfile extends StatelessWidget {
           Navigator.pushNamed(context, '/guild');
         },
       ),
+
+
     );
   }
 }
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('users').snapshots(),
+    stream: FirebaseFirestore.instance.collection('users').snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -75,4 +77,3 @@ class Record {
   @override
   String toString() => "Record<$username:$points>";
 }
-

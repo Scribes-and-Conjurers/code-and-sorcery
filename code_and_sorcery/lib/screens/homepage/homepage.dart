@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Homepage extends StatelessWidget {
-  final databaseReference = Firestore.instance;
+  final databaseReference = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +43,8 @@ class Homepage extends StatelessWidget {
 
   void createRecord() async {
     await databaseReference.collection("games")
-        .document("testGame")
-        .setData({
+        .doc("testGame")
+        .set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
       'player1': ("Clay"),
