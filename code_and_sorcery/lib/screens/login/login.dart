@@ -20,14 +20,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  // void checkIfUserIsSignedIn() async {
-  //   var userSignedIn = await _googleSignIn.isSignedIn();
-  //
-  //   setState(() {
-  //     isUserSignedIn = userSignedIn;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
