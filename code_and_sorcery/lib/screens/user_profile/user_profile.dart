@@ -84,24 +84,4 @@ class Record {
 }
 
 
-class RecordGuild {
-  final String username;
-  final int points;
-  final String guild;
-  final DocumentReference reference;
 
-  RecordGuild.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['username'] != null),
-        assert(map['points'] != null),
-        assert(map['guild'] != null),
-        username = map['username'],
-        points = map['points'],
-        guild = map['guild'];
-
-
-  RecordGuild.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$username:$points:$guild>";
-}
