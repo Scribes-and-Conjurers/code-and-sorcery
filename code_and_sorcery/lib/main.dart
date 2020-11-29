@@ -9,7 +9,6 @@ import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -26,8 +25,8 @@ void main() async {
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => InGame(),
-      '/guild': (context) => GuildView(),
+      '/ingame': (context) => Game1(),
+      '/guild': (context) => Guild(),
     },
   ));
 }

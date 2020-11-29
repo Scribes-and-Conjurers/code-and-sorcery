@@ -43,7 +43,7 @@ class Homepage extends StatelessWidget {
 
   void createRecord() async {
     await databaseReference.collection("games")
-        .doc("testGame")
+        .doc()
         .set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
