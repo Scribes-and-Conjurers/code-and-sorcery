@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+var userGuild = 'Backenders';
+
 class Guild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class Guild extends StatelessWidget {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('guild').snapshots(),
+    stream: FirebaseFirestore.instance.collection('guilds').snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -58,6 +60,10 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     ),
   );
 }
+
+
+CollectionReference guilds = FirebaseFirestore.instance.collection('guilds');
+
 
 class Record {
   final String name;

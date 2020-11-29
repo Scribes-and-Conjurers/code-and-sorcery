@@ -42,6 +42,7 @@ class Game1 extends StatefulWidget {
 
 // Game widget state
 class Game1State extends State<Game1>{
+  final databaseReference = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
@@ -107,6 +108,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -128,6 +130,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -159,6 +162,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -180,6 +184,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -242,6 +247,15 @@ class Game1State extends State<Game1>{
       }
     });
   }
+
+
+  void updateGame() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'player1Points': FieldValue.increment(1),
+    });
+  }
 }
 
 class Summary extends StatelessWidget{
@@ -273,6 +287,7 @@ class Summary extends StatelessWidget{
                           onPressed: () {
                             updatePlayerPoints();
                             updateGuildPoints();
+                            updateGame();
                             questionNumber = 0;
                             finalScore = 0;
                             Navigator.pop(context);
@@ -303,8 +318,16 @@ class Summary extends StatelessWidget{
     });
   }
 
+  void updateGame() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'finished': true,
+    });
+  }
+
   void updateGuildPoints() async {
-    await databaseReference.collection("guild")
+    await databaseReference.collection("guilds")
         .doc(userGuild)
         .update({
       'totalPoints': FieldValue.increment(score),

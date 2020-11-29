@@ -81,11 +81,12 @@ class Homepage extends StatelessWidget {
   }
   void createRecord() async {
     await databaseReference.collection("games")
-        .doc()
+        .doc('testGameSession')
         .set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
-      'player1': ("Clay"),
+      'player1': (userName),
+      'player1Points': 0,
     });
   }
 }
