@@ -20,14 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51bbfd3b-7c8c-4f97-b423-e81d49730a09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/authenticator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/authenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/authenticator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/login.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -50,6 +53,9 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="dart.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -98,26 +104,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606350995299" />
-    <state width="962" height="358" key="GridCell.Tab.0.bottom" timestamp="1606457132962">
+    <state width="1076" height="358" key="GridCell.Tab.0.bottom" timestamp="1606638074574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="962" height="358" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606457132962" />
-    <state width="962" height="358" key="GridCell.Tab.0.center" timestamp="1606457132962">
+    <state width="1076" height="358" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606638074574" />
+    <state width="1076" height="358" key="GridCell.Tab.0.center" timestamp="1606638074574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="962" height="358" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606457132962" />
-    <state width="962" height="358" key="GridCell.Tab.0.left" timestamp="1606457132961">
+    <state width="1076" height="358" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606638074574" />
+    <state width="1076" height="358" key="GridCell.Tab.0.left" timestamp="1606638074573">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="962" height="358" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606457132961" />
-    <state width="962" height="358" key="GridCell.Tab.0.right" timestamp="1606457132962">
+    <state width="1076" height="358" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606638074573" />
+    <state width="1076" height="358" key="GridCell.Tab.0.right" timestamp="1606638074574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="962" height="358" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606457132962" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1606352279764">
+    <state width="1076" height="358" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606638074574" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1606623707312">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606352279764" />
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606623707312" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606453951116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

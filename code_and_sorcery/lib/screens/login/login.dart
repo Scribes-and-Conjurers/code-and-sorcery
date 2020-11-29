@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:code_and_sorcery/screens/homepage/homepage.dart';
+import 'authenticator.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,118 +9,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  void initState() {
-    super.initState();
-    _usernameFocusNode.addListener(() {
-      setState(() {
-        //Redraw so that the username label reflects the focus state
-      });
-    });
-    _passwordFocusNode.addListener(() {
-      setState(() {
-        //Redraw so that the password label reflects the focus state
-      });
+  User user;
+  bool isUserSignedIn = false;
+
+  void click() {
+    signInWithGoogle().then((user) => {
+      this.user = user,
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Homepage()))
     });
   }
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _unfocusedColor = Colors.grey[600];
-  final _usernameFocusNode = FocusNode();
-  final _passwordFocusNode = FocusNode();
+
+  // void checkIfUserIsSignedIn() async {
+  //   var userSignedIn = await _googleSignIn.isSignedIn();
+  //
+  //   setState(() {
+  //     isUserSignedIn = userSignedIn;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          children: <Widget>[
-            SizedBox(height: 80.0),
-            Column(
-              children: <Widget>[
-                SizedBox(height: 16.0),
-                Text(
-                  'CODE&SORCERY',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ],
-            ),
-            SizedBox(height: 120.0),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2.0,
-                    color: Colors.black,
-                  ),
-                ),
-                border: OutlineInputBorder(),
-                filled: true,
-                labelText: 'Username',
-                labelStyle: TextStyle(
-
-                    color: _usernameFocusNode.hasFocus
-                        ? Theme.of(context).accentColor
-                        : _unfocusedColor),
-              ),
-              focusNode: _usernameFocusNode,
-            ),
-// spacer
-            SizedBox(height: 12.0),
-// [Password]
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2.0,
-                    color: Colors.black,
-                  ),
-                ),
-                border: OutlineInputBorder(),
-
-                // filled: true,
-                labelText: 'Password',
-                labelStyle: TextStyle(
-                    color: _passwordFocusNode.hasFocus
-                        ? Theme.of(context).accentColor
-                        : _unfocusedColor),
-              ),
-              focusNode: _passwordFocusNode,
-              obscureText: true,
-            ),
-            ButtonBar(
-              children: <Widget>[
-                FlatButton(
-
-                  child: Text('CANCEL'),
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                  ),
-
-                  onPressed: () {
-                    _usernameController.clear();
-                    _passwordController.clear();
-                  },
-                ),
-                RaisedButton(
-                  child: Text('NEXT'),
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                  ),
-
-                  elevation: 2.0,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+        body: Container(
+            padding: EdgeInsets.all(50),
+            child: Align(
+                alignment: Alignment.center,
+                child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    onPressed: () {
+                      this.click();
+                    },
+                    color: isUserSignedIn ? Colors.green : Colors.blueAccent,
+                    child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.account_circle, color: Colors.white),
+                            SizedBox(width: 10),
+                            Text('Login with Google',
+                                style: TextStyle(color: Colors.white))
+                          ],
+                        ))))));
   }
 }
