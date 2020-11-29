@@ -277,8 +277,9 @@ class Summary extends StatelessWidget{
                             finalScore = 0;
                             Navigator.pop(context);
                             Navigator.pop(context);
+                            Navigator.pop(context);
                           },
-                          child: Text("Reset Game",
+                          child: Text("Leave the game",
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
