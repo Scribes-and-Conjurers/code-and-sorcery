@@ -20,11 +20,10 @@ void main() async {
     initialRoute: '/login',
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
-      '/login': (context) => LoginPage(),
       '/': (context) => Homepage(),
+      '/login': (context) => LoginPage(),
       '/lobby': (context) => GameLobby(),
       '/join': (context) => JoinGame(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
       '/ingame': (context) => InGame(),
