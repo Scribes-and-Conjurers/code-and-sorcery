@@ -27,6 +27,7 @@ class _BodyState extends State<Body> {
 
   void click() {
     signInWithGoogle().then((user) => {
+      // getUser(uID),
       this.user = user,
       // if (user.)
 

@@ -48,6 +48,7 @@ class AccountSetupState extends State<AccountSetup> {
                 });
               },
             ),
+            new Text("\n\n"),
             new TextField
               (
               controller: guildController,
@@ -61,10 +62,11 @@ class AccountSetupState extends State<AccountSetup> {
                 // TextEditingController().clear();
               },
             ),
+            new Text("\n\n"),
             ElevatedButton(
               onPressed: () {
                 setUsernameAndGuild();
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/homepage');
               },
               child: Text('Submit'),
             ),

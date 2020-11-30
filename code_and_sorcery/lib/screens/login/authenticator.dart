@@ -15,23 +15,23 @@ String guild;
 int points;
 
 // define a user to become logged in user, then post in firestore
-User _currentUser;
-User get currentUser => _currentUser;
+dbUser _loggedInUser;
+// User get currentUser => _currentUser;
 
-Future<auth.User> getUser() async {
-  try {
-    final user = _auth.currentUser;
-    if (user != null) {
-      print('User signed in: ${user.email}');
-    } else {
-      print('No user signed in');
-    }
-    return user;
-  } catch (e) {
-    print(e);
-    return null;
-  }
-}
+// Future<auth.User> getUser() async {
+//   try {
+//     final user = _auth.currentUser;
+//     if (user != null) {
+//       print('User signed in: ${user.email}');
+//     } else {
+//       print('No user signed in');
+//     }
+//     return user;
+//   } catch (e) {
+//     print(e);
+//     return null;
+//   }
+// }
 
 // User checkUserLoggedIn() {
 //   if (_auth.currentUser != null) {
@@ -58,21 +58,21 @@ Future<auth.User> signInWithGoogle() async {
   // Return the current user, which should now be signed in with Google
   auth.User firebaseUser = auth.FirebaseAuth.instance.currentUser;
   uID = user.uid;
-  guild = 'Backenders';
+  guild = '';
   email = user.email;
   points = 0;
-  username = user.displayName;
+  username = '';
 
 // create a new user profile on firestore
-  _currentUser = User(
+  _loggedInUser = dbUser(
       uID: user.uid,
       email: user.email,
-      username: user.displayName,
+      username: '',
       points: 0,
-      guild: 'Backenders');
+      guild: '');
 
-  await _firestoreService.createUser(_currentUser);
-  print(_currentUser);
+  await _firestoreService.createUser(_loggedInUser);
+  print(_loggedInUser);
 
   return firebaseUser;
 }

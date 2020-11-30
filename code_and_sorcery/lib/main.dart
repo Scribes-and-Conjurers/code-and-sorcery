@@ -9,6 +9,11 @@ import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
 import 'package:firebase_core/firebase_core.dart';
+import './screens/login/authenticator.dart';
+// FireBase
+import 'package:firebase_auth/firebase_auth.dart';
+// final User _user = checkUserLoggedIn();
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +23,10 @@ void main() async {
     // Start the app with the "/" named route. In this case, the app starts
     // on the FirstScreen widget.
     initialRoute: '/login',
+    // home: _user == null ? LoginPage() : Homepage(),
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
-      '/': (context) => Homepage(),
+      '/homepage': (context) => Homepage(),
       '/login': (context) => LoginPage(),
       '/setup': (context) => AccountSetup(),
       '/lobby': (context) => GameLobby(),
