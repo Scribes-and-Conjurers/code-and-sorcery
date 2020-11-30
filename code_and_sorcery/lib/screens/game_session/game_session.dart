@@ -1,11 +1,13 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 var userGuild = 'Backenders';
 var userName = 'Clay';
 
 class GameContent{
-  var images = ["monster1", "monster2", "monster3", "boss1"];
+  var images = ["slimegreen1", "slimered1", "bossmonster", "bossmonster"];
 
   var questions = [
     "What does JS stand for?",
@@ -80,10 +82,41 @@ class Game1State extends State<Game1>{
                       // image
                       Padding(padding: EdgeInsets.all(10.0)),
 
-                      new Image.asset(
-                          "images/${game.images[questionNumber]}.jpg",
-                          height: 200,
-                      ),
+                      FutureBuilder(
+                          future: _getImage(context, "${game.images[questionNumber]}.png"),
+                          builder: (context, snapshot) {
+                            if(snapshot.connectionState == ConnectionState.done){
+                              return Container(
+                                width: MediaQuery.of(context).size.width / 1,
+                                height: MediaQuery.of(context).size.width / 1.5,
+                                child: snapshot.data,
+                              );
+                            }
+
+                            if(snapshot.connectionState == ConnectionState.waiting) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width / 1,
+                                height: MediaQuery.of(context).size.width / 1.5,
+                                child: SizedBox(
+                                  height: 10,
+                                  width: 10,
+                                  child: CircularProgressIndicator(),
+
+                                )
+                              );
+                            }
+
+                            return SizedBox(
+                                height: 10,
+                                width: 10,
+                                child: CircularProgressIndicator(),
+                            );
+                          }),
+
+                      // new Image.asset(
+                      //     "images/${game.images[questionNumber]}.png",
+                      //     height: 200,
+                      // ),
 
                       Padding(padding: EdgeInsets.all(10.0)),
 
@@ -275,6 +308,28 @@ class Summary extends StatelessWidget{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
 
+                      FutureBuilder(
+                        future: _getImage(context, "bossmonster.png"),
+                        builder: (context, snapshot) {
+                          if(snapshot.connectionState == ConnectionState.done){
+                            return Container(
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                height: MediaQuery.of(context).size.width / 1.2,
+                                child: snapshot.data,
+                            );
+                          }
+
+                          if(snapshot.connectionState == ConnectionState.waiting) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: MediaQuery.of(context).size.width / 1.2,
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return Container();
+                        }),
+
                       Text("Final score: $score",
                         style: TextStyle(
                             fontSize: 25.0
@@ -335,25 +390,36 @@ class Summary extends StatelessWidget{
   }
 }
 
+// utility method for fetching images from Firebase storage
+class FireStorageService extends ChangeNotifier {
+  FireStorageService();
+  static Future<dynamic> loadImage(BuildContext context, String Image) async {
+    return await FirebaseStorage.instance.ref().child(Image).getDownloadURL();
+  }
+}
+
+// method returning image with a certain name from storage; uses firestorageservice util method
+Future<Widget> _getImage(BuildContext context, String imageName) async {
+  Image image;
+  await FireStorageService.loadImage(context, imageName).then((value) {
+    image = Image.network(
+      value.toString(),
+      fit: BoxFit.scaleDown,
+    );
+  });
+  return image;
+}
 
 
-// class InGame extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("In game"),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: () {
-//             // Navigate back to the first screen by popping the current route
-//             // off the stack.
-//             Navigator.pushNamed(context, '/leaderboard');
-//           },
-//           child: Text('Escape the game'),
-//         ),
-//       ),
-//     );
-//   }
-// }
+
+
+
+
+
+
+
+
+
+
+
+
