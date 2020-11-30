@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'authenticator.dart';
+import 'package:code_and_sorcery/screens/login/firestore_service.dart';
+import 'account_setup.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
+final FirestoreService _firestoreService = FirestoreService();
 
 class LoginPage extends StatelessWidget {
   @override
@@ -21,17 +24,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   User user;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   signOutGoogle();
-  // }
 
   void click() {
     signInWithGoogle().then((user) => {
       this.user = user,
+      // if (user.)
+
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Homepage()))
+          MaterialPageRoute(builder: (context) => AccountSetup()))
     });
   }
 

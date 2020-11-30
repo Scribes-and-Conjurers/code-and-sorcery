@@ -7,6 +7,7 @@ import './screens/game_lobby/game_lobby.dart';
 import './screens/game_session/game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
+import './screens/login/account_setup.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -21,6 +22,7 @@ void main() async {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/': (context) => Homepage(),
       '/login': (context) => LoginPage(),
+      '/setup': (context) => AccountSetup(),
       '/lobby': (context) => GameLobby(),
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
