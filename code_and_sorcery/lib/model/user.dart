@@ -2,23 +2,29 @@ import 'package:flutter/services.dart';
 
 class User {
 
-  String name;
+  String username;
   String uID;
+  String email;
   int points;
+  String guild;
 
-  User({this.name, this.uID});
+  User({this.username, this.uID, this.email, this.points, this.guild});
 
   User.fromJson(Map<String, dynamic> json)
-    : name = json['name'],
+    : username = json['username'],
       uID = json['uID'],
-      points = json['points']
+      email = json['email'],
+      points = json['points'],
+      guild = json['guild']
   ;
 
   Map<String, dynamic> toJson() =>
       {
-        'name': name,
+        'username': username,
         'uID': uID,
-        'points': points
+        'email': email,
+        'points': points,
+        'guild': guild
       };
 
 }
