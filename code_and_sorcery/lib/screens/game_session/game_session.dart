@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-var userGuild = 'backenders';
+var userGuild = 'Backenders';
 var userName = 'Clay';
 
 class GameContent{
