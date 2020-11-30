@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -54,26 +55,34 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
       child: ListTile(
         title: Text(record.username),
         trailing: Text(record.points.toString()),
-        onTap: () => print(record),
+          onTap: () => record.reference.update({'points': record.points + 1})
+
       ),
     ),
   );
 }
+
 class Record {
   final String username;
   final int points;
+  final String guild;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['username'] != null),
         assert(map['points'] != null),
+        assert(map['guild'] != null),
         username = map['username'],
-        points = map['points'];
+        points = map['points'],
+        guild = map['guild'];
 
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$username:$points>";
+  String toString() => "Record<$username:$points:$guild>";
 }
+
+
+

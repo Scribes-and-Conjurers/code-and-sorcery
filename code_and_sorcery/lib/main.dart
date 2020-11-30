@@ -9,7 +9,6 @@ import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,15 +19,14 @@ void main() async {
     initialRoute: '/login',
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
-      '/login': (context) => LoginPage(),
       '/': (context) => Homepage(),
+      '/login': (context) => LoginPage(),
       '/lobby': (context) => GameLobby(),
       '/join': (context) => JoinGame(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
       '/ingame': (context) => Game1(),
-      '/guild': (context) => GuildView(),
+      '/guild': (context) => Guild(),
     },
   ));
 }
