@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../model/user.dart';
+import '../login/authenticator.dart';
+import '../login/login.dart';
 
 var profileImg = 'https://i.pinimg.com/originals/f3/be/e8/f3bee827c8aee1048d84bbb02af2e6b6.jpg';
 var userName = 'Clay';
 
+
+
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
+  User user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +47,7 @@ class Homepage extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                userName,
+                uID,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -72,6 +78,23 @@ class Homepage extends StatelessWidget {
                   Navigator.pushNamed(context, '/join');
                 },
                 child: Text('Join a game'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  signOutGoogle();
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                },
+                color: Colors.deepPurple,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Sign Out',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
               )
             ],
           ),

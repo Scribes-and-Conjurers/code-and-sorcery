@@ -1,10 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:code_and_sorcery/model/user.dart';
+import 'package:code_and_sorcery/screens/login/firestore_service.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
+final FirestoreService _firestoreService = FirestoreService();
 
-// final FirebaseRepository firebaseRepository = FirebaseRepository();
+// for our logged in user
+String uID;
+String username;
+String email;
+String guild;
+int points;
+
+// define a user to become logged in user, then post in firestore
+User _currentUser;
+User get currentUser => _currentUser;
 
 Future<auth.User> getUser() async {
   try {
@@ -21,6 +33,14 @@ Future<auth.User> getUser() async {
   }
 }
 
+// User checkUserLoggedIn() {
+//   if (_auth.currentUser != null) {
+//     return _auth.currentUser;
+//   } else {
+//     return null;
+//   }
+// }
+
 Future<auth.User> signInWithGoogle() async {
   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -33,10 +53,26 @@ Future<auth.User> signInWithGoogle() async {
 
   final auth.User user = (await _auth.signInWithCredential(credential)).user;
   print('Successfully signed in user with Google Provider');
-  print('Name: ${user.displayName} | uID: ${user.uid}');
+  print('Name: ${user.email} | uID: ${user.uid}');
 
   // Return the current user, which should now be signed in with Google
   auth.User firebaseUser = auth.FirebaseAuth.instance.currentUser;
+  uID = user.uid;
+  guild = 'Backenders';
+  email = user.email;
+  points = 0;
+  username = user.displayName;
+
+// create a new user profile on firestore
+  _currentUser = User(
+      uID: user.uid,
+      email: user.email,
+      username: user.displayName,
+      points: 0,
+      guild: 'Backenders');
+
+  await _firestoreService.createUser(_currentUser);
+  print(_currentUser);
 
   return firebaseUser;
 }
