@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+var userGuild = 'Backenders';
+var userName = 'Clay';
 
 class GameContent{
   var images = ["monster1", "monster2", "monster3", "boss1"];
@@ -40,6 +42,7 @@ class Game1 extends StatefulWidget {
 
 // Game widget state
 class Game1State extends State<Game1>{
+  final databaseReference = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
@@ -105,6 +108,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -126,6 +130,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -157,6 +162,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -178,6 +184,7 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
+                                  updateGame();
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -240,9 +247,19 @@ class Game1State extends State<Game1>{
       }
     });
   }
+
+
+  void updateGame() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'player1Points': FieldValue.increment(1),
+    });
+  }
 }
 
 class Summary extends StatelessWidget{
+  final databaseReference = FirebaseFirestore.instance;
   final int score;
   Summary({Key key, @required this.score}) : super(key: key);
 
@@ -268,12 +285,16 @@ class Summary extends StatelessWidget{
                       MaterialButton(
                           color: Colors.red,
                           onPressed: () {
+                            updatePlayerPoints();
+                            updateGuildPoints();
+                            updateGame();
                             questionNumber = 0;
                             finalScore = 0;
                             Navigator.pop(context);
                             Navigator.pop(context);
+                            Navigator.pop(context);
                           },
-                          child: Text("Reset Game",
+                          child: Text("Leave the game",
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
@@ -288,6 +309,30 @@ class Summary extends StatelessWidget{
     );
   }
 
+
+  void updatePlayerPoints() async {
+    await databaseReference.collection("users")
+        .doc(userName)
+        .update({
+      'points': FieldValue.increment(score),
+    });
+  }
+
+  void updateGame() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'finished': true,
+    });
+  }
+
+  void updateGuildPoints() async {
+    await databaseReference.collection("guilds")
+        .doc(userGuild)
+        .update({
+      'totalPoints': FieldValue.increment(score),
+    });
+  }
 }
 
 
