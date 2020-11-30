@@ -97,11 +97,20 @@ class Game1State extends State<Game1>{
                               return Container(
                                 width: MediaQuery.of(context).size.width / 1,
                                 height: MediaQuery.of(context).size.width / 1.5,
-                                child: CircularProgressIndicator(),
+                                child: SizedBox(
+                                  height: 10,
+                                  width: 10,
+                                  child: CircularProgressIndicator(),
+
+                                )
                               );
                             }
 
-                            return CircularProgressIndicator();
+                            return SizedBox(
+                                height: 10,
+                                width: 10,
+                                child: CircularProgressIndicator(),
+                            );
                           }),
 
                       // new Image.asset(
