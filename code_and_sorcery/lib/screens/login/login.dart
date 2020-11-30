@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'authenticator.dart';
+
+final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 class LoginPage extends StatelessWidget {
   @override
@@ -16,7 +19,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  FirebaseUser user;
+  User user;
 
   // @override
   // void initState() {
@@ -28,7 +31,7 @@ class _BodyState extends State<Body> {
     signInWithGoogle().then((user) => {
       this.user = user,
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Homepage(user)))
+          MaterialPageRoute(builder: (context) => Homepage()))
     });
   }
 
@@ -59,7 +62,10 @@ class _BodyState extends State<Body> {
   }
 }
 
-
+Future<void> signOutGoogle() async {
+  await _googleSignIn.signOut();
+  print("User Signed Out");
+}
 
 
 // class LoginPage extends StatefulWidget {

@@ -7,6 +7,13 @@ final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final FirestoreService _firestoreService = FirestoreService();
 
+// for our logged in user
+String uID;
+String username;
+String email;
+String guild;
+int points;
+
 // define a user to become logged in user, then post in firestore
 User _currentUser;
 User get currentUser => _currentUser;
@@ -26,6 +33,14 @@ Future<auth.User> getUser() async {
   }
 }
 
+// User checkUserLoggedIn() {
+//   if (_auth.currentUser != null) {
+//     return _auth.currentUser;
+//   } else {
+//     return null;
+//   }
+// }
+
 Future<auth.User> signInWithGoogle() async {
   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -42,10 +57,16 @@ Future<auth.User> signInWithGoogle() async {
 
   // Return the current user, which should now be signed in with Google
   auth.User firebaseUser = auth.FirebaseAuth.instance.currentUser;
+  uID = user.uid;
+  guild = 'Backenders';
+  email = user.email;
+  points = 0;
+  username = user.displayName;
 
 // create a new user profile on firestore
   _currentUser = User(
       uID: user.uid,
+      email: user.email,
       username: user.displayName,
       points: 0,
       guild: 'Backenders');

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../model/user.dart';
+import '../login/authenticator.dart';
 
 var userGuild = 'Backenders';
-var userName = 'Clay';
+// var userName = 'Clay';
 
 class GameContent{
   var images = ["monster1", "monster2", "monster3", "boss1"];
@@ -313,7 +314,7 @@ class Summary extends StatelessWidget{
 
   void updatePlayerPoints() async {
     await databaseReference.collection("users")
-        .doc(userName)
+        .doc(uID)
         .update({
       'points': FieldValue.increment(score),
     });
