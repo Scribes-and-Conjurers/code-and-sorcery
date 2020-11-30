@@ -5,11 +5,11 @@ import 'package:code_and_sorcery/screens/login/firestore_service.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
-// final FirestoreService _firestoreService = FirestoreService();
+final FirestoreService _firestoreService = FirestoreService();
 
 // define a user to become logged in user, then post in firestore
-// User _currentUser;
-// User get currentUser => _currentUser;
+User _currentUser;
+User get currentUser => _currentUser;
 
 Future<auth.User> getUser() async {
   try {
@@ -43,19 +43,15 @@ Future<auth.User> signInWithGoogle() async {
   // Return the current user, which should now be signed in with Google
   auth.User firebaseUser = auth.FirebaseAuth.instance.currentUser;
 
+// create a new user profile on firestore
+  _currentUser = User(
+      uID: user.uid,
+      username: user.displayName,
+      points: 0,
+      guild: 'Backenders');
 
+  await _firestoreService.createUser(_currentUser);
+  print(_currentUser);
 
   return firebaseUser;
 }
-
-
-// // create a new user profile on firestore
-// _currentUser = User(
-// uID: user.uid,
-// username: user.displayName,
-// points: 0,
-// guild: 'Backenders'
-// );
-//
-// await _firestoreService.createUser(_currentUser);
-// print(_currentUser);

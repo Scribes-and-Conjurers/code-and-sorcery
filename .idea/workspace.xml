@@ -20,15 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51bbfd3b-7c8c-4f97-b423-e81d49730a09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/firstscreen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/log_in.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/sign_in.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/android/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/android/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/model/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/model/user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/game_session/game_session.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/game_session/game_session.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/firstscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/firstscreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/homepage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/authenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/authenticator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/log_in.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/log_in.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/sign_in.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/login/sign_in.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

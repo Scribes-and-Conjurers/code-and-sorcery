@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../model/user.dart';
 
 var profileImg = 'https://i.pinimg.com/originals/f3/be/e8/f3bee827c8aee1048d84bbb02af2e6b6.jpg';
 var userName = 'Clay';
 
+
+
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
+  User user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +45,7 @@ class Homepage extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                userName,
+                user.uID,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
