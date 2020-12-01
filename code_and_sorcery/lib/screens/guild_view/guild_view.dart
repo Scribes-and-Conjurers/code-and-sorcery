@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 var userGuild = 'Backenders';
 
+
+
 class Guild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
