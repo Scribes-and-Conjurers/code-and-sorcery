@@ -144,9 +144,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  player1Score++;
-                                  player2Score++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -168,9 +172,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  player1Score++;
-                                  player2Score++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -202,9 +210,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  player1Score++;
-                                  player2Score++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -226,9 +238,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  player1Score++;
-                                  player2Score++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -295,14 +311,22 @@ class Game1State extends State<Game1>{
   }
 
 
-  void updateGame() async {
+  void updateGamePlayer1() async {
     await databaseReference.collection("games")
         .doc('testGameSession')
         .update({
       'player1Points': FieldValue.increment(1),
-      'player2Points': FieldValue.increment(1)
     });
   }
+
+  void updateGamePlayer2() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'player2Points': FieldValue.increment(1),
+    });
+  }
+
 }
 
 class Summary extends StatelessWidget{
