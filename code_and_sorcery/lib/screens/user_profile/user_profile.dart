@@ -29,7 +29,8 @@ class UserProfile extends StatelessWidget {
                       MaterialButton(onPressed: () {Navigator.pushNamed(context, '/guild');}, color: Colors.blueGrey, child: Text(
                         'Guild View', style: TextStyle(color: Colors.white),),),
                       Text('Your Current Quiz Points:', style: TextStyle(fontSize: 20, color: Colors.black)),
-                      Text(points.toString(), style: TextStyle(fontSize: 25))
+                      // Text(points.toString(), style: TextStyle(fontSize: 25))
+                      pointGetter(context),
                     ],
                   )
               )
@@ -41,8 +42,8 @@ class UserProfile extends StatelessWidget {
 }
 
 
-// this function fetches from database and updates live
-Widget buildUser(BuildContext context) {
+// this function fetches points live
+Widget pointGetter(BuildContext context) {
   // String userId = "skdjfkasjdkfja";
   return StreamBuilder(
       stream:
@@ -53,13 +54,8 @@ Widget buildUser(BuildContext context) {
         }
         var userDocument = snapshot.data;
         return Text(
-          userDocument['username'] +
-              '\n\n' +
-              userDocument["guild"] +
-              '\n\n' +
-              userDocument["points"].toString(),
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+          userDocument['points'].toString(),
+          style: TextStyle(fontSize: 25),
         );
       });
 }

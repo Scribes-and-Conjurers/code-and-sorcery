@@ -5,6 +5,7 @@ import '../login/authenticator.dart';
 var gameID = 'testGameSession';
 String player1;
 String player2;
+bool isMultiplayer;
 
 class GameLobby extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -34,6 +35,7 @@ class GameLobby extends StatelessWidget {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   getSetPlayers();
+                  checkIfSoloGame();
                   Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
@@ -63,6 +65,14 @@ void getSetPlayers() async {
       // points = documentSnapshot.data()['points'];
     }
   });
+}
+
+void checkIfSoloGame() {
+  if (player2 == '') {
+    isMultiplayer = false;
+  } else {
+    isMultiplayer = true;
+  }
 }
 
 Widget buildUser(BuildContext context) {
