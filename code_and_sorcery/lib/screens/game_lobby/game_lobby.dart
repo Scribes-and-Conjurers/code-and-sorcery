@@ -3,8 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
 
 var gameID = 'testGameSession';
+String player1;
+String player2;
 
 class GameLobby extends StatelessWidget {
+  final databaseReference = FirebaseFirestore.instance;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +33,7 @@ class GameLobby extends StatelessWidget {
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
+                  getSetPlayers();
                   Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
@@ -39,6 +45,24 @@ class GameLobby extends StatelessWidget {
       ),
     );
   }
+}
+
+void getSetPlayers() async {
+  await databaseReference
+      .collection('games')
+      .doc(gameID)
+      .get()
+      .then((DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.exists) {
+      print('Document data: ${documentSnapshot.data()}');
+      player1 = documentSnapshot.data()['player1'];
+      player2 = documentSnapshot.data()['player2'];
+      print(player1);
+      print(player2);
+      // guild = documentSnapshot.data()['guild'];
+      // points = documentSnapshot.data()['points'];
+    }
+  });
 }
 
 Widget buildUser(BuildContext context) {
@@ -54,8 +78,7 @@ Widget buildUser(BuildContext context) {
         return Text(
           userDocument['player1'] +
               '\n\n' +
-              userDocument["player2"] +
-              '\n\n',
+              userDocument["player2"],
           style: TextStyle(
               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         );
