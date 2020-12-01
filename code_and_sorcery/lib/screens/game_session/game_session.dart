@@ -292,7 +292,7 @@ class Game1State extends State<Game1>{
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
-      isSinglePlayer = true;
+      isMultiplayer = true;
     });
   }
 
@@ -383,7 +383,7 @@ class Summary extends StatelessWidget{
                           //   ),),
                           Builder(
                             builder: (context) {
-                              if (isSinglePlayer) {
+                              if (!isMultiplayer) {
                                 return singlePlayerPointsStream(context);
                               } else {
                                 return multiplayerPointsStream(context);
@@ -395,8 +395,13 @@ class Summary extends StatelessWidget{
                           MaterialButton(
                               color: Colors.red,
                               onPressed: () {
-                                updatePlayerPoints();
-                                updateGuildPoints();
+                                if(!isMultiplayer) {
+                                  updateSinglePlayerPoints();
+                                  updateSPGuildPoints();
+                                } else {
+                                  updateMultiplayerPoints();
+                                  updateMPGuildPoints();
+                                }
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
@@ -419,12 +424,21 @@ class Summary extends StatelessWidget{
         ));
   }
 
-
-  void updatePlayerPoints() async {
+  // for single player game
+  void updateSinglePlayerPoints() async {
     await databaseReference.collection("users")
         .doc(uID)
         .update({
       'points': FieldValue.increment(score),
+    });
+  }
+
+  // for multplayer game, add 2 bonus points
+  void updateMultiplayerPoints() async {
+    await databaseReference.collection("users")
+        .doc(uID)
+        .update({
+      'points': FieldValue.increment(score+2),
     });
   }
 
@@ -436,11 +450,21 @@ class Summary extends StatelessWidget{
     });
   }
 
-  void updateGuildPoints() async {
+  // for single player
+  void updateSPGuildPoints() async {
     await databaseReference.collection("guilds")
         .doc(guild)
         .update({
       'totalPoints': FieldValue.increment(score),
+    });
+  }
+
+  // for multiplayer
+  void updateMPGuildPoints() async {
+    await databaseReference.collection("guilds")
+        .doc(guild)
+        .update({
+      'totalPoints': FieldValue.increment(score+2),
     });
   }
 }
@@ -482,7 +506,8 @@ Widget multiplayerPointsStream(BuildContext context) {
           player1 + "'s score: " + userDocument['player1Points'].toString() +
               '\n\n' +
           player2 + "'s score: " + userDocument['player2Points'].toString() +
-              '\n\n',
+              '\n\n' +
+              'Multiplayer Bonus! +2',
           style: TextStyle(
               fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
         );

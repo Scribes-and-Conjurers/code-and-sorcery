@@ -5,7 +5,7 @@ import '../login/authenticator.dart';
 var gameID = 'testGameSession';
 String player1;
 String player2;
-bool isSinglePlayer = true;
+bool isMultiplayer;
 
 class GameLobby extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -69,9 +69,9 @@ void getSetPlayers() async {
 
 void checkIfSoloGame() {
   if (player2 == '') {
-    isSinglePlayer = true;
+    isMultiplayer = false;
   } else {
-    isSinglePlayer = false;
+    isMultiplayer = true;
   }
 }
 
