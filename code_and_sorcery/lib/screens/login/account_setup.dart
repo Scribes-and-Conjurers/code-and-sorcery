@@ -83,6 +83,7 @@ class AccountSetupState extends State<AccountSetup> {
         .update({
       'guild': guild,
       'username': username,
+      'points': 0
     });
   }
 }
