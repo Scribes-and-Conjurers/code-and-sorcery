@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
+import '../game_lobby/game_lobby.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
@@ -275,7 +276,11 @@ class Game1State extends State<Game1>{
   void updateQuestion() {
     setState(() {
       if(questionNumber == game.questions.length -1){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(score: finalScore)));
+        if(player1 == username) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(player1Score: finalScore)));
+        } else {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(player2Score: finalScore)));
+        }
       } else {
         questionNumber++;
       }
@@ -288,14 +293,16 @@ class Game1State extends State<Game1>{
         .doc('testGameSession')
         .update({
       'player1Points': FieldValue.increment(1),
+      'player2Points': FieldValue.increment(1),
     });
   }
 }
 
 class Summary extends StatelessWidget{
   final databaseReference = FirebaseFirestore.instance;
-  final int score;
-  Summary({Key key, @required this.score}) : super(key: key);
+  final int player1Score;
+  final int player2Score;
+  Summary({Key key, @required this.player1Score,@required this.player2Score}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +338,11 @@ class Summary extends StatelessWidget{
                           return Container();
                         }),
 
-                      Text("Final score: $score",
+                      Text("Player 1 score: $player1Score",
+                        style: TextStyle(
+                            fontSize: 25.0
+                        ),),
+                      Text("Player 2 score: $player2Score",
                         style: TextStyle(
                             fontSize: 25.0
                         ),),
@@ -370,7 +381,7 @@ class Summary extends StatelessWidget{
     await databaseReference.collection("users")
         .doc(uID)
         .update({
-      'points': FieldValue.increment(score),
+      // 'points': FieldValue.increment(score),
     });
   }
 
@@ -386,7 +397,7 @@ class Summary extends StatelessWidget{
     await databaseReference.collection("guilds")
         .doc(guild)
         .update({
-      'totalPoints': FieldValue.increment(score),
+      // 'totalPoints': FieldValue.increment(score),
     });
   }
 }

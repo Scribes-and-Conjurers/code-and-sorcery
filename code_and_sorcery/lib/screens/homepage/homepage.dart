@@ -5,7 +5,7 @@ import '../login/authenticator.dart';
 import '../login/login.dart';
 
 var profileImg = 'https://i.pinimg.com/originals/f3/be/e8/f3bee827c8aee1048d84bbb02af2e6b6.jpg';
-var userName = 'Clay';
+// var userName = 'Clay';
 
 
 
@@ -109,8 +109,10 @@ class Homepage extends StatelessWidget {
         .set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
-      'player1': (userName),
+      'player1': username,
       'player1Points': 0,
+      'player2': '',
+      'player2Points': 0,
     });
   }
   void updateUserProfile() async {
