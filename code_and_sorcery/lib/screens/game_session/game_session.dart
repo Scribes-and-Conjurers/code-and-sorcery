@@ -292,6 +292,7 @@ class Game1State extends State<Game1>{
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
+      isSinglePlayer = true;
     });
   }
 
@@ -380,7 +381,15 @@ class Summary extends StatelessWidget{
                           //   style: TextStyle(
                           //       fontSize: 25.0
                           //   ),),
-                          playersPointsStream(context),
+                          Builder(
+                            builder: (context) {
+                              if (isSinglePlayer) {
+                                return singlePlayerPointsStream(context);
+                              } else {
+                                return multiplayerPointsStream(context);
+                              }
+                            }
+                          ),
                           Padding(padding: EdgeInsets.all(10.0)),
 
                           MaterialButton(
@@ -437,8 +446,29 @@ class Summary extends StatelessWidget{
 }
 
 
-// live updating of player points
-Widget playersPointsStream(BuildContext context) {
+
+// live updating of player1 points
+Widget singlePlayerPointsStream(BuildContext context) {
+
+  return StreamBuilder(
+      stream:
+      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          player1 + "'s score: " + userDocument['player1Points'].toString() +
+              '\n\n',
+          style: TextStyle(
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+        );
+      });
+}
+
+// live updating of player2 points
+Widget multiplayerPointsStream(BuildContext context) {
 
   return StreamBuilder(
       stream:
@@ -451,7 +481,7 @@ Widget playersPointsStream(BuildContext context) {
         return Text(
           player1 + "'s score: " + userDocument['player1Points'].toString() +
               '\n\n' +
-              player2 + "'s score: " + userDocument["player2Points"].toString() +
+          player2 + "'s score: " + userDocument['player2Points'].toString() +
               '\n\n',
           style: TextStyle(
               fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
