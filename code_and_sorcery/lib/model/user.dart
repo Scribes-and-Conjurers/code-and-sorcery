@@ -20,11 +20,11 @@ class dbUser {
 
   Map<String, dynamic> toJson() =>
       {
-        'username': username,
+        // 'username': username,
         'uID': uID,
         'email': email,
-        'points': points,
-        'guild': guild
+        // 'points': points,
+        // 'guild': guild
       };
 
 }

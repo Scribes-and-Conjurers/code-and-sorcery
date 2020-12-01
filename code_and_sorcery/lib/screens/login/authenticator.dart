@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/model/user.dart';
 import 'package:code_and_sorcery/screens/login/firestore_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final FirestoreService _firestoreService = FirestoreService();
+final databaseReference = FirebaseFirestore.instance;
 
 // for our logged in user
 String uID;
@@ -63,16 +66,57 @@ Future<auth.User> signInWithGoogle() async {
   points = 0;
   username = '';
 
-// create a new user profile on firestore
-  _loggedInUser = dbUser(
-      uID: user.uid,
-      email: user.email,
-      username: '',
-      points: 0,
-      guild: '');
+  _loggedInUser = dbUser(uID: uID, email: email);
 
-  await _firestoreService.createUser(_loggedInUser);
-  print(_loggedInUser);
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uID)
+      .get()
+      .then((DocumentSnapshot documentSnapshot) async {
+    if (documentSnapshot.exists) {
+      print('Document data: ${documentSnapshot.data()}');
+      username = documentSnapshot.data()['username'];
+      guild = documentSnapshot.data()['guild'];
+      points = documentSnapshot.data()['points'];
+      print(username);
+      print(guild);
+      print(points);
+    } else {
+      await _firestoreService.createUser(_loggedInUser);
+    }
+  });
+
+  // void updateUserProfile() async {
+  //   await databaseReference.collection("users")
+  //       .doc(uID)
+  //       .update({
+  //     'points': FieldValue.increment(score),
+  //   });
+  // }
 
   return firebaseUser;
+
+
 }
+
+// class GetUserName extends StatelessWidget {
+//   GetUserName(uID);
+//   @override
+//   Widget build(BuildContext context) {
+//     CollectionReference users = FirebaseFirestore.instance.collection('users');
+//     return FutureBuilder<DocumentSnapshot>(
+//       future: users.doc(uID).get(),
+//       builder:
+//           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+//         if (snapshot.hasError) {
+//           return Text("Something went wrong");
+//         }
+//         if (snapshot.connectionState == ConnectionState.done) {
+//           Map<String, dynamic> data = snapshot.data.data();
+//           return Text("Full Name: ${data['username']} ${data['last_name']}");
+//         }
+//         return Text("loading");
+//       },
+//     );
+//   }
+// }

@@ -29,10 +29,13 @@ class _BodyState extends State<Body> {
     signInWithGoogle().then((user) => {
       // getUser(uID),
       this.user = user,
-      // if (user.)
-
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => AccountSetup()))
+      if (username != '') {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Homepage()))
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AccountSetup()))
+      }
     });
   }
 
@@ -57,62 +60,65 @@ class _BodyState extends State<Body> {
             )));
   }
 
+  Widget testButton() {
+    return OutlineButton(
+        onPressed: () {
+          print(username);
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+        splashColor: Colors.grey,
+        borderSide: BorderSide(color: Colors.grey),
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(image: AssetImage('assets/google_logo.png'), height: 35),
+                Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text('Test',
+                        style: TextStyle(color: Colors.grey, fontSize: 25)))
+              ],
+            )));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Align(alignment: Alignment.center, child: googleLoginButton());
-  }
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Homepage"),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blue[100], Colors.blue[400]],
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                testButton(),
+                googleLoginButton()
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+    // return Align(alignment: Alignment.center, child: googleLoginButton())
 }
 
 Future<void> signOutGoogle() async {
+  uID = '';
+  username = '';
+  email = '';
+  guild = '';
+  points = 0;
   await _googleSignIn.signOut();
   print("User Signed Out");
 }
-
-
-// class LoginPage extends StatefulWidget {
-//   @override
-//   _LoginPageState createState() => _LoginPageState();
-// }
-//
-// class _LoginPageState extends State<LoginPage> {
-//   User user;
-//   bool isUserSignedIn = false;
-//
-//   @override
-//   void click() {
-//     signInWithGoogle().then((user) => {
-//       this.user = user,
-//       Navigator.push(context,
-//           MaterialPageRoute(builder: (context) => Homepage(user)))
-//     });
-//   }
-//
-//
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Container(
-//             padding: EdgeInsets.all(50),
-//             child: Align(
-//                 alignment: Alignment.center,
-//                 child: FlatButton(
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20),
-//                     ),
-//                     onPressed: () {
-//                       this.click();
-//                     },
-//                     color: isUserSignedIn ? Colors.green : Colors.blueAccent,
-//                     child: Padding(
-//                         padding: EdgeInsets.all(10),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           children: <Widget>[
-//                             Icon(Icons.account_circle, color: Colors.white),
-//                             SizedBox(width: 10),
-//                             Text('Login with Google',
-//                                 style: TextStyle(color: Colors.white))
-//                           ],
-//                         ))))));
-//   }
-// }
