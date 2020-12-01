@@ -2,9 +2,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
+import '../game_lobby/game_lobby.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-
+var player1Score = 0;
+var player2Score = 0;
 
 
 class GameContent{
@@ -52,7 +54,7 @@ class Game1State extends State<Game1>{
         onWillPop: ()async => false,
         child: Scaffold(
 
-            // body
+          // body
             body: new Container(
                 margin: const EdgeInsets.all(10.0),
                 alignment: Alignment.topCenter,
@@ -96,21 +98,21 @@ class Game1State extends State<Game1>{
 
                             if(snapshot.connectionState == ConnectionState.waiting) {
                               return Container(
-                                width: MediaQuery.of(context).size.width / 1,
-                                height: MediaQuery.of(context).size.width / 1.5,
-                                child: SizedBox(
-                                  height: 10,
-                                  width: 10,
-                                  child: CircularProgressIndicator(),
+                                  width: MediaQuery.of(context).size.width / 1,
+                                  height: MediaQuery.of(context).size.width / 1.5,
+                                  child: SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: CircularProgressIndicator(),
 
-                                )
+                                  )
                               );
                             }
 
                             return SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: CircularProgressIndicator(),
+                              height: 10,
+                              width: 10,
+                              child: CircularProgressIndicator(),
                             );
                           }),
 
@@ -142,7 +144,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -164,7 +172,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -196,7 +210,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -218,7 +238,13 @@ class Game1State extends State<Game1>{
                                 if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  updateGame();
+                                  if(player1 == username) {
+                                    player1Score++;
+                                    updateGamePlayer1();
+                                  } else {
+                                    player2Score++;
+                                    updateGamePlayer2();
+                                  }
                                 } else {
                                   debugPrint('oh noes... that is incorrect');
                                 }
@@ -268,6 +294,8 @@ class Game1State extends State<Game1>{
       // reset variables:
       finalScore = 0;
       questionNumber = 0;
+      player1Score = 0;
+      player2Score = 0;
     });
   }
 
@@ -283,13 +311,22 @@ class Game1State extends State<Game1>{
   }
 
 
-  void updateGame() async {
+  void updateGamePlayer1() async {
     await databaseReference.collection("games")
         .doc('testGameSession')
         .update({
       'player1Points': FieldValue.increment(1),
     });
   }
+
+  void updateGamePlayer2() async {
+    await databaseReference.collection("games")
+        .doc('testGameSession')
+        .update({
+      'player2Points': FieldValue.increment(1),
+    });
+  }
+
 }
 
 class Summary extends StatelessWidget{
@@ -310,34 +347,28 @@ class Summary extends StatelessWidget{
                     children: <Widget>[
 
                       FutureBuilder(
-                        future: _getImage(context, "bossmonster.png"),
-                        builder: (context, snapshot) {
-                          if(snapshot.connectionState == ConnectionState.done){
-                            return Container(
+                          future: _getImage(context, "bossmonster.png"),
+                          builder: (context, snapshot) {
+                            if(snapshot.connectionState == ConnectionState.done){
+                              return Container(
                                 width: MediaQuery.of(context).size.width / 1.2,
                                 height: MediaQuery.of(context).size.width / 1.2,
                                 child: snapshot.data,
-                            );
-                          }
+                              );
+                            }
 
-                          if(snapshot.connectionState == ConnectionState.waiting) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width / 1.2,
-                              height: MediaQuery.of(context).size.width / 1.2,
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                            if(snapshot.connectionState == ConnectionState.waiting) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                height: MediaQuery.of(context).size.width / 1.2,
+                                child: CircularProgressIndicator(),
+                              );
+                            }
 
-                          return Container();
-                        }),
-
-                      Text("Final score: $score",
-                        style: TextStyle(
-                            fontSize: 25.0
-                        ),),
-
+                            return Container();
+                          }),
                       Padding(padding: EdgeInsets.all(10.0)),
-
+                      playersPointsStream(context),
                       MaterialButton(
                           color: Colors.red,
                           onPressed: () {
@@ -391,6 +422,29 @@ class Summary extends StatelessWidget{
   }
 }
 
+
+// live updating of player points
+Widget playersPointsStream(BuildContext context) {
+
+  return StreamBuilder(
+      stream:
+      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          player1 + "'s score: " + userDocument['player1Points'].toString() +
+              '\n\n' +
+              player2 + "'s score: " + userDocument["player2Points"].toString() +
+              '\n\n',
+          style: TextStyle(
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+        );
+      });
+}
+
 // utility method for fetching images from Firebase storage
 class FireStorageService extends ChangeNotifier {
   FireStorageService();
@@ -410,17 +464,3 @@ Future<Widget> _getImage(BuildContext context, String imageName) async {
   });
   return image;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
