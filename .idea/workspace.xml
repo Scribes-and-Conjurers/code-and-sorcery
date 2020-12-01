@@ -21,10 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="51bbfd3b-7c8c-4f97-b423-e81d49730a09" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/game_lobby/game_lobby.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/game_lobby/game_lobby.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/homepage/homepage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_and_sorcery/lib/screens/join_game/join_game.dart" beforeDir="false" afterPath="$PROJECT_DIR$/code_and_sorcery/lib/screens/join_game/join_game.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
