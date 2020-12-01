@@ -11,7 +11,7 @@ var userName = 'Clay';
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
-  User user;
+  dbUser user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,7 @@ class Homepage extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                uID,
+                username,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
