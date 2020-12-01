@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './screens/homepage/homepage.dart';
 import './screens/guild_view/guild_view.dart';
 import './screens/guild_view/change_guild.dart';
+import './screens/guild_view/guild_rankings.dart';
 import './screens/user_profile/user_profile.dart';
 import './screens/game_end/game_end.dart';
 import './screens/game_lobby/game_lobby.dart';
@@ -37,6 +38,7 @@ void main() async {
       '/ingame': (context) => Game1(),
       '/guild': (context) => Guild(),
       '/change': (context) => ChangeGuild(),
+      '/rankings': (context) => GuildRankings(),
     },
   ));
 }
