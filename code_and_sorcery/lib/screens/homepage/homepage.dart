@@ -111,6 +111,8 @@ class Homepage extends StatelessWidget {
       'finished': false,
       'player1': (userName),
       'player1Points': 0,
+      'player2': '',
+      'player2Points': 0,
     });
   }
   void updateUserProfile() async {
