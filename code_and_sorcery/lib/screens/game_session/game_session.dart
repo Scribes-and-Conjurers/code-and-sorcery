@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
+import '../game_lobby/game_lobby.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
@@ -275,8 +276,11 @@ class Game1State extends State<Game1>{
   void updateQuestion() {
     setState(() {
       if(questionNumber == game.questions.length -1){
-        // if(player1)
-        Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(player1Score: finalScore)));
+        if(player1 == username) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(player1Score: finalScore)));
+        } else {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(player2Score: finalScore)));
+        }
       } else {
         questionNumber++;
       }
