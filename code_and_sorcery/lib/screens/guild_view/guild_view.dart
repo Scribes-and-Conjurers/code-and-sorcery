@@ -1,84 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-var userGuild = 'Backenders';
+
+
+
 
 class Guild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Guild"),
+        title: Text('Your Guild'),
       ),
-      body: _buildBody(context),
-      floatingActionButton: FloatingActionButton(
-        child:Text("Profile"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+      body: Column(
+        children: [
+          guildNameSection,
+          totalPointsSection,
+          userRanking,
+          guildRanking,
+          changeGuildButton,
+        ],
       ),
-
-
     );
   }
-}
 
-Widget _buildBody(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('guilds').snapshots(),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
-
-      return _buildList(context, snapshot.data.docs);
-    },
+  Widget totalPointsSection = Container(
+    padding: EdgeInsets.all(40),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('Current Guild Points:', style: TextStyle(fontSize: 20)),
+        Text('[76,432]', style: TextStyle(fontSize: 20)),
+      ],
+    ),
   );
-}
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
-}
-
-Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  final record = Record.fromSnapshot(data);
-
-  return Padding(
-    key: ValueKey(record.name),
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      child: ListTile(
-          title: Text(record.name),
-          trailing: Text(record.totalPoints.toString()),
-
+  Widget guildNameSection = Container(
+    padding: EdgeInsets.all(40),
+    child: Center(
+      child: Column(
+        children: [
+          Text('The Microtask Ascendancy', style: TextStyle(fontSize: 20),),
+          Divider(thickness: 5,),
+        ],
       ),
     ),
   );
-}
 
+  Widget userRanking = Container(
+      padding: EdgeInsets.all(40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Your Current Rank:', style: TextStyle(fontSize: 20),),
+          Text('12', style: TextStyle(fontSize: 20),),
+        ],
+      )
+  );
 
-CollectionReference guilds = FirebaseFirestore.instance.collection('guilds');
+  Widget guildRanking = Container(
+      padding: EdgeInsets.all(40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Current Guild Global Rank:', style: TextStyle(fontSize: 20),),
+          Text('1', style: TextStyle(fontSize: 20),),
+        ],
+      )
+  );
 
-
-class Record {
-  final String name;
-  final int totalPoints;
-  final DocumentReference reference;
-
-  Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['totalPoints'] != null),
-        name = map['name'],
-        totalPoints = map['totalPoints'];
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$name:$totalPoints>";
+  Widget changeGuildButton = Container(
+    padding: EdgeInsets.all(30),
+    child: Center(
+      child: Column(
+        children: [
+          MaterialButton(
+            onPressed: () {debugPrint('Changing Guild....');},
+            color: Colors.blueGrey,
+            textColor: Colors.white,
+            child: Text('Change Guild', style: TextStyle(fontSize: 20),),),
+          Text(
+              'Warning: changing your guild will reset your personal score',
+              style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
+        ],
+      ),
+    ),
+  );
 }
