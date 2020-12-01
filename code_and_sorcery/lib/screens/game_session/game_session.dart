@@ -433,6 +433,29 @@ class Summary extends StatelessWidget{
   }
 }
 
+
+// live updating of player points
+Widget playersPointsStream(BuildContext context) {
+
+  return StreamBuilder(
+      stream:
+      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          userDocument['player1Points'].toString() +
+              '\n\n' +
+              userDocument["player2Points"].toString() +
+              '\n\n',
+          style: TextStyle(
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        );
+      });
+}
+
 // utility method for fetching images from Firebase storage
 class FireStorageService extends ChangeNotifier {
   FireStorageService();
