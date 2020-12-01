@@ -67,6 +67,12 @@ class JoinGameState extends State<JoinGame> {
               },
               child: Text('Submit'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back'),
+            ),
           ],
         ),
       ),

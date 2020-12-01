@@ -367,19 +367,8 @@ class Summary extends StatelessWidget{
 
                             return Container();
                           }),
-
-                      Text("$player1's score: $player1Score",
-                        style: TextStyle(
-                            fontSize: 25.0
-                        ),),
                       Padding(padding: EdgeInsets.all(10.0)),
-                      Text("$player2's score: $player2Score",
-                        style: TextStyle(
-                            fontSize: 25.0
-                        ),),
-
-                      Padding(padding: EdgeInsets.all(10.0)),
-
+                      playersPointsStream(context),
                       MaterialButton(
                           color: Colors.red,
                           onPressed: () {
@@ -446,12 +435,12 @@ Widget playersPointsStream(BuildContext context) {
         }
         var userDocument = snapshot.data;
         return Text(
-          userDocument['player1Points'].toString() +
+          player1 + "'s score: " + userDocument['player1Points'].toString() +
               '\n\n' +
-              userDocument["player2Points"].toString() +
+              player2 + "'s score: " + userDocument["player2Points"].toString() +
               '\n\n',
           style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
         );
       });
 }
