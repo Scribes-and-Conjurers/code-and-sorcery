@@ -367,19 +367,8 @@ class Summary extends StatelessWidget{
 
                             return Container();
                           }),
-
-                      Text("$player1's score: $player1Score",
-                        style: TextStyle(
-                            fontSize: 25.0
-                        ),),
                       Padding(padding: EdgeInsets.all(10.0)),
-                      Text("$player2's score: $player2Score",
-                        style: TextStyle(
-                            fontSize: 25.0
-                        ),),
-
-                      Padding(padding: EdgeInsets.all(10.0)),
-
+                      playersPointsStream(context),
                       MaterialButton(
                           color: Colors.red,
                           onPressed: () {
@@ -431,6 +420,29 @@ class Summary extends StatelessWidget{
       'totalPoints': FieldValue.increment(score),
     });
   }
+}
+
+
+// live updating of player points
+Widget playersPointsStream(BuildContext context) {
+
+  return StreamBuilder(
+      stream:
+      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          player1 + "'s score: " + userDocument['player1Points'].toString() +
+              '\n\n' +
+              player2 + "'s score: " + userDocument["player2Points"].toString() +
+              '\n\n',
+          style: TextStyle(
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+        );
+      });
 }
 
 // utility method for fetching images from Firebase storage

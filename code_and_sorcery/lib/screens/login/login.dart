@@ -9,34 +9,37 @@ import 'account_setup.dart';
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final FirestoreService _firestoreService = FirestoreService();
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  User user;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Hello World!')), body: Body());
-  }
-}
-
-class Body extends StatefulWidget {
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  User user;
-
-
-  void click() {
-    signInWithGoogle().then((user) => {
-      // getUser(uID),
-      this.user = user,
-      if (username != '') {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Homepage()))
-      } else {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AccountSetup()))
-      }
-    });
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'CODE&SORCERY',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              ),
+              SizedBox(height: 50),
+              googleLoginButton(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget googleLoginButton() {
@@ -51,7 +54,7 @@ class _BodyState extends State<Body> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image(image: AssetImage('assets/google_logo.png'), height: 35),
+                // Image(image: AssetImage('../../assets/google_logo.png'), height: 35),
                 Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text('Sign in with Google',
@@ -60,57 +63,19 @@ class _BodyState extends State<Body> {
             )));
   }
 
-  Widget testButton() {
-    return OutlineButton(
-        onPressed: () {
-          print(username);
-        },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
-        splashColor: Colors.grey,
-        borderSide: BorderSide(color: Colors.grey),
-        child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image(image: AssetImage('assets/google_logo.png'), height: 35),
-                Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text('Test',
-                        style: TextStyle(color: Colors.grey, fontSize: 25)))
-              ],
-            )));
+  void click() {
+    signInWithGoogle().then((user) => {
+      // getUser(uID),
+      this.user = user,
+      if (username != '') {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Homepage()))
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AccountSetup()))
+      }
+    });
   }
-
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Homepage"),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blue[100], Colors.blue[400]],
-            ),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                testButton(),
-                googleLoginButton()
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-    // return Align(alignment: Alignment.center, child: googleLoginButton())
 }
 
 Future<void> signOutGoogle() async {
