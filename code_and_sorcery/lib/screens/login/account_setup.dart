@@ -23,32 +23,8 @@ class AccountSetupState extends State<AccountSetup> {
   final guildController = TextEditingController();
   String usernameValue = "";
   String guildValue = "";
-  String dropdownValue = "The";
+  // String dropdownValue = "The";
 
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
   @override
   Widget build(BuildContext ctxt) {
     return new MaterialApp
@@ -99,8 +75,6 @@ class AccountSetupState extends State<AccountSetup> {
         ),
       ),
     );
-
-
   }
 
   // update username and guild for user in database
@@ -114,3 +88,30 @@ class AccountSetupState extends State<AccountSetup> {
     });
   }
 }
+
+  // Widget guildMenu(BuildContext context) {
+  //   return DropdownButton<String>(
+  //     value: dropdownValue,
+  //     icon: Icon(Icons.arrow_downward),
+  //     iconSize: 24,
+  //     elevation: 16,
+  //     style: TextStyle(color: Colors.deepPurple),
+  //     underline: Container(
+  //       height: 2,
+  //       color: Colors.deepPurpleAccent,
+  //     ),
+  //     onChanged: (String newValue) {
+  //       setState(() {
+  //         dropdownValue = newValue;
+  //       });
+  //     },
+  //     items: <String>['One', 'Two', 'Free', 'Four']
+  //         .map<DropdownMenuItem<String>>((String value) {
+  //       return DropdownMenuItem<String>(
+  //         value: value,
+  //         child: Text(value),
+  //       );
+  //     }).toList(),
+  //   );
+
+
