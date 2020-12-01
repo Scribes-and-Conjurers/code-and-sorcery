@@ -58,6 +58,7 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
+                  updateUserProfile();
                   Navigator.pushNamed(context, '/profile');
                 },
                 child: Text('Profile page'),
@@ -111,6 +112,22 @@ class Homepage extends StatelessWidget {
       'player1': (userName),
       'player1Points': 0,
     });
+  }
+  void updateUserProfile() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        username = documentSnapshot.data()['username'];
+        guild = documentSnapshot.data()['guild'];
+        points = documentSnapshot.data()['points'];
+      }
+    });
+
+
   }
 }
 
