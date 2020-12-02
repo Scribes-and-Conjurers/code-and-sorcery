@@ -74,7 +74,7 @@ class Game1State extends State<Game1>{
   }
 
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
         onWillPop: ()async => false,
         child: Scaffold(
 
@@ -83,8 +83,10 @@ class Game1State extends State<Game1>{
                 margin: const EdgeInsets.all(10.0),
                 alignment: Alignment.topCenter,
                 child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(padding: EdgeInsets.all(10.0)),
+
                       // top row that displays question number and current score
                       Container(
                           alignment: Alignment.centerRight,
@@ -93,16 +95,18 @@ class Game1State extends State<Game1>{
                               children: <Widget>[
                                 Text("Question ${questionNumber + 1}",
                                   style: TextStyle(
-                                      fontSize: 22.0
+                                      fontSize: 15.0
                                   ),),
                                 Text("Score: $finalScore",
                                   style: TextStyle(
-                                      fontSize: 22.0
+                                      fontSize: 15.0
                                   ),),
                               ]
                           )
                       ),
-                      Padding(padding: EdgeInsets.all(10.0)),
+
+                      Padding(padding: EdgeInsets.all(5.0)),
+
                       // image
                       FutureBuilder(
                           future: _getImage(context, "${game.images[questionNumber]}.png"),
@@ -110,14 +114,14 @@ class Game1State extends State<Game1>{
                             if(snapshot.connectionState == ConnectionState.done){
                               return Container(
                                 width: MediaQuery.of(context).size.width / 1,
-                                height: MediaQuery.of(context).size.width / 1.5,
+                                height: MediaQuery.of(context).size.width / 1.7,
                                 child: snapshot.data,
                               );
                             }
                             if(snapshot.connectionState == ConnectionState.waiting) {
                               return Container(
                                   width: MediaQuery.of(context).size.width / 1,
-                                  height: MediaQuery.of(context).size.width / 1.5,
+                                  height: MediaQuery.of(context).size.width / 1.7,
                                   child: SizedBox(
                                     height: 10,
                                     width: 10,
@@ -131,21 +135,28 @@ class Game1State extends State<Game1>{
                               child: CircularProgressIndicator(),
                             );
                           }),
-                      Padding(padding: EdgeInsets.all(10.0)),
+
+                      Padding(padding: EdgeInsets.all(5.0)),
+
                       // question
                       Text(game.questions[questionNumber],
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 15.0,
                         ),),
-                      Padding(padding: EdgeInsets.all(10.0),),
-                      // answers row 1
-                      Row(
+
+                      Padding(padding: EdgeInsets.all(5.0),),
+
+                      // answers
+                      Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            //button 1
+
+                            // button 1
                             MaterialButton(
-                              minWidth: 120.0,
-                              color: Colors.blueGrey,
+                              minWidth: 250.0,
+                              padding: EdgeInsets.all(0),
+                              color: Colors.blue,
                               onPressed: () {
                                 if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
@@ -169,10 +180,11 @@ class Game1State extends State<Game1>{
                                 ),
                               ),
                             ),
+
                             // button 2
                             MaterialButton(
-                              minWidth: 120.0,
-                              color: Colors.blueGrey,
+                              minWidth: 250.0,
+                              color: Colors.blue,
                               onPressed: () {
                                 if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
@@ -196,17 +208,11 @@ class Game1State extends State<Game1>{
                                 ),
                               ),
                             ),
-                          ]
-                      ),
-                      Padding(padding: EdgeInsets.all(10.0),),
-                      // answers row 2
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            //button 3
+
+                            // button 3
                             MaterialButton(
-                              minWidth: 120.0,
-                              color: Colors.blueGrey,
+                              minWidth: 250.0,
+                              color: Colors.blue,
                               onPressed: () {
                                 if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
@@ -230,10 +236,11 @@ class Game1State extends State<Game1>{
                                 ),
                               ),
                             ),
+
                             // button 4
                             MaterialButton(
-                              minWidth: 120.0,
-                              color: Colors.blueGrey,
+                              minWidth: 250.0,
+                              color: Colors.blue,
                               onPressed: () {
                                 if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
@@ -257,14 +264,18 @@ class Game1State extends State<Game1>{
                                 ),
                               ),
                             ),
+
+
                           ]
                       ),
-                      Padding(padding: EdgeInsets.all(10.0),),
+
+                      Padding(padding: EdgeInsets.all(5),),
+
                       // reset button
                       Container(
                           alignment: Alignment.bottomCenter,
                           child: MaterialButton(
-                            color: Colors.redAccent,
+                            color: Colors.deepPurple,
                             minWidth: 240.0,
                             height: 30.0,
                             onPressed: resetGame,
@@ -376,11 +387,6 @@ class Summary extends StatelessWidget{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
 
-
-                          // Text("Final score: $score",
-                          //   style: TextStyle(
-                          //       fontSize: 25.0
-                          //   ),),
                           Builder(
                             builder: (context) {
                               if (!isMultiplayer) {
@@ -393,7 +399,7 @@ class Summary extends StatelessWidget{
                           Padding(padding: EdgeInsets.all(10.0)),
 
                           MaterialButton(
-                              color: Colors.red,
+                              color: Colors.deepPurple,
                               onPressed: () {
                                 if(!isMultiplayer) {
                                   updateSinglePlayerPoints();
