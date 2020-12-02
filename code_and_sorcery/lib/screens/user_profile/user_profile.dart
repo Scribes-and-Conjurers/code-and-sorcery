@@ -13,6 +13,13 @@ class UserProfile extends StatelessWidget {
         title: Text("Your Profile"),
       ),
       body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blue[100], Colors.blue[400]],
+            ),
+          ),
           child: Center(
               child: Padding(
                   padding: EdgeInsets.all(70),
@@ -28,14 +35,23 @@ class UserProfile extends StatelessWidget {
                       )),
                       MaterialButton(onPressed: () {Navigator.pushNamed(context, '/guild');}, color: Colors.blueGrey, child: Text(
                         'Guild View', style: TextStyle(color: Colors.white),),),
-                      Text('Your Current Quiz Points:', style: TextStyle(fontSize: 20, color: Colors.black)),
+                      Text('Your Current Quiz Points:',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black)
+                      ),
                       // Text(points.toString(), style: TextStyle(fontSize: 25))
                       pointGetter(context),
                     ],
                   )
               )
           )
-
+      ),
+      floatingActionButton: FloatingActionButton(
+        child:Text('Back'),
+        onPressed: () {
+          Navigator.pushNamed(context, '/homepage');
+        },
       ),
     );
   }
