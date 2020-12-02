@@ -51,6 +51,12 @@ class Guild extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child:Text('Back'),
+        onPressed: () {
+          Navigator.pushNamed(context, '/profile');
+        },
+      ),
     );
   }
 

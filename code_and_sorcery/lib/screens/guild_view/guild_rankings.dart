@@ -10,7 +10,7 @@ class GuildRankings extends StatelessWidget {
       appBar: AppBar(title: Text('Guild Rankings')),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
-        child:Text('Guild'),
+        child:Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/guild');
         },
