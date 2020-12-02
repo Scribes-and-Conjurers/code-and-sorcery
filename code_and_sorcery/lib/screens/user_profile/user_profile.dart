@@ -46,7 +46,12 @@ class UserProfile extends StatelessWidget {
                   )
               )
           )
-
+      ),
+      floatingActionButton: FloatingActionButton(
+        child:Text('Back'),
+        onPressed: () {
+          Navigator.pushNamed(context, '/homepage');
+        },
       ),
     );
   }

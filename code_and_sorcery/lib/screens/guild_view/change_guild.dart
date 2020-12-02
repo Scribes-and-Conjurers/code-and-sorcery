@@ -60,6 +60,12 @@ class ChangeGuildState extends State<ChangeGuild> {
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child:Text('Back'),
+          onPressed: () {
+            Navigator.pushNamed(context, '/guild');
+          },
+        ),
       ),
     );
   }
