@@ -40,40 +40,54 @@ class JoinGameState extends State<JoinGame> {
   Widget build(BuildContext ctxt) {
     return new MaterialApp
       (
-      home: new Scaffold
+      home: Scaffold
         (
-        appBar: new AppBar (title: widget.title,),
-        body: new Column
-          (
-          children: <Widget>[
-            new TextField
+        appBar: AppBar (title: widget.title,),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blue[100], Colors.blue[400]],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Column
               (
-              controller: usernameController,
-              decoration: new InputDecoration.collapsed(
-                  hintText: "ADD LINK"),
-              onChanged: (String text) {
-                setState(() {
-                  usernameValue = usernameController.text;
-                  print('usernameValue $usernameValue');
-                  print('test');
-                });
-              },
+              children: <Widget>[
+                Padding(padding: EdgeInsets.all(70.0)),
+                TextField
+                  (
+                  controller: usernameController,
+                  decoration: new InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "ADD LINK"),
+                  onChanged: (String text) {
+                    setState(() {
+                      usernameValue = usernameController.text;
+                      print('usernameValue $usernameValue');
+                      print('test');
+                    });
+                  },
+                ),
+                Text("\n\n"),
+                ElevatedButton(
+                  onPressed: () {
+                    setPlayer2();
+                    Navigator.pushNamed(context, '/lobby');
+                  },
+                  child: Text('Submit'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Go back'),
+                ),
+              ],
             ),
-            new Text("\n\n"),
-            ElevatedButton(
-              onPressed: () {
-                setPlayer2();
-                Navigator.pushNamed(context, '/lobby');
-              },
-              child: Text('Submit'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Go back'),
-            ),
-          ],
+          ),
         ),
       ),
     );

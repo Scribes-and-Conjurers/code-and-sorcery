@@ -21,31 +21,44 @@ class ChangeGuildState extends State<ChangeGuild> {
       home: new Scaffold
         (
         appBar: new AppBar (title: widget.title,),
-        body: new Column
-          (
-          children: <Widget>[
-            new TextField
+        body:  Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blue[100], Colors.blue[400]],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Column
               (
-              controller: guildController,
-              decoration: new InputDecoration.collapsed(
-                  hintText: "Change Guild"),
-              onChanged: (String text) {
-                setState(() {
-                  guildValue = guildController.text;
-                });
-              },
+              children: <Widget>[
+                new TextField
+                  (
+                  controller: guildController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Change Guild"),
+                  onChanged: (String text) {
+                    setState(() {
+                      guildValue = guildController.text;
+                    });
+                  },
+                ),
+                new Text("\n\n"),
+                ElevatedButton(
+                  onPressed: () {
+                    changeGuild();
+                    guild = guildValue;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Guild()));
+                  },
+                  child: Text('Submit'),
+                ),
+              ],
             ),
-            new Text("\n\n"),
-            ElevatedButton(
-              onPressed: () {
-                changeGuild();
-                guild = guildValue;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Guild()));
-              },
-              child: Text('Submit'),
-            ),
-          ],
+          ),
         ),
       ),
     );

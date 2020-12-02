@@ -11,34 +11,45 @@ class Guild extends StatelessWidget {
       appBar: AppBar(
         title: Text('Your Guild'),
       ),
-      body: Column(
-        children: [
-          // guildNameSection,
-          guildNameGetter(context),
-          totalPointsSection,
-          guildPointsGetter(context),
-          // userRanking,
-          // guildRanking,
-          // guildRankGetter(context),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate back to the first screen by popping the current route
-              // off the stack.
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ChangeGuild()));
-            },
-            child: Text('Change Guild'),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.blue[100], Colors.blue[400]],
           ),
-          ElevatedButton(
-            onPressed: () {
-              // Navigate back to the first screen by popping the current route
-              // off the stack.
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => GuildRankings()));
-            },
-            child: Text('Guild Rankings'),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              // guildNameSection,
+              guildNameGetter(context),
+              totalPointsSection,
+              guildPointsGetter(context),
+              // userRanking,
+              // guildRanking,
+              // guildRankGetter(context),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate back to the first screen by popping the current route
+                  // off the stack.
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChangeGuild()));
+                },
+                child: Text('Change Guild'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate back to the first screen by popping the current route
+                  // off the stack.
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GuildRankings()));
+                },
+                child: Text('Guild Rankings'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
