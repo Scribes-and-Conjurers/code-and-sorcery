@@ -1,4 +1,5 @@
 import 'package:code_and_sorcery/screens/guild_view/guild_rankings.dart';
+import 'package:code_and_sorcery/screens/guild_view/user_rankings.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
@@ -29,14 +30,15 @@ class Guild extends StatelessWidget {
               // userRanking,
               // guildRanking,
               // guildRankGetter(context),
+              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ChangeGuild()));
+                      MaterialPageRoute(builder: (context) => UserRankings()));
                 },
-                child: Text('Change Guild'),
+                child: Text(' User Rankings'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -46,6 +48,16 @@ class Guild extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => GuildRankings()));
                 },
                 child: Text('Guild Rankings'),
+              ),
+              SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate back to the first screen by popping the current route
+                  // off the stack.
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChangeGuild()));
+                },
+                child: Text('Change Guild'),
               ),
             ],
           ),

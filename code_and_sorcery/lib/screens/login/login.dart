@@ -33,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
+              Text(
+                '<🧙‍♀️🧙‍♂️>',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              ),
               SizedBox(height: 50),
               googleLoginButton(),
             ],
