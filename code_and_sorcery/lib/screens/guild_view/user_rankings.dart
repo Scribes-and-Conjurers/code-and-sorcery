@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
 import 'guild_view.dart';
 
-class GuildRankings extends StatelessWidget {
+class UserRankings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Guild Rankings')),
+      appBar: AppBar(title: Text('User Rankings')),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         child:Text('Guild'),
@@ -22,7 +22,7 @@ class GuildRankings extends StatelessWidget {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('guilds').orderBy("totalPoints", descending: true).snapshots(),
+    stream: FirebaseFirestore.instance.collection('users').where("guild", isEqualTo:guild).orderBy("points", descending: true).limit(3).snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
       return _buildList(context, snapshot.data.docs);
@@ -37,9 +37,9 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
-  username = record.name;
+  username = record.username;
   return Padding(
-    key: ValueKey(record.name),
+    key: ValueKey(record.username),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
@@ -47,27 +47,27 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: ListTile(
-          title: Text(record.name),
-          trailing: Text(record.totalPoints.toString()),
+        title: Text(record.username),
+        trailing: Text(record.points.toString()),
       ),
     ),
   );
 }
 
 class Record {
-  final String name;
-  final int totalPoints;
+  final String username;
+  final int points;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['totalPoints'] != null),
-        name = map['name'],
-        totalPoints = map['totalPoints'];
+      : assert(map['username'] != null),
+        assert(map['points'] != null),
+        username = map['username'],
+        points = map['points'];
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$name:$totalPoints>";
+  String toString() => "Record<$username:$points>";
 }
