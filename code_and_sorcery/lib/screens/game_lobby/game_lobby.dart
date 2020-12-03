@@ -96,6 +96,12 @@ void createGame() async {
     'player2': '',
     'player2Class': '',
     'player2Points': 0,
+    'player3': '',
+    'player3Class': '',
+    'player3Points': 0,
+    'player4': '',
+    'player4Class': '',
+    'player4Points': 0,
   });
 }
 
