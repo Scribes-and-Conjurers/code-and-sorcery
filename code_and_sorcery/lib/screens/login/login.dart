@@ -4,6 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'authenticator.dart';
 import 'account_setup.dart';
+import '../../states/user_state.dart';
+import 'package:provider/provider.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -20,31 +22,41 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'CODE&SORCERY',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              SizedBox(height: 10),
-              Text(
-                '<🧙‍♀️🧙‍♂️>',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              SizedBox(height: 50),
-              googleLoginButton(),
-            ],
-          ),
+        child: Consumer<UserState>(
+          builder: (context, UserState, child) {
+            return RaisedButton(
+              child: Text('Test Here'),
+              onPressed: (){
+                UserState.testPress();
+              },
+            );
+          }
         ),
+        // child: Center(
+        //   child: Column(
+        //     mainAxisSize: MainAxisSize.max,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       Text(
+        //         'CODE&SORCERY',
+        //         style: TextStyle(
+        //             fontSize: 30,
+        //             fontWeight: FontWeight.bold,
+        //             color: Colors.black54),
+        //       ),
+        //       SizedBox(height: 10),
+        //       Text(
+        //         '<🧙‍♀️🧙‍♂️>',
+        //         style: TextStyle(
+        //             fontSize: 30,
+        //             fontWeight: FontWeight.bold,
+        //             color: Colors.black54),
+        //       ),
+        //       SizedBox(height: 50),
+        //       googleLoginButton(),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }

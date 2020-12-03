@@ -17,8 +17,6 @@ String gameLinkValue = "";
 class GameLobby extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
-  final documentReference =
-      FirebaseFirestore.instance.collection('games').doc(gameLinkValue);
 
   @override
   Widget build(BuildContext context) {

@@ -13,33 +13,44 @@ import './screens/game_session/game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
-import './screens/login/authenticator.dart';
+import './states/user_state.dart';
+import 'package:provider/provider.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Call this once to be able to use firebase
   await Firebase.initializeApp();
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Code&Sorcery',
-    // Start the app with the "/" named route. In this case, the app starts
-    // on the FirstScreen widget.
-    initialRoute: '/login',
-    // home: _user == null ? LoginPage() : Homepage(),
-    routes: {
-      // When navigating to the "/" route, build the FirstScreen widget.
-      '/homepage': (context) => Homepage(),
-      '/login': (context) => LoginPage(),
-      '/setup': (context) => AccountSetup(),
-      '/lobby': (context) => GameLobby(),
-      '/join': (context) => JoinGame(),
-      '/profile': (context) => UserProfile(),
-      '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => Game1(),
-      '/guild': (context) => Guild(),
-      '/change': (context) => ChangeGuild(),
-      '/guildrankings': (context) => GuildRankings(),
-      '/userrankings': (context) => UserRankings(),
-    },
-  ));
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<UserState>(
+        create: (context) => UserState(),
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Code&Sorcery',
+            // Start the app with the "/" named route. In this case, the app starts
+            // on the FirstScreen widget.
+            initialRoute: '/login',
+            // home: _user == null ? LoginPage() : Homepage(),
+            routes: {
+              // When navigating to the "/" route, build the FirstScreen widget.
+              '/homepage': (context) => Homepage(),
+              '/login': (context) => LoginPage(),
+              '/setup': (context) => AccountSetup(),
+              '/lobby': (context) => GameLobby(),
+              '/join': (context) => JoinGame(),
+              '/profile': (context) => UserProfile(),
+              '/leaderboard': (context) => Leaderboard(),
+              '/ingame': (context) => Game1(),
+              '/guild': (context) => Guild(),
+              '/change': (context) => ChangeGuild(),
+              '/guildrankings': (context) => GuildRankings(),
+              '/userrankings': (context) => UserRankings(),
+            }));
+  }
 }
