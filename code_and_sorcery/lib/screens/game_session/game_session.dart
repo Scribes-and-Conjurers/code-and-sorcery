@@ -349,7 +349,7 @@ class Game1State extends State<Game1> {
   }
 
   void decreasePartyHealth() async {
-    await databaseReference.collection("games").doc('testGameSession').update({
+    await databaseReference.collection("games").doc(gameLinkValue).update({
       'partyHealth': FieldValue.increment(-1),
     });
   }

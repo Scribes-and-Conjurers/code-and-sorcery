@@ -70,22 +70,40 @@ class JoinGameState extends State<JoinGame> {
   }
 
   void setPlayer2() async {
-    await databaseReference.collection("games").doc(gameLink).update({
-      'player2': username,
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    await _firestore.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          _firestore.collection('games').doc(gameLinkValue);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player2 = snapshot.data()['player2'];
+      player3 = snapshot.data()['player3'];
+      player4 = snapshot.data()['player4'];
+      if (player2 == "") {
+        await transaction.update(playerCheck, {'player2': username});
+      } else if (player2 != "") {
+        if (player3 == "") {
+          await transaction.update(playerCheck, {'player3': username});
+        } else if (player3 != "") {
+          if (player4 == "") {
+            await transaction.update(playerCheck, {'player4': username});
+          }
+        }
+      }
     });
   }
 
-  void setPlayer3() async {
-    await databaseReference.collection("games").doc(gameLink).update({
-      'player3': username,
-    });
-  }
+  // void setPlayer3() async {
+  //   await databaseReference.collection("games").doc(gameLink).update({
+  //     'player3': username,
+  //   });
+  // }
 
-  void setPlayer4() async {
-    await databaseReference.collection("games").doc(gameLink).update({
-      'player4': username,
-    });
-  }
+  // void setPlayer4() async {
+  //   await databaseReference.collection("games").doc(gameLink).update({
+  //     'player4': username,
+  //   });
+  // }
 }
 
 /*
