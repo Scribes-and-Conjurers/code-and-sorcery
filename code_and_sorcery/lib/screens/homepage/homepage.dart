@@ -80,7 +80,7 @@ class Homepage extends StatelessWidget {
               ),
               RaisedButton(
                 onPressed: () {
-                  signOutGoogle();
+                  // signOutGoogle();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
                     return LoginPage();

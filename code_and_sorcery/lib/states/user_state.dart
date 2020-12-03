@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class UserState extends ChangeNotifier {
   // These are the states for the logged in user
   String _uID;
-  String _username;
+  String _username = 'try';
   String _email;
   String _guild;
   String _playerClass;
