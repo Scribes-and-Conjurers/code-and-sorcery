@@ -15,6 +15,7 @@ String uID;
 String username;
 String email;
 String guild;
+String playerClass;
 int points;
 
 // define a user to become logged in user, then post in firestore
@@ -86,17 +87,7 @@ Future<auth.User> signInWithGoogle() async {
     }
   });
 
-  // void updateUserProfile() async {
-  //   await databaseReference.collection("users")
-  //       .doc(uID)
-  //       .update({
-  //     'points': FieldValue.increment(score),
-  //   });
-  // }
-
   return firebaseUser;
-
-
 }
 
 // class GetUserName extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,14 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 var player1Score = 0;
 var player2Score = 0;
+// int counter = 10;
+// Timer questionTimer;
 
-
-class GameContent{
+class GameContent {
   var images = ["slimegreen1", "slimered1", "bossmonster", "bossmonster"];
 
-  final CollectionReference questionCollection = FirebaseFirestore.instance.collection('mc_question');
+  final CollectionReference questionCollection =
+      FirebaseFirestore.instance.collection('mc_question');
 
   Stream<QuerySnapshot> get questionSnapshot {
     return questionCollection.snapshots();
@@ -28,10 +31,20 @@ class GameContent{
     "How do you print to the console in JS?"
   ];
 
-  List<dynamic> choices0 = ["JesusSighs", "Justice served", "JavaScript", "Just subtleties"];
+  List<dynamic> choices0 = [
+    "JesusSighs",
+    "Justice served",
+    "JavaScript",
+    "Just subtleties"
+  ];
   List<dynamic> choices1 = ["Encoder", "Framework", "Language", "Library"];
   List<dynamic> choices2 = ["React", "Vue", "Angular", "Underscore"];
-  List<dynamic> choices3 = ["console.log()", "print()", "log.Debug();", "WriteLine();"];
+  List<dynamic> choices3 = [
+    "console.log()",
+    "print()",
+    "log.Debug();",
+    "WriteLine();"
+  ];
 
   List<List<dynamic>> choices = [
     ["loading", "loading", "loading", "loading"],
@@ -41,7 +54,10 @@ class GameContent{
   ];
 
   List<dynamic> correctAnswers = [
-    "JavaScript", "Library", "Vue", "console.log()"
+    "JavaScript",
+    "Library",
+    "Vue",
+    "console.log()"
   ];
 }
 
@@ -62,23 +78,36 @@ class Game1 extends StatefulWidget {
 }
 
 // Game widget state
-class Game1State extends State<Game1>{
+class Game1State extends State<Game1> {
   final databaseReference = FirebaseFirestore.instance;
+  // void startTimer() {
+  //   counter = 10;
+  //   if (questionTimer != null) {
+  //     questionTimer.cancel();
+  //   }
+  //   questionTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     setState(() {
+  //       if (counter > 0) {
+  //         counter--;
+  //       } else {
+  //         questionTimer.cancel();
+  //       }
+  //     });
+  //   });
+  // }
 
   @override
-
   void initState() {
     // update game content when Game is initiated!!
     updateGameContent('JIfrv2SOOdlxkv5RJP3i');
-
   }
 
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: ()async => false,
+        onWillPop: () async => false,
         child: Scaffold(
 
-          // body
+            // body
             body: new Container(
                 margin: const EdgeInsets.all(10.0),
                 alignment: Alignment.topCenter,
@@ -86,48 +115,61 @@ class Game1State extends State<Game1>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(padding: EdgeInsets.all(10.0)),
-
                       // top row that displays question number and current score
                       Container(
                           alignment: Alignment.centerRight,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Question ${questionNumber + 1}",
-                                  style: TextStyle(
-                                      fontSize: 15.0
-                                  ),),
-                                Text("Score: $finalScore",
-                                  style: TextStyle(
-                                      fontSize: 15.0
-                                  ),),
-                              ]
-                          )
-                      ),
+                                // (counter > 0)
+                                //     ? Text("")
+                                //     : Text("OVER",
+                                //         style: TextStyle(color: Colors.red)),
+                                // Text('$counter',
+                                //     style: TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 48)),
+                                Text(
+                                  "Question ${questionNumber + 1}",
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                                Text(
+                                  "Score: $finalScore",
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                                Text(
+                                  "Party Health:",
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                                partyHealthModifier(context),
+                              ])),
 
                       Padding(padding: EdgeInsets.all(5.0)),
 
                       // image
                       FutureBuilder(
-                          future: _getImage(context, "${game.images[questionNumber]}.png"),
+                          future: _getImage(
+                              context, "${game.images[questionNumber]}.png"),
                           builder: (context, snapshot) {
-                            if(snapshot.connectionState == ConnectionState.done){
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
                               return Container(
                                 width: MediaQuery.of(context).size.width / 1,
                                 height: MediaQuery.of(context).size.width / 1.7,
                                 child: snapshot.data,
                               );
                             }
-                            if(snapshot.connectionState == ConnectionState.waiting) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
                               return Container(
                                   width: MediaQuery.of(context).size.width / 1,
-                                  height: MediaQuery.of(context).size.width / 1.7,
+                                  height:
+                                      MediaQuery.of(context).size.width / 1.7,
                                   child: SizedBox(
                                     height: 10,
                                     width: 10,
                                     child: CircularProgressIndicator(),
-                                  )
-                              );
+                                  ));
                             }
                             return SizedBox(
                               height: 10,
@@ -139,29 +181,33 @@ class Game1State extends State<Game1>{
                       Padding(padding: EdgeInsets.all(5.0)),
 
                       // question
-                      Text(game.questions[questionNumber],
+                      Text(
+                        game.questions[questionNumber],
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15.0,
-                        ),),
+                        ),
+                      ),
 
-                      Padding(padding: EdgeInsets.all(5.0),),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                      ),
 
                       // answers
                       Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-
                             // button 1
                             MaterialButton(
                               minWidth: 250.0,
                               padding: EdgeInsets.all(0),
                               color: Colors.blue,
                               onPressed: () {
-                                if(game.choices[questionNumber][0] == game.correctAnswers[questionNumber]) {
+                                if (game.choices[questionNumber][0] ==
+                                    game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  if(player1 == username) {
+                                  if (player1 == username) {
                                     player1Score++;
                                     updateGamePlayer1();
                                   } else {
@@ -169,11 +215,13 @@ class Game1State extends State<Game1>{
                                     updateGamePlayer2();
                                   }
                                 } else {
+                                  decreasePartyHealth();
                                   debugPrint('oh noes... that is incorrect');
                                 }
                                 updateQuestion();
                               },
-                              child: Text(game.choices[questionNumber][0],
+                              child: Text(
+                                game.choices[questionNumber][0],
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
@@ -186,10 +234,12 @@ class Game1State extends State<Game1>{
                               minWidth: 250.0,
                               color: Colors.blue,
                               onPressed: () {
-                                if(game.choices[questionNumber][1] == game.correctAnswers[questionNumber]) {
+                                if (game.choices[questionNumber][1] ==
+                                    game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
+                                  startTimer();
                                   finalScore++;
-                                  if(player1 == username) {
+                                  if (player1 == username) {
                                     player1Score++;
                                     updateGamePlayer1();
                                   } else {
@@ -197,11 +247,13 @@ class Game1State extends State<Game1>{
                                     updateGamePlayer2();
                                   }
                                 } else {
+                                  decreasePartyHealth();
                                   debugPrint('oh noes... that is incorrect');
                                 }
                                 updateQuestion();
                               },
-                              child: Text(game.choices[questionNumber][1],
+                              child: Text(
+                                game.choices[questionNumber][1],
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
@@ -214,10 +266,11 @@ class Game1State extends State<Game1>{
                               minWidth: 250.0,
                               color: Colors.blue,
                               onPressed: () {
-                                if(game.choices[questionNumber][2] == game.correctAnswers[questionNumber]) {
+                                if (game.choices[questionNumber][2] ==
+                                    game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  if(player1 == username) {
+                                  if (player1 == username) {
                                     player1Score++;
                                     updateGamePlayer1();
                                   } else {
@@ -225,11 +278,13 @@ class Game1State extends State<Game1>{
                                     updateGamePlayer2();
                                   }
                                 } else {
+                                  decreasePartyHealth();
                                   debugPrint('oh noes... that is incorrect');
                                 }
                                 updateQuestion();
                               },
-                              child: Text(game.choices[questionNumber][2],
+                              child: Text(
+                                game.choices[questionNumber][2],
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
@@ -242,10 +297,11 @@ class Game1State extends State<Game1>{
                               minWidth: 250.0,
                               color: Colors.blue,
                               onPressed: () {
-                                if(game.choices[questionNumber][3] == game.correctAnswers[questionNumber]) {
+                                if (game.choices[questionNumber][3] ==
+                                    game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   finalScore++;
-                                  if(player1 == username) {
+                                  if (player1 == username) {
                                     player1Score++;
                                     updateGamePlayer1();
                                   } else {
@@ -253,23 +309,24 @@ class Game1State extends State<Game1>{
                                     updateGamePlayer2();
                                   }
                                 } else {
+                                  decreasePartyHealth();
                                   debugPrint('oh noes... that is incorrect');
                                 }
                                 updateQuestion();
                               },
-                              child: Text(game.choices[questionNumber][3],
+                              child: Text(
+                                game.choices[questionNumber][3],
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
+                          ]),
 
-
-                          ]
+                      Padding(
+                        padding: EdgeInsets.all(5),
                       ),
-
-                      Padding(padding: EdgeInsets.all(5),),
 
                       // reset button
                       Container(
@@ -279,20 +336,23 @@ class Game1State extends State<Game1>{
                             minWidth: 240.0,
                             height: 30.0,
                             onPressed: resetGame,
-                            child: Text("Quit",
+                            child: Text(
+                              "Quit",
                               style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
                               ),
                             ),
-                          )
-                      )
-                    ]
-                )
-            )
-        )
-    );
+                          )),
+                    ]))));
   }
+
+  void decreasePartyHealth() async {
+    await databaseReference.collection("games").doc('testGameSession').update({
+      'partyHealth': FieldValue.increment(-1),
+    });
+  }
+
 // resetting question/answer screen
   void resetGame() {
     setState(() {
@@ -310,23 +370,22 @@ class Game1State extends State<Game1>{
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
     setState(() {
-      if(questionNumber == game.questions.length -1){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => new Summary(score: finalScore)));
+      if (questionNumber == game.questions.length - 1) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => new Summary(score: finalScore)));
       } else {
         questionNumber++;
       }
     });
   }
 
-
   void updateGamePlayer1() async {
-    await databaseReference.collection("games")
-        .doc('testGameSession')
-        .update({
+    await databaseReference.collection("games").doc('testGameSession').update({
       'player1Points': FieldValue.increment(1),
     });
   }
-
 
   void updateGameContent(String questName) async {
     await FirebaseFirestore.instance
@@ -345,63 +404,56 @@ class Game1State extends State<Game1>{
         game.choices3 = documentSnapshot.data()['choices4'];
 
         // put all four choices arrays in one main array
-        game.choices = [game.choices0, game.choices1, game.choices2, game.choices3];
+        game.choices = [
+          game.choices0,
+          game.choices1,
+          game.choices2,
+          game.choices3
+        ];
 
         // define answers
         game.correctAnswers = documentSnapshot.data()['answers'];
         print('answers: ${game.correctAnswers}');
       }
     });
-
   }
 
   void updateGamePlayer2() async {
-    await databaseReference.collection("games")
-        .doc('testGameSession')
-        .update({
+    await databaseReference.collection("games").doc('testGameSession').update({
       'player2Points': FieldValue.increment(1),
     });
   }
-
-
 }
 
-
-class Summary extends StatelessWidget{
+class Summary extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
   final int score;
   Summary({Key key, @required this.score}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return StreamProvider<QuerySnapshot>.value(
         value: game.questionSnapshot,
         child: WillPopScope(
-            onWillPop: ()async => false,
+            onWillPop: () async => false,
             child: Scaffold(
-
                 body: Container(
                     alignment: Alignment.topCenter,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-
-                          Builder(
-                            builder: (context) {
-                              if (!isMultiplayer) {
-                                return singlePlayerPointsStream(context);
-                              } else {
-                                return multiplayerPointsStream(context);
-                              }
+                          Builder(builder: (context) {
+                            if (!isMultiplayer) {
+                              return singlePlayerPointsStream(context);
+                            } else {
+                              return multiplayerPointsStream(context);
                             }
-                          ),
+                          }),
                           Padding(padding: EdgeInsets.all(10.0)),
-
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
-                                if(!isMultiplayer) {
+                                if (!isMultiplayer) {
                                   updateSinglePlayerPoints();
                                   updateSPGuildPoints();
                                 } else {
@@ -419,77 +471,61 @@ class Summary extends StatelessWidget{
                                   style: TextStyle(
                                     fontSize: 18.0,
                                     color: Colors.white,
-                                  ))
-                          )
-
-                        ]
-                    )
-                )
-
-            )
-        ));
+                                  )))
+                        ])))));
   }
 
   // for single player game
   void updateSinglePlayerPoints() async {
-    await databaseReference.collection("users")
-        .doc(uID)
-        .update({
+    await databaseReference.collection("users").doc(uID).update({
       'points': FieldValue.increment(score),
     });
   }
 
   // for multplayer game, add 2 bonus points
   void updateMultiplayerPoints() async {
-    await databaseReference.collection("users")
-        .doc(uID)
-        .update({
-      'points': FieldValue.increment(score+2),
+    await databaseReference.collection("users").doc(uID).update({
+      'points': FieldValue.increment(score + 2),
     });
   }
 
   void updateGame() async {
-    await databaseReference.collection("games")
-        .doc('testGameSession')
-        .update({
+    await databaseReference.collection("games").doc('testGameSession').update({
       'finished': true,
     });
   }
 
   // for single player
   void updateSPGuildPoints() async {
-    await databaseReference.collection("guilds")
-        .doc(guild)
-        .update({
+    await databaseReference.collection("guilds").doc(guild).update({
       'totalPoints': FieldValue.increment(score),
     });
   }
 
   // for multiplayer
   void updateMPGuildPoints() async {
-    await databaseReference.collection("guilds")
-        .doc(guild)
-        .update({
-      'totalPoints': FieldValue.increment(score+2),
+    await databaseReference.collection("guilds").doc(guild).update({
+      'totalPoints': FieldValue.increment(score + 2),
     });
   }
 }
 
-
-
 // live updating of player1 points
 Widget singlePlayerPointsStream(BuildContext context) {
-
   return StreamBuilder(
-      stream:
-      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc('testGameSession')
+          .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Text("Loading");
         }
         var userDocument = snapshot.data;
         return Text(
-          player1 + "'s score: " + userDocument['player1Points'].toString() +
+          player1 +
+              "'s score: " +
+              userDocument['player1Points'].toString() +
               '\n\n',
           style: TextStyle(
               fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
@@ -497,21 +533,45 @@ Widget singlePlayerPointsStream(BuildContext context) {
       });
 }
 
-// live updating of player2 points
-Widget multiplayerPointsStream(BuildContext context) {
-
+Widget partyHealthModifier(BuildContext context) {
+  // String userId = "skdjfkasjdkfja";
   return StreamBuilder(
-      stream:
-      FirebaseFirestore.instance.collection('games').doc('testGameSession').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc('testGameSession')
+          .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Text("Loading");
         }
         var userDocument = snapshot.data;
         return Text(
-          player1 + "'s score: " + userDocument['player1Points'].toString() +
+          userDocument['partyHealth'].toString(),
+          style: TextStyle(fontSize: 25, color: Colors.black),
+        );
+      });
+}
+
+// live updating of player2 points
+Widget multiplayerPointsStream(BuildContext context) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc('testGameSession')
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          player1 +
+              "'s score: " +
+              userDocument['player1Points'].toString() +
               '\n\n' +
-          player2 + "'s score: " + userDocument['player2Points'].toString() +
+              player2 +
+              "'s score: " +
+              userDocument['player2Points'].toString() +
               '\n\n' +
               'Multiplayer Bonus! +2',
           style: TextStyle(
@@ -538,10 +598,7 @@ Future<Widget> _getImage(BuildContext context, String imageName) async {
     );
   });
   return image;
-
 }
-
-
 
 // PLEASE DON'T DELETE THE BELOW COMMENTS YET
 
@@ -586,7 +643,6 @@ Future<Widget> _getImage(BuildContext context, String imageName) async {
 //     );
 //   }
 // }
-
 
 // class InsertQuestData extends StatelessWidget {
 //   final String quest;

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import './screens/homepage/homepage.dart';
 import './screens/guild_view/guild_view.dart';
 import './screens/guild_view/change_guild.dart';
@@ -11,17 +13,14 @@ import './screens/game_session/game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
-import 'package:firebase_core/firebase_core.dart';
 import './screens/login/authenticator.dart';
-// FireBase
-import 'package:firebase_auth/firebase_auth.dart';
+
 // final User _user = checkUserLoggedIn();
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'Code&Sorcery',
     // Start the app with the "/" named route. In this case, the app starts
     // on the FirstScreen widget.
@@ -44,22 +43,3 @@ void main() async {
     },
   ));
 }
-
-
-
-// import 'package:flutter/material.dart';
-// import './screens/login/log_in.dart';
-// void main() => runApp(MyApp());
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Login',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: LoginPage(),
-//     );
-//   }
-// }
-
