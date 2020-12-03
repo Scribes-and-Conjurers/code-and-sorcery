@@ -81,6 +81,7 @@ Future<auth.User> signInWithGoogle() async {
       guild = documentSnapshot.data()['guild'];
       points = documentSnapshot.data()['points'];
       profileImg = documentSnapshot.data()['profileImg'];
+      playerClass = documentSnapshot.data()['playerClass'];
       print(username);
       print(guild);
       print(points);

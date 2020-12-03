@@ -1,15 +1,18 @@
-import 'package:code_and_sorcery/screens/game_session/game_session.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
 import '../login/authenticator.dart';
 
-var gameID = 'testGameSession';
 String player1;
 String player2;
+String player3;
+String player4;
+String player1Class;
+String player2Class;
+String player3Class;
+String player4Class;
 bool isMultiplayer;
 String gameLinkValue = "";
-String playerClass = "Warrior";
 
 class GameLobby extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -48,7 +51,7 @@ class GameLobby extends StatelessWidget {
                   }),
               ElevatedButton(
                 onPressed: () {
-                  gameLinkController.text = randomAlphaNumeric(15);
+                  gameLinkController.text = randomAlpha(6);
                   gameLinkValue = gameLinkController.text;
                   createGame();
                   // Navigate back to the first screen by popping the current route
@@ -63,14 +66,23 @@ class GameLobby extends StatelessWidget {
                   // off the stack.
                   getSetPlayers();
                   checkIfSoloGame();
-                  if (playerClass == "Warrior") {
+                  if (player1Class == "Warrior") {
+                    updateGameHealth();
+                  }
+                  if (player2Class == "Warrior") {
+                    updateGameHealth();
+                  }
+                  if (player3Class == "Warrior") {
+                    updateGameHealth();
+                  }
+                  if (player4Class == "Warrior") {
                     updateGameHealth();
                   }
                   Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
               ),
-              buildUser(context),
+              // buildUser(context),
             ],
           ),
         ),
@@ -80,7 +92,7 @@ class GameLobby extends StatelessWidget {
 }
 
 void updateGameHealth() async {
-  await databaseReference.collection("games").doc('testGameSession').update({
+  await databaseReference.collection("games").doc(gameLinkValue).update({
     'partyHealth': FieldValue.increment(1),
   });
 }
@@ -108,17 +120,27 @@ void createGame() async {
 void getSetPlayers() async {
   await databaseReference
       .collection('games')
-      .doc(gameID)
+      .doc(gameLinkValue)
       .get()
       .then((DocumentSnapshot documentSnapshot) {
     if (documentSnapshot.exists) {
       print('Document data: ${documentSnapshot.data()}');
       player1 = documentSnapshot.data()['player1'];
       player2 = documentSnapshot.data()['player2'];
+      player3 = documentSnapshot.data()['player3'];
+      player4 = documentSnapshot.data()['player4'];
+      player1Class = documentSnapshot.data()['player1Class'];
+      player2Class = documentSnapshot.data()['player2Class'];
+      player3Class = documentSnapshot.data()['player3Class'];
+      player4Class = documentSnapshot.data()['player4Class'];
       print(player1);
       print(player2);
-      // guild = documentSnapshot.data()['guild'];
-      // points = documentSnapshot.data()['points'];
+      print(player3);
+      print(player4);
+      print(player1Class);
+      print(player2Class);
+      print(player3Class);
+      print(player4Class);
     }
   });
 }
@@ -131,22 +153,27 @@ void checkIfSoloGame() {
   }
 }
 
-Widget buildUser(BuildContext context) {
-  // String userId = "skdjfkasjdkfja";
-  return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('games')
-          .doc(gameID)
-          .snapshots(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return Text("Loading");
-        }
-        var userDocument = snapshot.data;
-        return Text(
-          userDocument['player1'] + '\n\n' + userDocument["player2"],
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-        );
-      });
-}
+// Widget buildUser(BuildContext context) {
+//   // String userId = "skdjfkasjdkfja";
+//   return StreamBuilder(
+//       stream: FirebaseFirestore.instance
+//           .collection('games')
+//           .doc(gameLinkValue)
+//           .snapshots(),
+//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+//         if (!snapshot.hasData) {
+//           return Text("Loading");
+//         }
+//         var userDocument = snapshot.data;
+//         return Text(
+//           userDocument["player1"] +
+//               '\n\n' +
+//               userDocument["player2"] +
+//               '\n\n' +
+//               userDocument["player3"] +
+//               '\n\n' +
+//               userDocument["player4"],
+//           style: TextStyle(
+//               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+//         );
+//       });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../login/authenticator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../game_lobby/game_lobby.dart';
 
 class JoinGame extends StatefulWidget {
   JoinGame({this.title, this.someText});
@@ -72,4 +73,27 @@ class JoinGameState extends State<JoinGame> {
       'player2': username,
     });
   }
+
+  void setPlayer3() async {
+    await databaseReference.collection("games").doc(gameLink).update({
+      'player3': username,
+    });
+  }
+
+  void setPlayer4() async {
+    await databaseReference.collection("games").doc(gameLink).update({
+      'player4': username,
+    });
+  }
+
+//   await databaseReference.runTransaction((transaction)async{
+//    DocumentReference gameRef = _firestore.collection('games')
+//                                          .document(gameLinkValue);
+//    DocumentSnapshot snapshot = await transaction.get(gameRef);
+//    int likesCount = snapshot.data['likes'];
+//    await transaction.update(gameRef,{
+//      'likes' : likesCount + 1
+//    });
+// });
+
 }
