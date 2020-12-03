@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'authenticator.dart';
-import 'package:code_and_sorcery/screens/login/firestore_service.dart';
 import 'account_setup.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
-final FirestoreService _firestoreService = FirestoreService();
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,6 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   User user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
+              SizedBox(height: 10),
               Text(
                 '<🧙‍♀️🧙‍♂️>',
                 style: TextStyle(
@@ -72,16 +72,18 @@ class _LoginPageState extends State<LoginPage> {
 
   void click() {
     signInWithGoogle().then((user) => {
-      // getUser(uID),
-      this.user = user,
-      if (username != '') {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Homepage()))
-      } else {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AccountSetup()))
-      }
-    });
+          this.user = user,
+          if (username != '')
+            {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Homepage()))
+            }
+          else
+            {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AccountSetup()))
+            }
+        });
   }
 }
 
