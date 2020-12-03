@@ -528,7 +528,7 @@ Widget singlePlayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -551,7 +551,7 @@ Widget partyHealthModifier(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -570,7 +570,7 @@ Widget multiplayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {

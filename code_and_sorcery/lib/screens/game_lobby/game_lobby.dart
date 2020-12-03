@@ -153,27 +153,28 @@ void checkIfSoloGame() {
   }
 }
 
-// Widget buildUser(BuildContext context) {
-//   // String userId = "skdjfkasjdkfja";
-//   return StreamBuilder(
-//       stream: FirebaseFirestore.instance
-//           .collection('games')
-//           .doc(gameLinkValue)
-//           .snapshots(),
-//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (!snapshot.hasData) {
-//           return Text("Loading");
-//         }
-//         var userDocument = snapshot.data;
-//         return Text(
-//           userDocument["player1"] +
-//               '\n\n' +
-//               userDocument["player2"] +
-//               '\n\n' +
-//               userDocument["player3"] +
-//               '\n\n' +
-//               userDocument["player4"],
-//           style: TextStyle(
-//               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-//         );
-//       });
+Widget buildUser(BuildContext context) {
+  // String userId = "skdjfkasjdkfja";
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameLinkValue)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          userDocument["player1"] +
+              '\n\n' +
+              userDocument["player2"] +
+              '\n\n' +
+              userDocument["player3"] +
+              '\n\n' +
+              userDocument["player4"],
+          style: TextStyle(
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        );
+      });
+}
