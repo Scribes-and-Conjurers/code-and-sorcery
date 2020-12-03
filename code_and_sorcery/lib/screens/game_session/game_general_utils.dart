@@ -10,7 +10,7 @@ import 'assembling_codebits.dart';
 import '../game_lobby/game_lobby.dart';
 import './game_image_utils.dart';
 import './game_summary.dart';
-import './quest_short.dart';
+import './long_game_session.dart';
 import './game_session.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
