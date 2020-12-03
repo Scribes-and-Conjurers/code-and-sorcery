@@ -237,7 +237,7 @@ class Game1State extends State<Game1> {
                                 if (game.choices[questionNumber][1] ==
                                     game.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
-                                  startTimer();
+                                  // startTimer();
                                   finalScore++;
                                   if (player1 == username) {
                                     player1Score++;
