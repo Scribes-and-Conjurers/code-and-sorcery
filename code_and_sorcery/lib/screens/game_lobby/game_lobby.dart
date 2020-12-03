@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
 import '../login/authenticator.dart';
+import '../../global_variables/global_variables.dart';
 
 String player1;
 String player2;

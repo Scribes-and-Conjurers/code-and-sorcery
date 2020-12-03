@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../login/authenticator.dart';
+import '../../global_variables/global_variables.dart';
 import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
 import './question_list.dart';

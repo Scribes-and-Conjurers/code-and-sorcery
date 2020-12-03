@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../login/authenticator.dart';
-import 'guild_view.dart';
+import '../../global_variables/global_variables.dart';
 
 class UserRankings extends StatelessWidget {
   @override
@@ -37,9 +36,8 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
-  username = record.username;
   return Padding(
-    key: ValueKey(record.username),
+    key: ValueKey(record.usernameRanked),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
@@ -47,7 +45,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: ListTile(
-        title: Text(record.username),
+        title: Text(record.usernameRanked),
         trailing: Text(record.points.toString()),
       ),
     ),
@@ -55,19 +53,19 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 }
 
 class Record {
-  final String username;
+  final String usernameRanked;
   final int points;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['username'] != null),
         assert(map['points'] != null),
-        username = map['username'],
+        usernameRanked = map['username'],
         points = map['points'];
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$username:$points>";
+  String toString() => "Record<$usernameRanked:$points>";
 }

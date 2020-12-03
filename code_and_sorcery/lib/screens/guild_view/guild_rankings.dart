@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../login/authenticator.dart';
+import '../../global_variables/global_variables.dart';
 import 'guild_view.dart';
 
 class GuildRankings extends StatelessWidget {

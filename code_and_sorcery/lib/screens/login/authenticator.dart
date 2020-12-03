@@ -3,21 +3,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/model/user.dart';
 import 'package:code_and_sorcery/screens/login/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import '../../global_variables/global_variables.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final FirestoreService _firestoreService = FirestoreService();
 final databaseReference = FirebaseFirestore.instance;
-
-// for our logged in user
-String uID;
-String username;
-String email;
-String guild;
-String playerClass;
-String profileImg;
-int points;
 
 // define a user to become logged in user, then post in firestore
 dbUser _loggedInUser;
