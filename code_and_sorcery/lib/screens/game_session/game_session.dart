@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
+import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
 import './question_list.dart';
 import '../game_lobby/game_lobby.dart';
@@ -348,7 +349,7 @@ class Game1State extends State<Game1> {
   }
 
   void decreasePartyHealth() async {
-    await databaseReference.collection("games").doc('testGameSession').update({
+    await databaseReference.collection("games").doc(gameLinkValue).update({
       'partyHealth': FieldValue.increment(-1),
     });
   }
@@ -378,12 +379,6 @@ class Game1State extends State<Game1> {
       } else {
         questionNumber++;
       }
-    });
-  }
-
-  void updateGamePlayer1() async {
-    await databaseReference.collection("games").doc('testGameSession').update({
-      'player1Points': FieldValue.increment(1),
     });
   }
 
@@ -418,9 +413,27 @@ class Game1State extends State<Game1> {
     });
   }
 
+  void updateGamePlayer1() async {
+    await databaseReference.collection("games").doc(gameLinkValue).update({
+      'player1Points': FieldValue.increment(1),
+    });
+  }
+
   void updateGamePlayer2() async {
-    await databaseReference.collection("games").doc('testGameSession').update({
+    await databaseReference.collection("games").doc(gameLinkValue).update({
       'player2Points': FieldValue.increment(1),
+    });
+  }
+
+  void updateGamePlayer3() async {
+    await databaseReference.collection("games").doc(gameLinkValue).update({
+      'player3Points': FieldValue.increment(1),
+    });
+  }
+
+  void updateGamePlayer4() async {
+    await databaseReference.collection("games").doc(gameLinkValue).update({
+      'player4Points': FieldValue.increment(1),
     });
   }
 }
@@ -515,7 +528,7 @@ Widget singlePlayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -538,7 +551,7 @@ Widget partyHealthModifier(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -557,7 +570,7 @@ Widget multiplayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc('testGameSession')
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
