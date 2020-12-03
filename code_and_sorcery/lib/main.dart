@@ -10,6 +10,7 @@ import './screens/user_profile/user_profile.dart';
 import './screens/game_end/game_end.dart';
 import './screens/game_lobby/game_lobby.dart';
 import './screens/game_session/game_session.dart';
+import './screens/game_session/long_game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
@@ -36,6 +37,7 @@ void main() async {
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
       '/ingame': (context) => Game1(),
+      '/ingameLong': (context) => QuestLong(),
       '/guild': (context) => Guild(),
       '/change': (context) => ChangeGuild(),
       '/guildrankings': (context) => GuildRankings(),
