@@ -6,11 +6,6 @@ import '../login/authenticator.dart';
 import '../login/login.dart';
 import '../game_session/game_session.dart';
 
-var profileImg =
-    'https://i.pinimg.com/originals/f3/be/e8/f3bee827c8aee1048d84bbb02af2e6b6.jpg';
-// var userName = 'Clay';
-var gameID;
-
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
   dbUser user;
@@ -38,7 +33,7 @@ class Homepage extends StatelessWidget {
                   profileImg,
                 ),
                 radius: 60,
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white,
               ),
               SizedBox(height: 40),
               Text(
@@ -109,20 +104,6 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
-
-  // void createGame() async {
-  //   await databaseReference.collection("games").doc('testGameSession').set({
-  //     'created': FieldValue.serverTimestamp(),
-  //     'finished': false,
-  //     'partyHealth': 3,
-  //     'player1': username,
-  //     'player1Points': 0,
-  //     'player1Class': '',
-  //     'player2': '',
-  //     'player2Class': '',
-  //     'player2Points': 0,
-  //   });
-  // }
 
   void updateUserProfile() async {
     await FirebaseFirestore.instance
