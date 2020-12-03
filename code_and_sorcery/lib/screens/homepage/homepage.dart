@@ -69,7 +69,7 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
-                  createGame();
+                  // createGame();
                   Navigator.pushNamed(context, '/lobby');
                   // createRecord();
                 },
@@ -110,19 +110,19 @@ class Homepage extends StatelessWidget {
     );
   }
 
-  void createGame() async {
-    await databaseReference.collection("games").doc('testGameSession').set({
-      'created': FieldValue.serverTimestamp(),
-      'finished': false,
-      'partyHealth': 3,
-      'player1': username,
-      'player1Points': 0,
-      'player1Class': '',
-      'player2': '',
-      'player2Class': '',
-      'player2Points': 0,
-    });
-  }
+  // void createGame() async {
+  //   await databaseReference.collection("games").doc('testGameSession').set({
+  //     'created': FieldValue.serverTimestamp(),
+  //     'finished': false,
+  //     'partyHealth': 3,
+  //     'player1': username,
+  //     'player1Points': 0,
+  //     'player1Class': '',
+  //     'player2': '',
+  //     'player2Class': '',
+  //     'player2Points': 0,
+  //   });
+  // }
 
   void updateUserProfile() async {
     await FirebaseFirestore.instance

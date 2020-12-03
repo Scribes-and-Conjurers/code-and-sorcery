@@ -84,16 +84,19 @@ void updateGameHealth() async {
   });
 }
 
-// void createGame() async {
-//   await databaseReference.collection("games").doc('testGameSession').set({
-//     'created': FieldValue.serverTimestamp(),
-//     'finished': false,
-//     'player1': username,
-//     'player1Points': 0,
-//     'player2': '',
-//     'player2Points': 0,
-//   });
-// }
+void createGame() async {
+  await databaseReference.collection("games").doc('testGameSession').set({
+    'created': FieldValue.serverTimestamp(),
+    'finished': false,
+    'partyHealth': 3,
+    'player1': username,
+    'player1Points': 0,
+    'player1Class': playerClass,
+    'player2': '',
+    'player2Class': '',
+    'player2Points': 0,
+  });
+}
 
 void getSetPlayers() async {
   await databaseReference
