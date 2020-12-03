@@ -49,7 +49,8 @@ class GameLobby extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   gameLinkController.text = randomAlphaNumeric(15);
-
+                  gameLinkValue = gameLinkController.text;
+                  createGame();
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                 },
@@ -85,7 +86,7 @@ void updateGameHealth() async {
 }
 
 void createGame() async {
-  await databaseReference.collection("games").doc('testGameSession').set({
+  await databaseReference.collection("games").doc(gameLinkValue).set({
     'created': FieldValue.serverTimestamp(),
     'finished': false,
     'partyHealth': 3,
