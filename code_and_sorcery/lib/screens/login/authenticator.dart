@@ -16,6 +16,7 @@ String username;
 String email;
 String guild;
 String playerClass;
+String profileImg;
 int points;
 
 // define a user to become logged in user, then post in firestore
@@ -79,6 +80,8 @@ Future<auth.User> signInWithGoogle() async {
       username = documentSnapshot.data()['username'];
       guild = documentSnapshot.data()['guild'];
       points = documentSnapshot.data()['points'];
+      profileImg = documentSnapshot.data()['profileImg'];
+      playerClass = documentSnapshot.data()['playerClass'];
       print(username);
       print(guild);
       print(points);
