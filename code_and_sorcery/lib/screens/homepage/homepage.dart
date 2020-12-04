@@ -5,7 +5,38 @@ import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 
+String player2db;
+String player3db;
+String player4db;
+String gameJoinLink = "";
+
 class Homepage extends StatelessWidget {
+  Future<String> createJoinGamePopUp(BuildContext context) {
+    TextEditingController gameLinkController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Enter the game link"),
+            content: TextField(controller: gameLinkController),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('Submit'),
+                onPressed: () {
+                  gameJoinLink = gameLinkController.text.toString();
+                  setPlayer();
+                  // if (gameID == gameLinkController.text.toString()) {
+                  //   Navigator.pushNamed(context, '/lobby');
+                  // }
+                  Navigator.of(context).pop(gameLinkController.text.toString());
+                },
+              )
+            ],
+          );
+        });
+  }
+
   final databaseReference = FirebaseFirestore.instance;
   dbUser user;
   @override
@@ -72,9 +103,9 @@ class Homepage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  Navigator.pushNamed(context, '/join');
+                  createJoinGamePopUp(context).then(
+                      (onValue) => Navigator.pushNamed(context, '/lobby'));
+                  // Navigator.pushNamed(context, '/join');
                 },
                 child: Text('Join a game'),
               ),
@@ -138,6 +169,35 @@ class Homepage extends StatelessWidget {
       'player4': '',
       'player4Class': '',
       'player4Points': 0,
+    });
+  }
+
+  void setPlayer() async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+        if (playerClass == "Warrior") {
+          await transaction
+              .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
+        }
+      if (player2db == "") {
+        await transaction.update(
+            playerCheck, {'player2': username, 'player2Class': playerClass});
+      } else if (player2db != "") {
+        if (player3db == "") {
+          await transaction.update(
+              playerCheck, {'player3': username, 'player3Class': playerClass});
+        } else if (player3db != "") {
+          if (player4db == "") {
+            await transaction.update(playerCheck,
+                {'player4': username, 'player4Class': playerClass});
+          }
+        }
+      }
     });
   }
 }

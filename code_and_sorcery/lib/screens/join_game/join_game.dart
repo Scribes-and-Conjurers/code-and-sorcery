@@ -52,7 +52,7 @@ class JoinGameState extends State<JoinGame> {
                 Text("\n\n"),
                 ElevatedButton(
                   onPressed: () {
-                    setPlayer();
+                    // setPlayer();
                     Navigator.pushNamed(context, '/lobby');
                   },
                   child: Text('Submit'),
@@ -71,28 +71,28 @@ class JoinGameState extends State<JoinGame> {
     );
   }
 
-  void setPlayer() async {
-    await _firestore.runTransaction((transaction) async {
-      DocumentReference playerCheck =
-          _firestore.collection('games').doc(gameID);
-      DocumentSnapshot snapshot = await transaction.get(playerCheck);
-      player2db = snapshot.data()['player2'];
-      player3db = snapshot.data()['player3'];
-      player4db = snapshot.data()['player4'];
-      if (player2db == "") {
-        await transaction.update(
-            playerCheck, {'player2': username, 'player2Class': playerClass});
-      } else if (player2db != "") {
-        if (player3db == "") {
-          await transaction.update(
-              playerCheck, {'player3': username, 'player3Class': playerClass});
-        } else if (player3db != "") {
-          if (player4db == "") {
-            await transaction.update(playerCheck,
-                {'player4': username, 'player4Class': playerClass});
-          }
-        }
-      }
-    });
-  }
+  // void setPlayer() async {
+  //   await _firestore.runTransaction((transaction) async {
+  //     DocumentReference playerCheck =
+  //         _firestore.collection('games').doc(gameID);
+  //     DocumentSnapshot snapshot = await transaction.get(playerCheck);
+  //     player2db = snapshot.data()['player2'];
+  //     player3db = snapshot.data()['player3'];
+  //     player4db = snapshot.data()['player4'];
+  //     if (player2db == "") {
+  //       await transaction.update(
+  //           playerCheck, {'player2': username, 'player2Class': playerClass});
+  //     } else if (player2db != "") {
+  //       if (player3db == "") {
+  //         await transaction.update(
+  //             playerCheck, {'player3': username, 'player3Class': playerClass});
+  //       } else if (player3db != "") {
+  //         if (player4db == "") {
+  //           await transaction.update(playerCheck,
+  //               {'player4': username, 'player4Class': playerClass});
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 }
