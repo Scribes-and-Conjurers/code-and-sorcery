@@ -52,7 +52,7 @@ class GameLobby extends StatelessWidget {
 
   // This creates a single player game in the collection games_sp
   void createGame() async {
-    await databaseReference.collection("games_sp").doc(gameLinkValue).set({
+    await databaseReference.collection("games").doc(gameLinkValue).set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
       'partyHealth': 3,
@@ -65,7 +65,7 @@ class GameLobby extends StatelessWidget {
   // This gets and sets the player in the game object
   void getSetPlayers() async {
     await databaseReference
-        .collection('games_sp')
+        .collection('games')
         .doc(gameLinkValue)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
@@ -81,7 +81,7 @@ class GameLobby extends StatelessWidget {
 
   // Update health if player is warrior
   void updateGameHealth() async {
-    await databaseReference.collection("games_sp").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameLinkValue).update({
       'partyHealth': FieldValue.increment(1),
     });
   }
