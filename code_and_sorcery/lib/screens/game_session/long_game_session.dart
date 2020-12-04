@@ -24,7 +24,7 @@ var questionNumber = 0;
 var buttonNumber = 0;
 
 // variable that holds game object:
-var game = new GameContent();
+var game = new GameContentLong();
 
 class QuestLong extends StatefulWidget {
   @override
@@ -541,17 +541,29 @@ class _QuestLongState extends State<QuestLong> {
         game.questions = documentSnapshot.data()['questions'];
 
         // define choices for each question
-        game.choices0 = documentSnapshot.data()['choices1'];
-        game.choices1 = documentSnapshot.data()['choices2'];
-        game.choices2 = documentSnapshot.data()['choices3'];
-        game.choices3 = documentSnapshot.data()['choices4'];
+        game.choices0 = documentSnapshot.data()['choices0'];
+        game.choices1 = documentSnapshot.data()['choices1'];
+        game.choices2 = documentSnapshot.data()['choices2'];
+        game.choices3 = documentSnapshot.data()['choices3'];
+        game.choices4 = documentSnapshot.data()['choices4'];
+        game.choices5 = documentSnapshot.data()['choices5'];
+        game.choices6 = documentSnapshot.data()['choices6'];
+        game.choices7 = documentSnapshot.data()['choices7'];
+        game.choices8 = documentSnapshot.data()['choices8'];
+        game.choices9 = documentSnapshot.data()['choices9'];
 
         // put all four choices arrays in one main array
         game.choices = [
           game.choices0,
           game.choices1,
           game.choices2,
-          game.choices3
+          game.choices3,
+          game.choices4,
+          game.choices5,
+          game.choices6,
+          game.choices7,
+          game.choices8,
+          game.choices9
         ];
 
         // define answers

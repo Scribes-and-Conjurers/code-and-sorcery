@@ -13,7 +13,7 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
-bool isMultiplayer;
+bool isMultiplayer = false;
 String gameLinkValue = "";
 
 class GameLobby extends StatelessWidget {
@@ -80,7 +80,7 @@ class GameLobby extends StatelessWidget {
                   if (player4Class == "Warrior") {
                     updateGameHealth();
                   }
-                  Navigator.pushNamed(context, '/ingame');
+                  Navigator.pushNamed(context, '/ingameLong');
                 },
                 child: Text('Go to game'),
               ),
