@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
 // import '../login/authenticator.dart';
-import '../../states/user_state.dart';
 import '../../global_variables/global_variables.dart';
 
 String player1;
@@ -14,6 +13,7 @@ String player2Class;
 String player3Class;
 String player4Class;
 bool isMultiplayer;
+bool gameOn = false;
 String gameLinkValue = "";
 
 class GameLobby extends StatelessWidget {
@@ -55,12 +55,16 @@ class GameLobby extends StatelessWidget {
                 onPressed: () {
                   gameLinkController.text = randomAlpha(2);
                   gameLinkValue = gameLinkController.text;
+                  gameOn = true;
                   createGame();
+
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                 },
                 child: Text('GENERATE LINK'),
               ),
+              SizedBox(height: 40),
+              // buildUser(context),
               SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
@@ -84,7 +88,6 @@ class GameLobby extends StatelessWidget {
                 },
                 child: Text('Go to game'),
               ),
-              // buildUser(context),
             ],
           ),
         ),
@@ -138,11 +141,9 @@ void getSetPlayers() async {
       player2Class = documentSnapshot.data()['player2Class'];
       player3Class = documentSnapshot.data()['player3Class'];
       player4Class = documentSnapshot.data()['player4Class'];
-      print(player1);
       print(player2);
       print(player3);
       print(player4);
-      print(player1Class);
       print(player2Class);
       print(player3Class);
       print(player4Class);
@@ -158,26 +159,27 @@ void getSetPlayers() async {
 //   }
 // }
 
-// Widget buildUser(BuildContext context) {
-//   return StreamBuilder(
-//       stream: FirebaseFirestore.instance
-//           .collection('games')
-//           .doc(gameLinkValue)
-//           .snapshots(),
-//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (!snapshot.hasData) {
-//           return Text("Loading");
-//         }
-//         var userDocument = snapshot.data;
-//         return Text(
-//           userDocument["player1"] +
-//               '\n\n' +
-//               userDocument["player2"] +
-//               '\n\n' +
-//               userDocument["player3"] +
-//               '\n\n' +
-//               userDocument["player4"],
-//           style: TextStyle(
-//               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-//         );
-//       });
+Widget buildUser(BuildContext context) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameLinkValue)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          userDocument["player1"] +
+              '\n\n' +
+              userDocument["player2"] +
+              '\n\n' +
+              userDocument["player3"] +
+              '\n\n' +
+              userDocument["player4"],
+          style: TextStyle(
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        );
+      });
+}
