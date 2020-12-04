@@ -9,18 +9,15 @@ import 'package:provider/provider.dart';
 import 'assembling_codebits.dart';
 import '../game_lobby/game_lobby.dart';
 import './game_image_utils.dart';
+import './game_content_long.dart';
 import './game_summary.dart';
-import 'long_game_session.dart';
 import './game_general_utils.dart';
-import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-// SHORT ADVENTURE !!!!
+// LONG ADVENTURE !!!
 
 var player1Score = 0;
 var player2Score = 0;
-// int counter = 10;
-// Timer questionTimer;
 
 // game variables
 var finalScore = 0;
@@ -30,16 +27,12 @@ var buttonNumber = 0;
 // variable that holds game object:
 var game = new GameContent();
 
-// Game widget class
-class Game1 extends StatefulWidget {
+class QuestLong extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new Game1State();
-  }
+  _QuestLongState createState() => _QuestLongState();
 }
 
-// Game widget state
-class Game1State extends State<Game1> {
+class _QuestLongState extends State<QuestLong> {
   final databaseReference = FirebaseFirestore.instance;
   // void startTimer() {
   //   counter = 10;
