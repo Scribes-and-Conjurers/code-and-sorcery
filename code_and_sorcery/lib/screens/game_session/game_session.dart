@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
+import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
 import '../game_lobby/game_lobby.dart';
 import './game_image_utils.dart';

@@ -52,7 +52,7 @@ class _QuestLongState extends State<QuestLong> {
   @override
   void initState() {
     // update game content when Game is initiated!!
-    updateGameContent('JIfrv2SOOdlxkv5RJP3i');
+    updateGameContent('long-adv0');
   }
 
   Widget build(BuildContext context) {
