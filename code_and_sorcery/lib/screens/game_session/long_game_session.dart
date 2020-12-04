@@ -151,7 +151,7 @@ class _QuestLongState extends State<QuestLong> {
                           padding: EdgeInsets.all(5.0),
                         ),
 
-                        // answers
+                        // answers: conditional depending on question
                         Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
