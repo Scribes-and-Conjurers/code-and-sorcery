@@ -22,6 +22,7 @@ var player2Score = 0;
 var finalScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
+var longQuestion = true;
 
 // variable that holds game object:
 var game = new GameContentLong();
@@ -56,7 +57,7 @@ class _QuestLongState extends State<QuestLong> {
   }
 
   Widget build(BuildContext context) {
-    if (true) {
+    if (longQuestion) {
       // return long version (4 buttons)
       return WillPopScope(
           onWillPop: () async => false,
@@ -519,6 +520,14 @@ class _QuestLongState extends State<QuestLong> {
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
     setState(() {
+      if ((questionNumber) == 3
+          // (questionNumber + 1) == 5 ||
+          // (questionNumber + 1) == 9
+          ) {
+        longQuestion = false;
+      } else {
+        longQuestion = true;
+      }
       if (questionNumber == game.questions.length - 1) {
         Navigator.push(
             context,
