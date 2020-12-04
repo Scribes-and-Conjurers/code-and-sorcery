@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:code_and_sorcery/model/user.dart';
-import 'package:flutter/services.dart';
 
 class FirestoreService {
   final CollectionReference _usersCollectionReference =
-  FirebaseFirestore.instance.collection("users");
+      FirebaseFirestore.instance.collection("users");
 
   Future createUser(dbUser user) async {
     try {
@@ -13,8 +12,6 @@ class FirestoreService {
       return e.message;
     }
   }
-
-
 
   Future getUser(String uid) async {
     try {
@@ -25,5 +22,4 @@ class FirestoreService {
       return e.toString();
     }
   }
-
 }

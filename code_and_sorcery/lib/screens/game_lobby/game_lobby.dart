@@ -16,9 +16,7 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
-bool isMultiplayer;
-bool gameOn = false;
-String gameLinkValue = "";
+// bool gameOn = false;
 
 class GameLobby extends StatelessWidget {
   // final databaseReference = FirebaseFirestore.instance;
@@ -44,6 +42,9 @@ class GameLobby extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              SizedBox(height: 40),
+              buildUser(context),
+              SizedBox(height: 40),
               TextField(
                   controller: gameLinkController,
                   decoration: new InputDecoration(
@@ -53,23 +54,8 @@ class GameLobby extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                   onChanged: (String text) {
-                    gameLinkValue = gameLinkController.text;
+                    gameID = gameLinkController.text;
                   }),
-              ElevatedButton(
-                onPressed: () {
-                  gameLinkController.text = randomAlpha(2);
-                  gameLinkValue = gameLinkController.text;
-                  gameOn = true;
-                  createGame();
-
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                },
-                child: Text('GENERATE LINK'),
-              ),
-              SizedBox(height: 40),
-              // buildUser(context),
-              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
@@ -108,38 +94,15 @@ class GameLobby extends StatelessWidget {
 }
 
 void updateGameHealth() async {
-  await FirebaseFirestore.instance
-      .collection("games")
-      .doc(gameLinkValue)
-      .update({
+  await FirebaseFirestore.instance.collection("games").doc(gameID).update({
     'partyHealth': FieldValue.increment(1),
-  });
-}
-
-void createGame() async {
-  await FirebaseFirestore.instance.collection("games").doc(gameLinkValue).set({
-    'created': FieldValue.serverTimestamp(),
-    'finished': false,
-    'partyHealth': 3,
-    'player1': username,
-    'player1Points': 0,
-    'player1Class': playerClass,
-    'player2': '',
-    'player2Class': '',
-    'player2Points': 0,
-    'player3': '',
-    'player3Class': '',
-    'player3Points': 0,
-    'player4': '',
-    'player4Class': '',
-    'player4Points': 0,
   });
 }
 
 void removePlayer() async {
   await FirebaseFirestore.instance.runTransaction((transaction) async {
     DocumentReference playerCheck =
-        FirebaseFirestore.instance.collection('games').doc(gameLinkValue);
+        FirebaseFirestore.instance.collection('games').doc(gameID);
     DocumentSnapshot snapshot = await transaction.get(playerCheck);
     player1db = snapshot.data()['player1'];
     player2db = snapshot.data()['player2'];
@@ -163,7 +126,7 @@ void removePlayer() async {
 void getSetPlayers() async {
   await FirebaseFirestore.instance
       .collection('games')
-      .doc(gameLinkValue)
+      .doc(gameID)
       .get()
       .then((DocumentSnapshot documentSnapshot) {
     if (documentSnapshot.exists) {
@@ -186,19 +149,11 @@ void getSetPlayers() async {
   });
 }
 
-// void checkIfSoloGame() {
-//   if (player2 == '') {
-//     isMultiplayer = false;
-//   } else {
-//     isMultiplayer = true;
-//   }
-// }
-
 Widget buildUser(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc(gameLinkValue)
+          .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
