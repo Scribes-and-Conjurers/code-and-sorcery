@@ -8,6 +8,10 @@ String player1;
 String player2;
 String player3;
 String player4;
+String player1db;
+String player2db;
+String player3db;
+String player4db;
 String player1Class;
 String player2Class;
 String player3Class;
@@ -17,7 +21,7 @@ bool gameOn = false;
 String gameLinkValue = "";
 
 class GameLobby extends StatelessWidget {
-  final databaseReference = FirebaseFirestore.instance;
+  // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
 
   @override
@@ -88,6 +92,13 @@ class GameLobby extends StatelessWidget {
                 },
                 child: Text('Go to game'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  removePlayer();
+                  Navigator.pop(context);
+                },
+                child: Text('Go back to homepage'),
+              ),
             ],
           ),
         ),
@@ -122,6 +133,30 @@ void createGame() async {
     'player4': '',
     'player4Class': '',
     'player4Points': 0,
+  });
+}
+
+void removePlayer() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameLinkValue);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    player1db = snapshot.data()['player1'];
+    player2db = snapshot.data()['player2'];
+    player3db = snapshot.data()['player3'];
+    player4db = snapshot.data()['player4'];
+    if (player1db == username) {
+      await transaction.delete(playerCheck);
+    } else if (player2db == username) {
+      await transaction
+          .update(playerCheck, {'player2': "", 'player2Class': ""});
+    } else if (player3db == username) {
+      await transaction
+          .update(playerCheck, {'player2': "", 'player2Class': ""});
+    } else if (player4db == username) {
+      await transaction
+          .update(playerCheck, {'player2': "", 'player2Class': ""});
+    }
   });
 }
 

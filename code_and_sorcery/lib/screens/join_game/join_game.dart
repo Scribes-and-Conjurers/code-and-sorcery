@@ -15,7 +15,6 @@ class JoinGame extends StatefulWidget {
 }
 
 class JoinGameState extends State<JoinGame> {
-  final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 

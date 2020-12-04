@@ -5,6 +5,7 @@ import '../../model/user.dart';
 import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import '../game_session/game_session.dart';
+import 'package:random_string/random_string.dart';
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -64,7 +65,8 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
-                  // createGame();
+                  gameID = randomAlpha(2);
+                  createGame();
                   Navigator.pushNamed(context, '/lobby');
                   // createRecord();
                 },
@@ -117,6 +119,27 @@ class Homepage extends StatelessWidget {
         guild = documentSnapshot.data()['guild'];
         points = documentSnapshot.data()['points'];
       }
+    });
+  }
+
+  // Create a multiplayer game
+  void createMPGame() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'partyHealth': 3,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+      'player2': '',
+      'player2Class': '',
+      'player2Points': 0,
+      'player3': '',
+      'player3Class': '',
+      'player3Points': 0,
+      'player4': '',
+      'player4Class': '',
+      'player4Points': 0,
     });
   }
 }
