@@ -1,3 +1,4 @@
+import 'package:code_and_sorcery/screens/game_lobby/game_lobby.dart';
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -81,13 +82,16 @@ class JoinGameState extends State<JoinGame> {
       player3db = snapshot.data()['player3'];
       player4db = snapshot.data()['player4'];
       if (player2db == "") {
-        await transaction.update(playerCheck, {'player2': username});
+        await transaction.update(
+            playerCheck, {'player2': username, 'player2Class': playerClass});
       } else if (player2db != "") {
         if (player3db == "") {
-          await transaction.update(playerCheck, {'player3': username});
+          await transaction.update(
+              playerCheck, {'player3': username, 'player3Class': playerClass});
         } else if (player3db != "") {
           if (player4db == "") {
-            await transaction.update(playerCheck, {'player4': username});
+            await transaction.update(playerCheck,
+                {'player4': username, 'player4Class': playerClass});
           }
         }
       }
