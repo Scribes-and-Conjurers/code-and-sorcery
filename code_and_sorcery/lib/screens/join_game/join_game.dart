@@ -1,4 +1,3 @@
-import 'package:code_and_sorcery/screens/game_lobby/game_lobby.dart';
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,11 +14,10 @@ class JoinGame extends StatefulWidget {
 }
 
 class JoinGameState extends State<JoinGame> {
-  final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  String gameLink = "";
+  // String gameLink = "";
 
   @override
   Widget build(BuildContext ctxt) {
@@ -47,7 +45,7 @@ class JoinGameState extends State<JoinGame> {
                       border: OutlineInputBorder(), hintText: "ADD LINK"),
                   onChanged: (String text) {
                     setState(() {
-                      gameLink = gameLinkController.text;
+                      gameID = gameLinkController.text;
                     });
                   },
                 ),
@@ -76,7 +74,7 @@ class JoinGameState extends State<JoinGame> {
   void setPlayer() async {
     await _firestore.runTransaction((transaction) async {
       DocumentReference playerCheck =
-          _firestore.collection('games').doc(gameLink);
+          _firestore.collection('games').doc(gameID);
       DocumentSnapshot snapshot = await transaction.get(playerCheck);
       player2db = snapshot.data()['player2'];
       player3db = snapshot.data()['player3'];

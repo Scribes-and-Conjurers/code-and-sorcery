@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:code_and_sorcery/screens/login/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
-import '../homepage/homepage.dart';
 
 // if username != null && guild != null then go to homepage
 

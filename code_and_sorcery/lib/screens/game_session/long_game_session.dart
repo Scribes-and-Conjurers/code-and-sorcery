@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
-import '../game_lobby/game_lobby.dart';
+
 import './game_image_utils.dart';
 import './game_content_long.dart';
 import './game_summary.dart';
@@ -309,7 +309,7 @@ class _QuestLongState extends State<QuestLong> {
   }
 
   void decreasePartyHealth() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'partyHealth': FieldValue.increment(-1),
     });
   }
@@ -324,7 +324,7 @@ class _QuestLongState extends State<QuestLong> {
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
-      isMultiplayer = true;
+      // isMultiplayer = true;
     });
   }
 
@@ -374,25 +374,25 @@ class _QuestLongState extends State<QuestLong> {
   }
 
   void updateGamePlayer1() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player1Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer2() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player2Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer3() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player3Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer4() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player4Points': FieldValue.increment(1),
     });
   }
