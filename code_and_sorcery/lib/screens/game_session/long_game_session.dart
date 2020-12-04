@@ -519,15 +519,14 @@ class _QuestLongState extends State<QuestLong> {
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
+    if ((questionNumber) == 1 ||
+        (questionNumber) == 3 ||
+        (questionNumber) == 7) {
+      longQuestion = false;
+    } else {
+      longQuestion = true;
+    }
     setState(() {
-      if ((questionNumber) == 3
-          // (questionNumber + 1) == 5 ||
-          // (questionNumber + 1) == 9
-          ) {
-        longQuestion = false;
-      } else {
-        longQuestion = true;
-      }
       if (questionNumber == game.questions.length - 1) {
         Navigator.push(
             context,
