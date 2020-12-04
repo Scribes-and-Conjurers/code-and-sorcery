@@ -17,8 +17,6 @@ String gameLinkValue = "";
 class GameLobby extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
-  final documentReference =
-      FirebaseFirestore.instance.collection('games').doc(gameLinkValue);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class GameLobby extends StatelessWidget {
                   }),
               ElevatedButton(
                 onPressed: () {
-                  gameLinkController.text = randomAlpha(6);
+                  gameLinkController.text = randomAlpha(2);
                   gameLinkValue = gameLinkController.text;
                   createGame();
                   // Navigate back to the first screen by popping the current route
@@ -84,7 +82,7 @@ class GameLobby extends StatelessWidget {
                 },
                 child: Text('Go to game'),
               ),
-              // buildUser(context),
+              buildUser(context),
             ],
           ),
         ),

@@ -3,6 +3,10 @@ import '../login/authenticator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../game_lobby/game_lobby.dart';
 
+String player2db;
+String player3db;
+String player4db;
+
 class JoinGame extends StatefulWidget {
   JoinGame({this.title, this.someText});
   final Widget title, someText;
@@ -13,8 +17,7 @@ class JoinGame extends StatefulWidget {
 class JoinGameState extends State<JoinGame> {
   final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
-  final DocumentReference sfDocRef =
-      FirebaseFirestore.instance.collection("cities").doc("SF");
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String gameLink = "";
 
@@ -51,6 +54,7 @@ class JoinGameState extends State<JoinGame> {
                 Text("\n\n"),
                 ElevatedButton(
                   onPressed: () {
+                    setPlayer();
                     Navigator.pushNamed(context, '/lobby');
                   },
                   child: Text('Submit'),
@@ -69,23 +73,21 @@ class JoinGameState extends State<JoinGame> {
     );
   }
 
-  void setPlayer2() async {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  void setPlayer() async {
     await _firestore.runTransaction((transaction) async {
       DocumentReference playerCheck =
           _firestore.collection('games').doc(gameLinkValue);
       DocumentSnapshot snapshot = await transaction.get(playerCheck);
-      player2 = snapshot.data()['player2'];
-      player3 = snapshot.data()['player3'];
-      player4 = snapshot.data()['player4'];
-      if (player2 == "") {
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+      if (player2db == "") {
         await transaction.update(playerCheck, {'player2': username});
-      } else if (player2 != "") {
-        if (player3 == "") {
+      } else if (player2db != "") {
+        if (player3db == "") {
           await transaction.update(playerCheck, {'player3': username});
-        } else if (player3 != "") {
-          if (player4 == "") {
+        } else if (player3db != "") {
+          if (player4db == "") {
             await transaction.update(playerCheck, {'player4': username});
           }
         }
