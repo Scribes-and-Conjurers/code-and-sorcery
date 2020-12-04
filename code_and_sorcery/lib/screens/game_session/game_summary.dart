@@ -30,23 +30,19 @@ class Summary extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Builder(builder: (context) {
-                            if (!isMultiplayer) {
-                              return singlePlayerPointsStream(context);
-                            } else {
-                              return multiplayerPointsStream(context);
-                            }
+                            return multiplayerPointsStream(context);
                           }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
-                                if (!isMultiplayer) {
-                                  updateSinglePlayerPoints();
-                                  updateSPGuildPoints();
-                                } else {
-                                  updateMultiplayerPoints();
-                                  updateMPGuildPoints();
-                                }
+                                // if (!isMultiplayer) {
+                                //   updateSinglePlayerPoints();
+                                //   updateSPGuildPoints();
+                                // } else {
+                                //   updateMultiplayerPoints();
+                                //   updateMPGuildPoints();
+                                // }
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
@@ -77,7 +73,7 @@ class Summary extends StatelessWidget {
   }
 
   void updateGame() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'finished': true,
     });
   }

@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
 // import '../login/authenticator.dart';
-import '../../states/user_state.dart';
 import '../../global_variables/global_variables.dart';
 
 String player1;
 String player2;
 String player3;
 String player4;
+String player1db;
+String player2db;
+String player3db;
+String player4db;
 String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
-bool isMultiplayer;
-String gameLinkValue = "";
+// bool gameOn = false;
 
 class GameLobby extends StatelessWidget {
-  final databaseReference = FirebaseFirestore.instance;
+  // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
 
   @override
@@ -40,6 +42,9 @@ class GameLobby extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              SizedBox(height: 40),
+              buildUser(context),
+              SizedBox(height: 40),
               TextField(
                   controller: gameLinkController,
                   decoration: new InputDecoration(
@@ -49,19 +54,8 @@ class GameLobby extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                   onChanged: (String text) {
-                    gameLinkValue = gameLinkController.text;
+                    gameID = gameLinkController.text;
                   }),
-              ElevatedButton(
-                onPressed: () {
-                  gameLinkController.text = randomAlpha(2);
-                  gameLinkValue = gameLinkController.text;
-                  createGame();
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                },
-                child: Text('GENERATE LINK'),
-              ),
-              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
@@ -84,7 +78,13 @@ class GameLobby extends StatelessWidget {
                 },
                 child: Text('Go to game'),
               ),
-              // buildUser(context),
+              ElevatedButton(
+                onPressed: () {
+                  removePlayer();
+                  Navigator.pop(context);
+                },
+                child: Text('Go back to homepage'),
+              ),
             ],
           ),
         ),
@@ -94,38 +94,39 @@ class GameLobby extends StatelessWidget {
 }
 
 void updateGameHealth() async {
-  await FirebaseFirestore.instance
-      .collection("games")
-      .doc(gameLinkValue)
-      .update({
+  await FirebaseFirestore.instance.collection("games").doc(gameID).update({
     'partyHealth': FieldValue.increment(1),
   });
 }
 
-void createGame() async {
-  await FirebaseFirestore.instance.collection("games").doc(gameLinkValue).set({
-    'created': FieldValue.serverTimestamp(),
-    'finished': false,
-    'partyHealth': 3,
-    'player1': username,
-    'player1Points': 0,
-    'player1Class': playerClass,
-    'player2': '',
-    'player2Class': '',
-    'player2Points': 0,
-    'player3': '',
-    'player3Class': '',
-    'player3Points': 0,
-    'player4': '',
-    'player4Class': '',
-    'player4Points': 0,
+void removePlayer() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    player1db = snapshot.data()['player1'];
+    player2db = snapshot.data()['player2'];
+    player3db = snapshot.data()['player3'];
+    player4db = snapshot.data()['player4'];
+    if (player1db == username) {
+      await transaction.delete(playerCheck);
+    } else if (player2db == username) {
+      await transaction
+          .update(playerCheck, {'player2': "", 'player2Class': ""});
+    } else if (player3db == username) {
+      await transaction
+          .update(playerCheck, {'player3': "", 'player3Class': ""});
+    } else if (player4db == username) {
+      await transaction
+          .update(playerCheck, {'player4': "", 'player4Class': ""});
+    }
   });
 }
 
 void getSetPlayers() async {
   await FirebaseFirestore.instance
       .collection('games')
-      .doc(gameLinkValue)
+      .doc(gameID)
       .get()
       .then((DocumentSnapshot documentSnapshot) {
     if (documentSnapshot.exists) {
@@ -138,11 +139,9 @@ void getSetPlayers() async {
       player2Class = documentSnapshot.data()['player2Class'];
       player3Class = documentSnapshot.data()['player3Class'];
       player4Class = documentSnapshot.data()['player4Class'];
-      print(player1);
       print(player2);
       print(player3);
       print(player4);
-      print(player1Class);
       print(player2Class);
       print(player3Class);
       print(player4Class);
@@ -150,34 +149,27 @@ void getSetPlayers() async {
   });
 }
 
-// void checkIfSoloGame() {
-//   if (player2 == '') {
-//     isMultiplayer = false;
-//   } else {
-//     isMultiplayer = true;
-//   }
-// }
-
-// Widget buildUser(BuildContext context) {
-//   return StreamBuilder(
-//       stream: FirebaseFirestore.instance
-//           .collection('games')
-//           .doc(gameLinkValue)
-//           .snapshots(),
-//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (!snapshot.hasData) {
-//           return Text("Loading");
-//         }
-//         var userDocument = snapshot.data;
-//         return Text(
-//           userDocument["player1"] +
-//               '\n\n' +
-//               userDocument["player2"] +
-//               '\n\n' +
-//               userDocument["player3"] +
-//               '\n\n' +
-//               userDocument["player4"],
-//           style: TextStyle(
-//               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-//         );
-//       });
+Widget buildUser(BuildContext context) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          userDocument["player1"] +
+              '\n\n' +
+              userDocument["player2"] +
+              '\n\n' +
+              userDocument["player3"] +
+              '\n\n' +
+              userDocument["player4"],
+          style: TextStyle(
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        );
+      });
+}
