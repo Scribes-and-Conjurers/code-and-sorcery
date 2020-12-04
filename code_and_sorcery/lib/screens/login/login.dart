@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'authenticator.dart';
 import 'account_setup.dart';
+import '../../global_variables/global_variables.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -72,18 +73,18 @@ class _LoginPageState extends State<LoginPage> {
 
   void click() {
     signInWithGoogle().then((user) => {
-          this.user = user,
-          if (username != '')
-            {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Homepage()))
-            }
-          else
-            {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AccountSetup()))
-            }
-        });
+      this.user = user,
+      if (username != '')
+        {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Homepage()))
+        }
+      else
+        {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AccountSetup()))
+        }
+    });
   }
 }
 

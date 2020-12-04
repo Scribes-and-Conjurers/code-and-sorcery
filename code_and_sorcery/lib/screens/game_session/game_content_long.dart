@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
-import 'assembling_codebits.dart';
 import '../game_lobby/game_lobby.dart';
 import 'game_image_utils.dart';
 import 'game_summary.dart';

@@ -2,7 +2,7 @@ import 'package:code_and_sorcery/screens/guild_view/guild_rankings.dart';
 import 'package:code_and_sorcery/screens/guild_view/user_rankings.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../login/authenticator.dart';
+import '../../global_variables/global_variables.dart';
 import 'change_guild.dart';
 
 class Guild extends StatelessWidget {

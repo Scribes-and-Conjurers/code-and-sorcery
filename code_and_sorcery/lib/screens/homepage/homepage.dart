@@ -2,7 +2,7 @@ import 'package:code_and_sorcery/screens/game_lobby/game_lobby.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../model/user.dart';
-import '../login/authenticator.dart';
+import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import '../game_session/game_session.dart';
 
@@ -80,7 +80,7 @@ class Homepage extends StatelessWidget {
               ),
               RaisedButton(
                 onPressed: () {
-                  signOutGoogle();
+                  // signOutGoogle();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
                     return LoginPage();
