@@ -115,10 +115,10 @@ void removePlayer() async {
           .update(playerCheck, {'player2': "", 'player2Class': ""});
     } else if (player3db == username) {
       await transaction
-          .update(playerCheck, {'player2': "", 'player2Class': ""});
+          .update(playerCheck, {'player3': "", 'player3Class': ""});
     } else if (player4db == username) {
       await transaction
-          .update(playerCheck, {'player2': "", 'player2Class': ""});
+          .update(playerCheck, {'player4': "", 'player4Class': ""});
     }
   });
 }
