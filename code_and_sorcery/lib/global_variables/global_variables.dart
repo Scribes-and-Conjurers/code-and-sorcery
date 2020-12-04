@@ -7,3 +7,6 @@ String guild;
 String playerClass;
 String profileImg;
 int points;
+
+// variables in relation to the game object
+String gameID;
