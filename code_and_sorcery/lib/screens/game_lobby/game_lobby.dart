@@ -17,6 +17,8 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
+bool pushedGo;
+int startCountdown;
 
 class GameLobby extends StatefulWidget {
   @override
@@ -38,7 +40,7 @@ class GameLobbySL extends State<GameLobby> {
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if (counter > 0) {
-          counter--;
+          decreaseCountdown();
         } else {
           readyTimer.cancel();
         }
@@ -66,15 +68,16 @@ class GameLobbySL extends State<GameLobby> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              (counter > 0)
-                  ? Text("")
-                  : Text("Let's go!",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 48)),
-              Text('$counter',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48)),
+              // (counter > 0)
+              //     ? Text("")
+              //     : Text("Let's go!",
+              //         style: TextStyle(
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 48)),
+              // Text('$counter',
+              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48)),
+              startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
               SizedBox(height: 40),
@@ -94,9 +97,7 @@ class GameLobbySL extends State<GameLobby> {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   checkP1GO();
-                  if (startGameTimer == true) {
-                    startTimer();
-                  }
+                  startTimer();
 
                   // getSetPlayers();
 
@@ -107,7 +108,6 @@ class GameLobbySL extends State<GameLobby> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  startGameTimer = false;
                   removePlayer();
                   Navigator.pop(context);
                 },
@@ -129,7 +129,21 @@ void checkP1GO() async {
     player1db = snapshot.data()['player1'];
     if (player1db == username) {
       await transaction.update(playerCheck, {'pushedGo': true});
-      startGameTimer = true;
+    }
+  });
+}
+
+void decreaseCountdown() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    startCountdown = snapshot.data()['startCountdown'];
+    pushedGo = snapshot.data()['pushedGo'];
+    if (pushedGo == true && startCountdown > 0) {
+      await transaction.update(playerCheck, {
+        'startCountdown': FieldValue.increment(-1),
+      });
     }
   });
 }
@@ -209,14 +223,35 @@ Widget buildUser(BuildContext context) {
       });
 }
 
+Widget startCountdownStream(BuildContext context) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var fiveSecondCountdown = snapshot.data;
+        return Text(
+          fiveSecondCountdown['startCountdown'].toString(),
+          style: TextStyle(fontSize: 25),
+        );
+      });
+}
+
 /*
 Players in lobby
 Player 1 push GO TO GAME
-      CHECK IF PLAYER 1 USERNAME == PLAYER1 IN GAME OBJECT
-      IF FALSE, DO NOTHING
-      IF TRUE, UPDATE GAME OBJECT PUSHEDGO FIELD TO TRUE
+      O     CHECK IF PLAYER 1 USERNAME == PLAYER1 IN GAME OBJECT
+      O     IF FALSE, DO NOTHING
+      O     IF TRUE, UPDATE GAME OBJECT PUSHEDGO FIELD TO TRUE
 
-      SEND THIS CHANGE TO ALL PLAYER
-      SEND MESSAGE TO GAME SESSION TO START LOADING ASSETS
-      IN APP, 5 SECONDS TIMER STARTS. WHEN TIMER REACHES 0, SPLASH SCREEN, ALL PLAYERS MOVE TO GAME SESSION.
+      O     SEND THIS CHANGE TO ALL PLAYER
+      X     SEND MESSAGE TO GAME SESSION TO START LOADING ASSETS
+            IN APP, 5 SECONDS TIMER STARTS
+            WHEN TIMER REACHES 0
+            SPLASH SCREEN
+            ALL PLAYERS MOVE TO GAME SESSION.
  */
