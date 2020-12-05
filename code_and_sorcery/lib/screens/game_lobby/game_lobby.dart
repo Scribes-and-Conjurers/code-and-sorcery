@@ -16,7 +16,6 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
-// bool gameOn = false;
 
 class GameLobby extends StatelessWidget {
   // final databaseReference = FirebaseFirestore.instance;
@@ -60,21 +59,11 @@ class GameLobby extends StatelessWidget {
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
-                  getSetPlayers();
+                  checkP1GO();
+                  // getSetPlayers();
+
                   // checkIfSoloGame();
-                  if (player1Class == "Warrior") {
-                    updateGameHealth();
-                  }
-                  if (player2Class == "Warrior") {
-                    updateGameHealth();
-                  }
-                  if (player3Class == "Warrior") {
-                    updateGameHealth();
-                  }
-                  if (player4Class == "Warrior") {
-                    updateGameHealth();
-                  }
-                  Navigator.pushNamed(context, '/ingame');
+                  // Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
               ),
@@ -93,9 +82,16 @@ class GameLobby extends StatelessWidget {
   }
 }
 
-void updateGameHealth() async {
-  await FirebaseFirestore.instance.collection("games").doc(gameID).update({
-    'partyHealth': FieldValue.increment(1),
+void checkP1GO() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    player1db = snapshot.data()['player1'];
+    if (player1db == username) {
+      await transaction
+        ..update(playerCheck, {'pushedGo': true});
+    }
   });
 }
 
@@ -173,3 +169,15 @@ Widget buildUser(BuildContext context) {
         );
       });
 }
+
+/*
+Players in lobby
+Player 1 push GO TO GAME
+      CHECK IF PLAYER 1 USERNAME == PLAYER1 IN GAME OBJECT
+      IF FALSE, DO NOTHING
+      IF TRUE, UPDATE GAME OBJECT PUSHEDGO FIELD TO TRUE
+
+      SEND THIS CHANGE TO ALL PLAYER
+      SEND MESSAGE TO GAME SESSION TO START LOADING ASSETS
+      IN APP, 5 SECONDS TIMER STARTS. WHEN TIMER REACHES 0, SPLASH SCREEN, ALL PLAYERS MOVE TO GAME SESSION.
+ */
