@@ -94,7 +94,10 @@ class GameLobbySL extends State<GameLobby> {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   checkP1GO();
-                  startTimer();
+                  if (startGameTimer == true) {
+                    startTimer();
+                  }
+
                   // getSetPlayers();
 
                   // checkIfSoloGame();
@@ -104,6 +107,7 @@ class GameLobbySL extends State<GameLobby> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  startGameTimer = false;
                   removePlayer();
                   Navigator.pop(context);
                 },
@@ -125,6 +129,7 @@ void checkP1GO() async {
     player1db = snapshot.data()['player1'];
     if (player1db == username) {
       await transaction.update(playerCheck, {'pushedGo': true});
+      startGameTimer = true;
     }
   });
 }

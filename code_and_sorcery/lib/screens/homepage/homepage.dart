@@ -19,6 +19,7 @@ class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
 
   dbUser user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +74,7 @@ class Homepage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   chooseGameTypePopUp(context);
+                  startGameTimer = false;
 
                   // Navigator.pushNamed(context, '/lobby');
                   // createRecord();
