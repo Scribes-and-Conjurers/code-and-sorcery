@@ -10,4 +10,3 @@ int points;
 
 // variables in relation to the game object
 String gameID;
-bool startGameTimer = false;

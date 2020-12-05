@@ -74,7 +74,6 @@ class Homepage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   chooseGameTypePopUp(context);
-                  startGameTimer = false;
 
                   // Navigator.pushNamed(context, '/lobby');
                   // createRecord();
@@ -272,6 +271,7 @@ class Homepage extends StatelessWidget {
       'player4Points': 0,
       'nbOfPlayers': 1,
       'pushedGo': false,
+      'startCountdown': 5,
     });
   }
 
