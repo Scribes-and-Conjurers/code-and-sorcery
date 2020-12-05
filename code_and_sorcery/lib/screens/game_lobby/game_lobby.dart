@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
+import 'dart:async';
 // import '../login/authenticator.dart';
 import '../../global_variables/global_variables.dart';
 
@@ -17,9 +18,33 @@ String player2Class;
 String player3Class;
 String player4Class;
 
-class GameLobby extends StatelessWidget {
+class GameLobby extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new GameLobbySL();
+  }
+}
+
+// Game widget state
+class GameLobbySL extends State<GameLobby> {
+  int counter = 5;
+  Timer readyTimer;
   // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
+  void startTimer() {
+    if (readyTimer != null) {
+      readyTimer.cancel();
+    }
+    readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (counter > 0) {
+          counter--;
+        } else {
+          readyTimer.cancel();
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +66,15 @@ class GameLobby extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              (counter > 0)
+                  ? Text("")
+                  : Text("Let's go!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 48)),
+              Text('$counter',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48)),
               SizedBox(height: 40),
               buildUser(context),
               SizedBox(height: 40),
@@ -60,6 +94,10 @@ class GameLobby extends StatelessWidget {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   checkP1GO();
+                  if (startGameTimer == true) {
+                    startTimer();
+                  }
+
                   // getSetPlayers();
 
                   // checkIfSoloGame();
@@ -69,6 +107,7 @@ class GameLobby extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                  startGameTimer = false;
                   removePlayer();
                   Navigator.pop(context);
                 },
@@ -89,8 +128,8 @@ void checkP1GO() async {
     DocumentSnapshot snapshot = await transaction.get(playerCheck);
     player1db = snapshot.data()['player1'];
     if (player1db == username) {
-      await transaction
-        ..update(playerCheck, {'pushedGo': true});
+      await transaction.update(playerCheck, {'pushedGo': true});
+      startGameTimer = true;
     }
   });
 }
