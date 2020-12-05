@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
+import '../game_session/game_session.dart';
 import 'dart:async';
 // import '../login/authenticator.dart';
 import '../../global_variables/global_variables.dart';
@@ -31,8 +32,12 @@ class GameLobby extends StatefulWidget {
 class GameLobbySL extends State<GameLobby> {
   int counter = 5;
   Timer readyTimer;
+  Timer gameSessionTimer;
   // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
+  final String _collection = 'collectionName';
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+
   void startTimer() {
     if (readyTimer != null) {
       readyTimer.cancel();
@@ -43,6 +48,8 @@ class GameLobbySL extends State<GameLobby> {
           decreaseCountdown();
         } else {
           readyTimer.cancel();
+          //   Navigator.push(
+          //       context, MaterialPageRoute(builder: (context) => Game1()));};
         }
       });
     });
@@ -97,9 +104,14 @@ class GameLobbySL extends State<GameLobby> {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   checkP1GO();
+                  getSetPlayers();
                   startTimer();
 
-                  // getSetPlayers();
+                  gameSessionTimer =
+                      new Timer.periodic(new Duration(seconds: 6), (time) {
+                    Navigator.pushNamed(context, '/ingame');
+                    gameSessionTimer.cancel();
+                  });
 
                   // checkIfSoloGame();
                   // Navigator.pushNamed(context, '/ingame');
