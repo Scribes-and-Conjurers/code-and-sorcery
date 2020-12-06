@@ -16,16 +16,16 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class GameContentLong {
   var images = [
-    "slimegreen1",
-    "slimegreen1",
-    "slimered1",
-    "slimered1",
-    "slimegreen1",
-    "slimegreen1",
-    "bossmonster",
-    "bossmonster",
-    "bossmonster",
-    "bossmonster",
+    "ghost_white",
+    "ghost_blue",
+    "ghost_black",
+    "medghost_white",
+    "medghost_black",
+    "medghost_red",
+    "zombie_green",
+    "boss001",
+    "boss001",
+    "boss001",
   ];
 
   final CollectionReference questionCollection =
