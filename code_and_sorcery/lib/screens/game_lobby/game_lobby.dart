@@ -32,7 +32,7 @@ class GameLobby extends StatefulWidget {
 class GameLobbySL extends State<GameLobby> {
   int counter = 5;
   Timer readyTimer;
-  Timer gameSessionTimer;
+  // Timer gameSessionTimer;
   // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
   final String _collection = 'collectionName';
@@ -53,7 +53,6 @@ class GameLobbySL extends State<GameLobby> {
           }
         });
       }
-      ;
     });
   }
 
@@ -110,7 +109,7 @@ class GameLobbySL extends State<GameLobby> {
                   startTimer();
 
                   // gameSessionTimer =
-                  //     new Timer.periodic(new Duration(seconds: 6), (time) {
+                  //     new Timer.periodic(new Duration(seconds: 5), (time) {
                   //   Navigator.pushNamed(context, '/ingame');
                   //   gameSessionTimer.cancel();
                   // });
@@ -172,6 +171,7 @@ void stopCountdown() async {
     if (pushedGo == true && startCountdown == 0) {
       await transaction.update(playerCheck, {
         'startCountdown': 0,
+        'startedAt': FieldValue.serverTimestamp(),
       });
     }
   });
@@ -260,17 +260,20 @@ Widget startCountdownStream(BuildContext context) {
           .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        var fiveSecondCountdown = snapshot.data['startCountdown'];
+        var gameStarted = snapshot.data['startedAt'];
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        var fiveSecondCountdown = snapshot.data['startCountdown'];
-        if (fiveSecondCountdown == 4) {
-          gameSessionTimer =
-              new Timer.periodic(new Duration(seconds: 5), (time) {
+        if (fiveSecondCountdown == 1 && gameStarted == null) {
+          gameSessionTimer = Timer(Duration(seconds: 1), () {
             Navigator.pushNamed(context, '/ingame');
             gameSessionTimer.cancel();
           });
-          // Navigator.pushNamed(context, '/ingame');
+          return Text(
+            "1",
+            style: TextStyle(fontSize: 25),
+          );
         } else {
           return Text(
             fiveSecondCountdown.toString(),
@@ -279,18 +282,3 @@ Widget startCountdownStream(BuildContext context) {
         }
       });
 }
-
-/*
-Players in lobby
-Player 1 push GO TO GAME
-      O     CHECK IF PLAYER 1 USERNAME == PLAYER1 IN GAME OBJECT
-      O     IF FALSE, DO NOTHING
-      O     IF TRUE, UPDATE GAME OBJECT PUSHEDGO FIELD TO TRUE
-
-      O     SEND THIS CHANGE TO ALL PLAYER
-      X     SEND MESSAGE TO GAME SESSION TO START LOADING ASSETS
-            IN APP, 5 SECONDS TIMER STARTS
-            WHEN TIMER REACHES 0
-            SPLASH SCREEN
-            ALL PLAYERS MOVE TO GAME SESSION.
- */

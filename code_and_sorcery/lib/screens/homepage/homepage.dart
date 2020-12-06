@@ -254,8 +254,9 @@ class Homepage extends StatelessWidget {
   // Create a multiplayer game
   void createMPGame() async {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
-      'created': FieldValue.serverTimestamp(),
-      'finished': false,
+      'createdAt': FieldValue.serverTimestamp(),
+      'startedAt': null,
+      ' finished': false,
       'partyHealth': 3,
       'player1': username,
       'player1Points': 0,
