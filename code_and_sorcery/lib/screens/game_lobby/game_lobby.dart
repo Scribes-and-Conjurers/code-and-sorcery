@@ -43,15 +43,17 @@ class GameLobbySL extends State<GameLobby> {
       readyTimer.cancel();
     }
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (counter > 0) {
-          decreaseCountdown();
-        } else {
-          readyTimer.cancel();
-          //   Navigator.push(
-          //       context, MaterialPageRoute(builder: (context) => Game1()));};
-        }
-      });
+      if (this.mounted) {
+        setState(() {
+          if (counter > 0) {
+            decreaseCountdown();
+          } else {
+            readyTimer.cancel();
+            stopCountdown();
+          }
+        });
+      }
+      ;
     });
   }
 
@@ -107,11 +109,11 @@ class GameLobbySL extends State<GameLobby> {
                   getSetPlayers();
                   startTimer();
 
-                  gameSessionTimer =
-                      new Timer.periodic(new Duration(seconds: 6), (time) {
-                    Navigator.pushNamed(context, '/ingame');
-                    gameSessionTimer.cancel();
-                  });
+                  // gameSessionTimer =
+                  //     new Timer.periodic(new Duration(seconds: 6), (time) {
+                  //   Navigator.pushNamed(context, '/ingame');
+                  //   gameSessionTimer.cancel();
+                  // });
 
                   // checkIfSoloGame();
                   // Navigator.pushNamed(context, '/ingame');
@@ -155,6 +157,21 @@ void decreaseCountdown() async {
     if (pushedGo == true && startCountdown > 0) {
       await transaction.update(playerCheck, {
         'startCountdown': FieldValue.increment(-1),
+      });
+    }
+  });
+}
+
+void stopCountdown() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    startCountdown = snapshot.data()['startCountdown'];
+    pushedGo = snapshot.data()['pushedGo'];
+    if (pushedGo == true && startCountdown == 0) {
+      await transaction.update(playerCheck, {
+        'startCountdown': 0,
       });
     }
   });
@@ -236,6 +253,7 @@ Widget buildUser(BuildContext context) {
 }
 
 Widget startCountdownStream(BuildContext context) {
+  Timer gameSessionTimer;
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
@@ -245,11 +263,20 @@ Widget startCountdownStream(BuildContext context) {
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        var fiveSecondCountdown = snapshot.data;
-        return Text(
-          fiveSecondCountdown['startCountdown'].toString(),
-          style: TextStyle(fontSize: 25),
-        );
+        var fiveSecondCountdown = snapshot.data['startCountdown'];
+        if (fiveSecondCountdown == 4) {
+          gameSessionTimer =
+              new Timer.periodic(new Duration(seconds: 5), (time) {
+            Navigator.pushNamed(context, '/ingame');
+            gameSessionTimer.cancel();
+          });
+          // Navigator.pushNamed(context, '/ingame');
+        } else {
+          return Text(
+            fiveSecondCountdown.toString(),
+            style: TextStyle(fontSize: 25),
+          );
+        }
       });
 }
 
