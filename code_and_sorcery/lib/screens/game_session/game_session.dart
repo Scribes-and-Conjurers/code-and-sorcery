@@ -4,13 +4,14 @@ import 'dart:developer';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../global_variables/global_variables.dart';
+import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
+import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
 
 import './game_image_utils.dart';
 import './game_summary.dart';
-import './long_game_session.dart';
+import 'long_game_session.dart';
 import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;

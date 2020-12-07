@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:splashscreen/splashscreen.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import './screens/homepage/homepage.dart';
 import './screens/guild_view/guild_view.dart';
@@ -17,6 +18,7 @@ import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
 
 // import './screens/login/authenticator.dart';
+import './screens/loadingscreen/loadingscreen.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
@@ -27,7 +29,7 @@ void main() async {
     title: 'Code&Sorcery',
     // Start the app with the "/" named route. In this case, the app starts
     // on the FirstScreen widget.
-    initialRoute: '/login',
+    initialRoute: '/splash',
     // home: _user == null ? LoginPage() : Homepage(),
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
@@ -45,6 +47,7 @@ void main() async {
       '/change': (context) => ChangeGuild(),
       '/guildrankings': (context) => GuildRankings(),
       '/userrankings': (context) => UserRankings(),
+      '/splash': (context) => LoadingScreen(),
     },
   ));
 }

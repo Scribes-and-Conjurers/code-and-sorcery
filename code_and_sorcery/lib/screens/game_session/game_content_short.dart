@@ -15,7 +15,7 @@ import './game_session.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class GameContent {
-  var images = ["slimegreen1", "slimered1", "bossmonster", "bossmonster"];
+  var images = ["ghost_white", "ghost_blue", "ghost_black", "boss001"];
 
   final CollectionReference questionCollection =
       FirebaseFirestore.instance.collection('mc_question');

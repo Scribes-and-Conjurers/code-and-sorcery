@@ -18,6 +18,7 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
+String gameLinkValue = "";
 bool pushedGo;
 int startCountdown;
 
