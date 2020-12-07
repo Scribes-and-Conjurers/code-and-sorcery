@@ -301,6 +301,7 @@ class Homepage extends StatelessWidget {
       if (documentSnapshot.exists) {
         // define questions
         questID = documentSnapshot.data()['questID'];
+        print(questID);
       }
     });
   }
