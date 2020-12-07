@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,6 +40,8 @@ class Game1 extends StatefulWidget {
 
 // Game widget state
 class Game1State extends State<Game1> {
+  int counter = 5;
+  Timer readyTimer;
   final databaseReference = FirebaseFirestore.instance;
   // void startTimer() {
   //   counter = 10;
@@ -60,6 +63,26 @@ class Game1State extends State<Game1> {
   void initState() {
     // update game content when Game is initiated!!
     updateGameContent('JIfrv2SOOdlxkv5RJP3i');
+    startTimer();
+  }
+
+  void startTimer() {
+    if (readyTimer != null) {
+      readyTimer.cancel();
+    }
+    readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (this.mounted) {
+        setState(() {
+          if (counter > 0) {
+            counter--;
+          } else {
+            readyTimer.cancel();
+            updateQuestion();
+            counter = 5;
+          }
+        });
+      }
+    });
   }
 
   Widget build(BuildContext context) {
@@ -84,14 +107,10 @@ class Game1State extends State<Game1> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  // (counter > 0)
-                                  //     ? Text("")
-                                  //     : Text("OVER",
-                                  //         style: TextStyle(color: Colors.red)),
-                                  // Text('$counter',
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 48)),
+                                  Text('$counter',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
                                   Text(
                                     "Question ${questionNumber + 1}",
                                     style: TextStyle(fontSize: 15.0),
