@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
+import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
 // import '../login/authenticator.dart';
@@ -32,12 +33,10 @@ class GameLobby extends StatefulWidget {
 
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
-  // @override
-  // void initState() {
-  //   // update game content when Game is initiated!!
-  //   // updateGameContent('JIfrv2SOOdlxkv5RJP3i');
-  //   // startTimer();
-  // }
+  @override
+  void initState() {
+    updateGameContent(questID);
+  }
 
   int counter = 5;
   Timer readyTimer;
@@ -117,6 +116,37 @@ class GameLobbySL extends State<GameLobby> {
       ),
     );
   }
+
+  void updateGameContent(String questName) async {
+    await FirebaseFirestore.instance
+        .collection('ready-quests')
+        .doc(questName)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        game.questions = documentSnapshot.data()['questions'];
+
+        // define choices for each question
+        game.choices0 = documentSnapshot.data()['choices1'];
+        game.choices1 = documentSnapshot.data()['choices2'];
+        game.choices2 = documentSnapshot.data()['choices3'];
+        game.choices3 = documentSnapshot.data()['choices4'];
+
+        // put all four choices arrays in one main array
+        game.choices = [
+          game.choices0,
+          game.choices1,
+          game.choices2,
+          game.choices3
+        ];
+
+        // define answers
+        game.correctAnswers = documentSnapshot.data()['answers'];
+        print('answers: ${game.correctAnswers}');
+      }
+    });
+  }
 }
 
 void checkP1GO() async {
@@ -184,37 +214,6 @@ void removePlayer() async {
           .update(playerCheck, {'player4': "", 'player4Class': ""});
     }
   });
-
-  void updateGameContent(String questName) async {
-    await FirebaseFirestore.instance
-        .collection('ready-quests')
-        .doc(questName)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // define questions
-        game.questions = documentSnapshot.data()['questions'];
-
-        // define choices for each question
-        game.choices0 = documentSnapshot.data()['choices1'];
-        game.choices1 = documentSnapshot.data()['choices2'];
-        game.choices2 = documentSnapshot.data()['choices3'];
-        game.choices3 = documentSnapshot.data()['choices4'];
-
-        // put all four choices arrays in one main array
-        game.choices = [
-          game.choices0,
-          game.choices1,
-          game.choices2,
-          game.choices3
-        ];
-
-        // define answers
-        game.correctAnswers = documentSnapshot.data()['answers'];
-        print('answers: ${game.correctAnswers}');
-      }
-    });
-  }
 }
 
 Widget buildUser(BuildContext context) {

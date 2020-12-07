@@ -106,6 +106,7 @@ class JoinGameState extends State<JoinGame> {
       if (documentSnapshot.exists) {
         // define questions
         questID = documentSnapshot.data()['questID'];
+        print(questID);
       }
     });
   }
