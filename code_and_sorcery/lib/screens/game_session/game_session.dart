@@ -64,7 +64,7 @@ class Game1State extends State<Game1> {
   @override
   void initState() {
     // update game content when Game is initiated!!
-    // updateGameContent('JIfrv2SOOdlxkv5RJP3i');
+    updateGameContent('JIfrv2SOOdlxkv5RJP3i');
     // startTimer();
   }
 
