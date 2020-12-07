@@ -32,11 +32,7 @@ class GameLobby extends StatefulWidget {
 class GameLobbySL extends State<GameLobby> {
   int counter = 5;
   Timer readyTimer;
-  // Timer gameSessionTimer;
-  // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
-  final String _collection = 'collectionName';
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   void startTimer() {
     if (readyTimer != null) {
@@ -76,15 +72,6 @@ class GameLobbySL extends State<GameLobby> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              // (counter > 0)
-              //     ? Text("")
-              //     : Text("Let's go!",
-              //         style: TextStyle(
-              //             color: Colors.white,
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 48)),
-              // Text('$counter',
-              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48)),
               startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
@@ -102,20 +89,8 @@ class GameLobbySL extends State<GameLobby> {
                   }),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
                   checkP1GO();
-                  getSetPlayers();
                   startTimer();
-
-                  // gameSessionTimer =
-                  //     new Timer.periodic(new Duration(seconds: 5), (time) {
-                  //   Navigator.pushNamed(context, '/ingame');
-                  //   gameSessionTimer.cancel();
-                  // });
-
-                  // checkIfSoloGame();
-                  // Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
               ),
@@ -201,32 +176,6 @@ void removePlayer() async {
   });
 }
 
-void getSetPlayers() async {
-  await FirebaseFirestore.instance
-      .collection('games')
-      .doc(gameID)
-      .get()
-      .then((DocumentSnapshot documentSnapshot) {
-    if (documentSnapshot.exists) {
-      print('Document data: ${documentSnapshot.data()}');
-      player1 = documentSnapshot.data()['player1'];
-      player2 = documentSnapshot.data()['player2'];
-      player3 = documentSnapshot.data()['player3'];
-      player4 = documentSnapshot.data()['player4'];
-      player1Class = documentSnapshot.data()['player1Class'];
-      player2Class = documentSnapshot.data()['player2Class'];
-      player3Class = documentSnapshot.data()['player3Class'];
-      player4Class = documentSnapshot.data()['player4Class'];
-      print(player2);
-      print(player3);
-      print(player4);
-      print(player2Class);
-      print(player3Class);
-      print(player4Class);
-    }
-  });
-}
-
 Widget buildUser(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
@@ -240,12 +189,20 @@ Widget buildUser(BuildContext context) {
         var userDocument = snapshot.data;
         return Text(
           userDocument["player1"] +
+              '  -  ' +
+              userDocument['player1Class'] +
               '\n\n' +
               userDocument["player2"] +
+              '  -  ' +
+              userDocument['player2Class'] +
               '\n\n' +
               userDocument["player3"] +
+              '  -  ' +
+              userDocument['player3Class'] +
               '\n\n' +
-              userDocument["player4"],
+              userDocument["player4"] +
+              '  -  ' +
+              userDocument['player4Class'],
           style: TextStyle(
               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         );
@@ -266,7 +223,7 @@ Widget startCountdownStream(BuildContext context) {
           return Text("Loading");
         }
         if (fiveSecondCountdown == 1 && gameStarted == null) {
-          gameSessionTimer = Timer(Duration(seconds: 1), () {
+          gameSessionTimer = Timer(Duration(seconds: 0), () {
             Navigator.pushNamed(context, '/ingame');
             gameSessionTimer.cancel();
           });
