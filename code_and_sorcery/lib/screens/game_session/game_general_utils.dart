@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../global_variables/global_variables.dart';
 import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ Widget singlePlayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc(gameLinkValue)
+          .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -41,7 +42,7 @@ Widget partyHealthModifier(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc(gameLinkValue)
+          .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -60,7 +61,7 @@ Widget multiplayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc(gameLinkValue)
+          .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -75,6 +76,14 @@ Widget multiplayerPointsStream(BuildContext context) {
               player2 +
               "'s score: " +
               userDocument['player2Points'].toString() +
+              '\n\n' +
+              player3 +
+              "'s score: " +
+              userDocument['player3Points'].toString() +
+              '\n\n' +
+              player4 +
+              "'s score: " +
+              userDocument['player4Points'].toString() +
               '\n\n' +
               'Multiplayer Bonus! +2',
           style: TextStyle(

@@ -1,15 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 
 class UserProfile extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text("Your Profile"),
       ),
       body: Container(
@@ -29,26 +27,32 @@ class UserProfile extends StatelessWidget {
                         username,
                         style: TextStyle(fontSize: 25, color: Colors.black),
                       ),
-                      Divider(thickness: 5,),
-                      Padding(padding: EdgeInsets.all(10),child: Text(
-                          guild, style: TextStyle(fontSize: 20, color: Colors.black)
-                      )),
-                      MaterialButton(onPressed: () {Navigator.pushNamed(context, '/guild');}, color: Colors.blueGrey, child: Text(
-                        'Guild View', style: TextStyle(color: Colors.white),),),
-                      Text('Your Current Quiz Points:',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black)
+                      Divider(
+                        thickness: 5,
                       ),
+                      Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(guild,
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.black))),
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/guild');
+                        },
+                        color: Colors.blueGrey,
+                        child: Text(
+                          'Guild View',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Text('Your Current Quiz Points:',
+                          style: TextStyle(fontSize: 20, color: Colors.black)),
                       // Text(points.toString(), style: TextStyle(fontSize: 25))
                       pointGetter(context),
                     ],
-                  )
-              )
-          )
-      ),
+                  )))),
       floatingActionButton: FloatingActionButton(
-        child:Text('Back'),
+        child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/homepage');
         },
@@ -56,7 +60,6 @@ class UserProfile extends StatelessWidget {
     );
   }
 }
-
 
 // this function fetches points live
 Widget pointGetter(BuildContext context) {
@@ -126,4 +129,3 @@ Widget pointGetter(BuildContext context) {
 //       : this.fromMap(snapshot.data(), reference: snapshot.reference);
 //   @override
 //   String toString() => "Record<$username:$points:$guild>";
-

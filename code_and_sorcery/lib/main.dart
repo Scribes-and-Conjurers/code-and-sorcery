@@ -10,11 +10,13 @@ import './screens/guild_view/user_rankings.dart';
 import './screens/user_profile/user_profile.dart';
 import './screens/game_end/game_end.dart';
 import './screens/game_lobby/game_lobby.dart';
+import './screens/game_lobby/game_lobby_SP.dart';
 import './screens/game_session/game_session.dart';
 import './screens/game_session/long_game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
+
 // import './screens/login/authenticator.dart';
 import './screens/loadingscreen/loadingscreen.dart';
 
@@ -35,6 +37,7 @@ void main() async {
       '/login': (context) => LoginPage(),
       '/setup': (context) => AccountSetup(),
       '/lobby': (context) => GameLobby(),
+      '/lobbySP': (context) => GameLobbySP(),
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),

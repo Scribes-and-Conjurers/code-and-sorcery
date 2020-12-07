@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../game_lobby/game_lobby.dart';
 
 String player2db;
 String player3db;
@@ -15,11 +14,10 @@ class JoinGame extends StatefulWidget {
 }
 
 class JoinGameState extends State<JoinGame> {
-  final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  String gameLink = "";
+  // String gameLink = "";
 
   @override
   Widget build(BuildContext ctxt) {
@@ -47,7 +45,7 @@ class JoinGameState extends State<JoinGame> {
                       border: OutlineInputBorder(), hintText: "ADD LINK"),
                   onChanged: (String text) {
                     setState(() {
-                      gameLink = gameLinkController.text;
+                      gameID = gameLinkController.text;
                     });
                   },
                 ),
@@ -76,63 +74,25 @@ class JoinGameState extends State<JoinGame> {
   void setPlayer() async {
     await _firestore.runTransaction((transaction) async {
       DocumentReference playerCheck =
-          _firestore.collection('games').doc(gameLinkValue);
+          _firestore.collection('games').doc(gameID);
       DocumentSnapshot snapshot = await transaction.get(playerCheck);
       player2db = snapshot.data()['player2'];
       player3db = snapshot.data()['player3'];
       player4db = snapshot.data()['player4'];
       if (player2db == "") {
-        await transaction.update(playerCheck, {'player2': username});
+        await transaction.update(
+            playerCheck, {'player2': username, 'player2Class': playerClass});
       } else if (player2db != "") {
         if (player3db == "") {
-          await transaction.update(playerCheck, {'player3': username});
+          await transaction.update(
+              playerCheck, {'player3': username, 'player3Class': playerClass});
         } else if (player3db != "") {
           if (player4db == "") {
-            await transaction.update(playerCheck, {'player4': username});
+            await transaction.update(playerCheck,
+                {'player4': username, 'player4Class': playerClass});
           }
         }
       }
     });
   }
-
-  // void setPlayer3() async {
-  //   await databaseReference.collection("games").doc(gameLink).update({
-  //     'player3': username,
-  //   });
-  // }
-
-  // void setPlayer4() async {
-  //   await databaseReference.collection("games").doc(gameLink).update({
-  //     'player4': username,
-  //   });
-  // }
-}
-
-/*
-FOUR PLAYER LOGIC :
-
-Check if PLAYER2 is empty or not in the game object
-  IF PLAYER2 is empty, set CURRENTPLAYER as PLAYER2
-  ELSE : IF PLAYER2 is full, check if PLAYER3 is empty or not in the game object
-            IF PLAYER3 is empty, set CURRENTPLAYER as PLAYER3
-            ELSE : IF PLAYER 3 is full, check if PLAYER4 is empty or not in the game object
-                      IF PLAYER4 is empty, set CURRENTPLAYER as PLAYER4
-                      ELSE : IF PLAYER4 is full, send alert message in popup box saying the game is already full
-*/
-class Record {
-  final String player2;
-  final String player3;
-  final String player4;
-  final DocumentReference reference;
-
-  Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['player2'] != null),
-        assert(map['player3'] != null),
-        assert(map['player4'] != null),
-        player2 = map['player2'],
-        player3 = map['player3'],
-        player4 = map['player4'];
-
-  @override
-  String toString() => "Record<$player2:$player3:$player4>";
 }

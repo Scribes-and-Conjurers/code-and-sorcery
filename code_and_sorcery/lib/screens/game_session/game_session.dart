@@ -7,7 +7,7 @@ import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
-import '../game_lobby/game_lobby.dart';
+
 import './game_image_utils.dart';
 import './game_summary.dart';
 import 'long_game_session.dart';
@@ -302,6 +302,7 @@ class Game1State extends State<Game1> {
                               minWidth: 240.0,
                               height: 30.0,
                               onPressed: () {
+                                // removePlayer();
                                 resetGame();
                               },
                               child: Text(
@@ -317,8 +318,32 @@ class Game1State extends State<Game1> {
   }
 
   void decreasePartyHealth() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'partyHealth': FieldValue.increment(-1),
+    });
+  }
+
+  void removePlayer() async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          FirebaseFirestore.instance.collection('games').doc(gameID);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player1db = snapshot.data()['player1'];
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+      if (player1db == username) {
+        await transaction.delete(playerCheck);
+      } else if (player2db == username) {
+        await transaction
+            .update(playerCheck, {'player2': "", 'player2Class': ""});
+      } else if (player3db == username) {
+        await transaction
+            .update(playerCheck, {'player3': "", 'player3Class': ""});
+      } else if (player4db == username) {
+        await transaction
+            .update(playerCheck, {'player4': "", 'player4Class': ""});
+      }
     });
   }
 
@@ -332,7 +357,7 @@ class Game1State extends State<Game1> {
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
-      isMultiplayer = true;
+      // isMultiplayer = true;
     });
   }
 
@@ -382,25 +407,25 @@ class Game1State extends State<Game1> {
   }
 
   void updateGamePlayer1() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player1Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer2() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player2Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer3() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player3Points': FieldValue.increment(1),
     });
   }
 
   void updateGamePlayer4() async {
-    await databaseReference.collection("games").doc(gameLinkValue).update({
+    await databaseReference.collection("games").doc(gameID).update({
       'player4Points': FieldValue.increment(1),
     });
   }
