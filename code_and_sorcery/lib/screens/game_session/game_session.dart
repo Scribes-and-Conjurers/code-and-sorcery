@@ -4,12 +4,13 @@ import 'dart:developer';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../global_variables/global_variables.dart';
+import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
+import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
 import './game_image_utils.dart';
 import './game_summary.dart';
-import './long_game_session.dart';
+import 'long_game_session.dart';
 import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -194,10 +195,10 @@ class Game1State extends State<Game1> {
                                     finalScore++;
                                     if (player1 == username) {
                                       player1Score++;
-                                      updateGamePlayer1();
+                                      // updateGamePlayer1();
                                     } else {
                                       player2Score++;
-                                      updateGamePlayer2();
+                                      // updateGamePlayer2();
                                     }
                                   } else {
                                     decreasePartyHealth();
@@ -227,10 +228,10 @@ class Game1State extends State<Game1> {
                                     finalScore++;
                                     if (player1 == username) {
                                       player1Score++;
-                                      updateGamePlayer1();
+                                      // updateGamePlayer1();
                                     } else {
                                       player2Score++;
-                                      updateGamePlayer2();
+                                      // updateGamePlayer2();
                                     }
                                   } else {
                                     decreasePartyHealth();
@@ -260,11 +261,11 @@ class Game1State extends State<Game1> {
                                     finalScore++;
                                     if (player1 == username) {
                                       player1Score++;
-                                      updateGamePlayer1();
+                                      // updateGamePlayer1();
                                     } else {
                                       player2Score++;
-                                      updateGamePlayer2();
-                                      startTimer();
+                                      // updateGamePlayer2();
+                                      // startTimer();
                                     }
                                   } else {
                                     decreasePartyHealth();
@@ -293,14 +294,14 @@ class Game1State extends State<Game1> {
                                     finalScore++;
                                     if (player1 == username) {
                                       player1Score++;
-                                      updateGamePlayer1();
+                                      // updateGamePlayer1();
                                     } else {
                                       player2Score++;
-                                      updateGamePlayer2();
+                                      // updateGamePlayer2();
                                     }
                                   } else {
                                     decreasePartyHealth();
-                                    startTimer();
+                                    // startTimer();
                                     debugPrint('oh noes... that is incorrect');
                                   }
                                   updateQuestion();
@@ -400,58 +401,59 @@ class Game1State extends State<Game1> {
     });
   }
 
-  // void updateGameContent(String questName) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('ready-quests')
-  //       .doc(questName)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       // define questions
-  //       game.questions = documentSnapshot.data()['questions'];
+  void updateGameContent(String questName) async {
+    await FirebaseFirestore.instance
+        .collection('ready-quests')
+        .doc(questName)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        game.questions = documentSnapshot.data()['questions'];
 
-  //       // define choices for each question
-  //       game.choices0 = documentSnapshot.data()['choices1'];
-  //       game.choices1 = documentSnapshot.data()['choices2'];
-  //       game.choices2 = documentSnapshot.data()['choices3'];
-  //       game.choices3 = documentSnapshot.data()['choices4'];
+        // define choices for each question
+        game.choices0 = documentSnapshot.data()['choices1'];
+        game.choices1 = documentSnapshot.data()['choices2'];
+        game.choices2 = documentSnapshot.data()['choices3'];
+        game.choices3 = documentSnapshot.data()['choices4'];
 
-  //       // put all four choices arrays in one main array
-  //       game.choices = [
-  //         game.choices0,
-  //         game.choices1,
-  //         game.choices2,
-  //         game.choices3
-  //       ];
+        // put all four choices arrays in one main array
+        game.choices = [
+          game.choices0,
+          game.choices1,
+          game.choices2,
+          game.choices3
+        ];
 
-  //       // define answers
-  //       game.correctAnswers = documentSnapshot.data()['answers'];
-  //       print('answers: ${game.correctAnswers}');
-  //     }
-  //   });
-  // }
-
-  void updateGamePlayer1() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player1Points': FieldValue.increment(1),
+        // define answers
+        game.correctAnswers = documentSnapshot.data()['answers'];
+        print('answers: ${game.correctAnswers}');
+      }
     });
-  }
+    // }
 
-  void updateGamePlayer2() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player2Points': FieldValue.increment(1),
-    });
-  }
+    void updateGamePlayer1() async {
+      await databaseReference.collection("games").doc(gameID).update({
+        'player1Points': FieldValue.increment(1),
+      });
+    }
 
-  void updateGamePlayer3() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player3Points': FieldValue.increment(1),
-    });
-  }
+    void updateGamePlayer2() async {
+      await databaseReference.collection("games").doc(gameID).update({
+        'player2Points': FieldValue.increment(1),
+      });
+    }
 
-  void updateGamePlayer4() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player4Points': FieldValue.increment(1),
-    });
+    void updateGamePlayer3() async {
+      await databaseReference.collection("games").doc(gameID).update({
+        'player3Points': FieldValue.increment(1),
+      });
+    }
+
+    void updateGamePlayer4() async {
+      await databaseReference.collection("games").doc(gameID).update({
+        'player4Points': FieldValue.increment(1),
+      });
+    }
   }
 }

@@ -25,3 +25,11 @@ IF HE JOINS A GAME
 
 
 GAME LOBBY => ON INIT => Get back the game name from the db, store it in a local variable and download the content immediately
+
+How does a player select what kind of game he wants to play ? 
+    CREATE A GAME
+        SINGLE PLAYER OR MULTIPLAYER
+        IF SINGLEPLAYER => A Settings button, where you go and have access to the settings for the game we are going to play ? With update to db ?
+        IF MULTIPLAYER => Same ? With updates that will update the game object for everyone
+
+        

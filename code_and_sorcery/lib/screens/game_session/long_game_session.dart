@@ -22,9 +22,10 @@ var player2Score = 0;
 var finalScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
+var longQuestion = true;
 
 // variable that holds game object:
-var game = new GameContent();
+var game = new GameContentLong();
 
 class QuestLong extends StatefulWidget {
   @override
@@ -52,12 +53,12 @@ class _QuestLongState extends State<QuestLong> {
   @override
   void initState() {
     // update game content when Game is initiated!!
-    updateGameContent('JIfrv2SOOdlxkv5RJP3i');
+    updateGameContent('long-adv0');
   }
 
   Widget build(BuildContext context) {
-    if (true) {
-      // return QuestShort();
+    if (longQuestion) {
+      // return long version (4 buttons)
       return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
@@ -151,7 +152,7 @@ class _QuestLongState extends State<QuestLong> {
                           padding: EdgeInsets.all(5.0),
                         ),
 
-                        // answers
+                        // answers: conditional depending on question
                         Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
@@ -305,6 +306,194 @@ class _QuestLongState extends State<QuestLong> {
                               ),
                             )),
                       ]))));
+    } else {
+      //SHORT question format
+      // return true or false question
+      return WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+
+              // body
+              body: new Container(
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.topCenter,
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.all(10.0)),
+                        // top row that displays question number and current score
+                        Container(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  // (counter > 0)
+                                  //     ? Text("")
+                                  //     : Text("OVER",
+                                  //         style: TextStyle(color: Colors.red)),
+                                  // Text('$counter',
+                                  //     style: TextStyle(
+                                  //         fontWeight: FontWeight.bold,
+                                  //         fontSize: 48)),
+                                  Text(
+                                    "Question ${questionNumber + 1}",
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                  Text(
+                                    "Score: $finalScore",
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                  Text(
+                                    "Party Health:",
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                  partyHealthModifier(context),
+                                ])),
+
+                        Padding(padding: EdgeInsets.all(5.0)),
+
+                        // image
+                        FutureBuilder(
+                            future: getImage(
+                                context, "${game.images[questionNumber]}.png"),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width / 1,
+                                  height:
+                                      MediaQuery.of(context).size.width / 1.7,
+                                  child: snapshot.data,
+                                );
+                              }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1,
+                                    height:
+                                        MediaQuery.of(context).size.width / 1.7,
+                                    child: SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator(),
+                                    ));
+                              }
+                              return SizedBox(
+                                height: 10,
+                                width: 10,
+                                child: CircularProgressIndicator(),
+                              );
+                            }),
+
+                        Padding(padding: EdgeInsets.all(5.0)),
+
+                        // question
+                        Text(
+                          game.questions[questionNumber],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                        ),
+
+                        // answers: conditional depending on question
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              // button 1
+                              MaterialButton(
+                                minWidth: 250.0,
+                                padding: EdgeInsets.all(0),
+                                color: Colors.blue,
+                                onPressed: () {
+                                  if (game.choices[questionNumber][0] ==
+                                      game.correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    finalScore++;
+                                    if (player1 == username) {
+                                      player1Score++;
+                                      updateGamePlayer1();
+                                    } else {
+                                      player2Score++;
+                                      updateGamePlayer2();
+                                    }
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  game.choices[questionNumber][0],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+
+                              // button 2
+                              MaterialButton(
+                                minWidth: 250.0,
+                                color: Colors.blue,
+                                onPressed: () {
+                                  if (game.choices[questionNumber][1] ==
+                                      game.correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    // startTimer();
+                                    finalScore++;
+                                    if (player1 == username) {
+                                      player1Score++;
+                                      updateGamePlayer1();
+                                    } else {
+                                      player2Score++;
+                                      updateGamePlayer2();
+                                    }
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  game.choices[questionNumber][1],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ]),
+
+                        Padding(
+                          padding: EdgeInsets.all(5),
+                        ),
+
+                        // reset button
+                        Container(
+                            alignment: Alignment.bottomCenter,
+                            child: MaterialButton(
+                              color: Colors.deepPurple,
+                              minWidth: 240.0,
+                              height: 30.0,
+                              onPressed: () {
+                                resetGame();
+                              },
+                              child: Text(
+                                "Quit",
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )),
+                      ]))));
     }
   }
 
@@ -330,6 +519,13 @@ class _QuestLongState extends State<QuestLong> {
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
+    if ((questionNumber) == 1 ||
+        (questionNumber) == 3 ||
+        (questionNumber) == 7) {
+      longQuestion = false;
+    } else {
+      longQuestion = true;
+    }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
         Navigator.push(
@@ -353,17 +549,29 @@ class _QuestLongState extends State<QuestLong> {
         game.questions = documentSnapshot.data()['questions'];
 
         // define choices for each question
-        game.choices0 = documentSnapshot.data()['choices1'];
-        game.choices1 = documentSnapshot.data()['choices2'];
-        game.choices2 = documentSnapshot.data()['choices3'];
-        game.choices3 = documentSnapshot.data()['choices4'];
+        game.choices0 = documentSnapshot.data()['choices0'];
+        game.choices1 = documentSnapshot.data()['choices1'];
+        game.choices2 = documentSnapshot.data()['choices2'];
+        game.choices3 = documentSnapshot.data()['choices3'];
+        game.choices4 = documentSnapshot.data()['choices4'];
+        game.choices5 = documentSnapshot.data()['choices5'];
+        game.choices6 = documentSnapshot.data()['choices6'];
+        game.choices7 = documentSnapshot.data()['choices7'];
+        game.choices8 = documentSnapshot.data()['choices8'];
+        game.choices9 = documentSnapshot.data()['choices9'];
 
         // put all four choices arrays in one main array
         game.choices = [
           game.choices0,
           game.choices1,
           game.choices2,
-          game.choices3
+          game.choices3,
+          game.choices4,
+          game.choices5,
+          game.choices6,
+          game.choices7,
+          game.choices8,
+          game.choices9
         ];
 
         // define answers

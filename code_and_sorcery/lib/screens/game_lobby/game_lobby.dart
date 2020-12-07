@@ -19,6 +19,7 @@ String player2Class;
 String player3Class;
 String player4Class;
 String questID;
+String gameLinkValue = "";
 bool pushedGo;
 int startCountdown;
 
@@ -31,6 +32,13 @@ class GameLobby extends StatefulWidget {
 
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
+  // @override
+  // void initState() {
+  //   // update game content when Game is initiated!!
+  //   // updateGameContent('JIfrv2SOOdlxkv5RJP3i');
+  //   // startTimer();
+  // }
+
   int counter = 5;
   Timer readyTimer;
   final gameLinkController = TextEditingController();
@@ -92,7 +100,7 @@ class GameLobbySL extends State<GameLobby> {
                 onPressed: () {
                   checkP1GO();
                   startTimer();
-                  updateGameContent(questID);
+                  // updateGameContent(questID);
                 },
                 child: Text('Go to game'),
               ),
@@ -176,19 +184,6 @@ void removePlayer() async {
           .update(playerCheck, {'player4': "", 'player4Class': ""});
     }
   });
-
-  void getQuestID() async {
-    await FirebaseFirestore.instance
-        .collection('games')
-        .doc('gameID')
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // define questions
-        questID = documentSnapshot.data()['questID'];
-      }
-    });
-  }
 
   void updateGameContent(String questName) async {
     await FirebaseFirestore.instance

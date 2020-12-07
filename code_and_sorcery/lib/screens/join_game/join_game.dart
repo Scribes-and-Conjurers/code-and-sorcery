@@ -53,6 +53,7 @@ class JoinGameState extends State<JoinGame> {
                 ElevatedButton(
                   onPressed: () {
                     setPlayer();
+                    getQuestID();
                     Navigator.pushNamed(context, '/lobby');
                   },
                   child: Text('Submit'),
@@ -92,6 +93,19 @@ class JoinGameState extends State<JoinGame> {
                 {'player4': username, 'player4Class': playerClass});
           }
         }
+      }
+    });
+  }
+
+  void getQuestID() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        questID = documentSnapshot.data()['questID'];
       }
     });
   }

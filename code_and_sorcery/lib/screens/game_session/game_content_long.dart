@@ -14,8 +14,19 @@ import 'game_general_utils.dart';
 import 'game_session.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-class GameContent {
-  var images = ["slimegreen1", "slimered1", "bossmonster", "bossmonster"];
+class GameContentLong {
+  var images = [
+    "ghost_white",
+    "ghost_blue",
+    "ghost_black",
+    "medghost_white",
+    "medghost_black",
+    "medghost_red",
+    "zombie_green",
+    "boss001",
+    "boss001",
+    "boss001",
+  ];
 
   final CollectionReference questionCollection =
       FirebaseFirestore.instance.collection('mc_question');
@@ -28,7 +39,13 @@ class GameContent {
     "What does JS stand for?",
     "What is Vue.js?",
     "Best JavaScript library ever?",
-    "How do you print to the console in JS?"
+    "How do you print to the console in JS?",
+    "Error: couldn't load question",
+    "Error: couldn't load question",
+    "Error: couldn't load question",
+    "Error: couldn't load question",
+    "Error: couldn't load question",
+    "Error: couldn't load question"
   ];
 
   List<dynamic> choices0 = [
@@ -38,18 +55,30 @@ class GameContent {
     "Just subtleties"
   ];
   List<dynamic> choices1 = ["Encoder", "Framework", "Language", "Library"];
-  List<dynamic> choices2 = ["React", "Vue", "Angular", "Underscore"];
+  List<dynamic> choices2 = ["React", "Vue"];
   List<dynamic> choices3 = [
     "console.log()",
     "print()",
     "log.Debug();",
     "WriteLine();"
   ];
+  List<dynamic> choices4 = ["Loading", "Loading"];
+  List<dynamic> choices5 = ["Loading", "Loading", "Loading", "Loading"];
+  List<dynamic> choices6 = ["Loading", "Loading", "Loading", "Loading"];
+  List<dynamic> choices7 = ["Loading", "Loading", "Loading", "Loading"];
+  List<dynamic> choices8 = ["Loading", "Loading"];
+  List<dynamic> choices9 = ["Loading", "Loading", "Loading", "Loading"];
 
   List<List<dynamic>> choices = [
     ["loading", "loading", "loading", "loading"],
     ["loading", "loading", "loading", "loading"],
+    ["loading", "loading"],
     ["loading", "loading", "loading", "loading"],
+    ["loading", "loading"],
+    ["loading", "loading", "loading", "loading"],
+    ["loading", "loading", "loading", "loading"],
+    ["loading", "loading", "loading", "loading"],
+    ["loading", "loading"],
     ["loading", "loading", "loading", "loading"],
   ];
 
@@ -57,6 +86,12 @@ class GameContent {
     "JavaScript",
     "Library",
     "Vue",
-    "console.log()"
+    "console.log()",
+    "Loading",
+    "Loading",
+    "Loading",
+    "Loading",
+    "Loading",
+    "Loading",
   ];
 }
