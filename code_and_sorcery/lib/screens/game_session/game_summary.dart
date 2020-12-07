@@ -29,20 +29,15 @@ class Summary extends StatelessWidget {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          // Builder(builder: (context) {
-                          //   return multiplayerPointsStream(context);
-                          // }),
+                          Builder(builder: (context) {
+                            return twoPlayersPointsStream(context);
+                          }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
-                                // if (!isMultiplayer) {
-                                //   updateSinglePlayerPoints();
-                                //   updateSPGuildPoints();
-                                // } else {
-                                //   updateMultiplayerPoints();
-                                //   updateMPGuildPoints();
-                                // }
+                                updateMultiplayerPoints();
+                                updateMPGuildPoints();
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
@@ -112,8 +107,7 @@ class SummarySP extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Builder(builder: (context) {
-                            return Text('Your Score: $score',
-                              style: TextStyle(fontSize: 25, color: Colors.black),);
+                            return singlePlayerPointsStream(context);
                           }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
