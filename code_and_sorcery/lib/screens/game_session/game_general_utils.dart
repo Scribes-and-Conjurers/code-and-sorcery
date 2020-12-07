@@ -27,7 +27,7 @@ Widget singlePlayerPointsStream(BuildContext context) {
         }
         var userDocument = snapshot.data;
         return Text(
-          player1 +
+          userDocument['player1'] +
               "'s score: " +
               userDocument['player1Points'].toString() +
               '\n\n',
@@ -52,6 +52,34 @@ Widget partyHealthModifier(BuildContext context) {
         return Text(
           userDocument['partyHealth'].toString(),
           style: TextStyle(fontSize: 25, color: Colors.black),
+        );
+      });
+}
+
+// live updating of 2 players' points
+Widget twoPlayersPointsStream(BuildContext context) {
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var userDocument = snapshot.data;
+        return Text(
+          userDocument['player1'] +
+              "'s score: " +
+              userDocument['player1Points'].toString() +
+              '\n\n' +
+              userDocument['player2'] +
+              "'s score: " +
+              userDocument['player2Points'].toString() +
+              '\n\n' +
+              'Multiplayer Bonus! +2',
+          style: TextStyle(
+              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
         );
       });
 }

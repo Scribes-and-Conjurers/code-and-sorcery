@@ -148,7 +148,7 @@ class Homepage extends StatelessWidget {
                     print('null');
                     alertGameNull(context);
                   }
-                  gameFullCheck();
+                  // gameFullCheck();
                   if (gameFull == false) {
                     print('can set');
                     setPlayer();
@@ -227,6 +227,8 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   gameID = randomAlpha(2);
                   createMPGame();
+                  getQuestID();
+
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/lobby');
                 },
@@ -256,7 +258,7 @@ class Homepage extends StatelessWidget {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
-      ' finished': false,
+      'finished': false,
       'partyHealth': 3,
       'player1': username,
       'player1Points': 0,
@@ -273,6 +275,9 @@ class Homepage extends StatelessWidget {
       'nbOfPlayers': 1,
       'pushedGo': false,
       'startCountdown': 5,
+      'selectAnswer': 0,
+      'questID': 'JIfrv2SOOdlxkv5RJP3i',
+      // 'questionTimer': 6,
     });
   }
 
@@ -284,6 +289,20 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+    });
+  }
+
+  void getQuestID() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        questID = documentSnapshot.data()['questID'];
+        print(questID);
+      }
     });
   }
 
@@ -327,39 +346,40 @@ class Homepage extends StatelessWidget {
       }
     });
   }
-
-  void gameFullCheck() async {
-    await FirebaseFirestore.instance.runTransaction((transaction) async {
-      DocumentReference playerCheck =
-          FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-      DocumentSnapshot snapshot = await transaction.get(playerCheck);
-      nbOfPlayers = snapshot.data()['nbOfPlayers'];
-      if (nbOfPlayers >= 1 && nbOfPlayers > 4) {
-        gameFull = false;
-        print(nbOfPlayers);
-        print(nbOfPlayers);
-      } else if (nbOfPlayers == 4) {
-        gameFull = true;
-        print(nbOfPlayers);
-        print(nbOfPlayers);
-      }
-    });
-
-    // void gameNullCheck() async {
-    //   await FirebaseFirestore.instance.runTransaction((transaction) async {
-    //     DocumentReference gameCheck =
-    //         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-    //     DocumentSnapshot snapshot = await transaction.get(gameCheck);
-    //     if (gameCheck) {
-    //       gameNull = true;
-    //     }
-    //     if (!gameCheck.exists) {
-    //       gameNull = false;
-    //     }
-    //   });
-    // }
-  }
 }
+
+// void gameFullCheck() async {
+//   await FirebaseFirestore.instance.runTransaction((transaction) async {
+//     DocumentReference playerCheck =
+//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
+//     DocumentSnapshot snapshot = await transaction.get(playerCheck);
+//     nbOfPlayers = snapshot.data()['nbOfPlayers'];
+//     if (nbOfPlayers >= 1 && nbOfPlayers > 4) {
+//       gameFull = false;
+//       print(nbOfPlayers);
+//       print(nbOfPlayers);
+//     } else if (nbOfPlayers == 4) {
+//       gameFull = true;
+//       print(nbOfPlayers);
+//       print(nbOfPlayers);
+//     }
+//   });
+
+// void gameNullCheck() async {
+//   await FirebaseFirestore.instance.runTransaction((transaction) async {
+//     DocumentReference gameCheck =
+//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
+//     DocumentSnapshot snapshot = await transaction.get(gameCheck);
+//     if (gameCheck) {
+//       gameNull = true;
+//     }
+//     if (!gameCheck.exists) {
+//       gameNull = false;
+//     }
+//   });
+// }
+//   }
+// }
 
 // void checkGameFull() async {
 //   await FirebaseFirestore.instance.runTransaction((transaction) async {

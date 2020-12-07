@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
-import '../game_lobby/game_lobby.dart';
+// import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
 
 import './game_image_utils.dart';
@@ -19,7 +19,7 @@ var player1Score = 0;
 var player2Score = 0;
 
 // game variables
-var finalScore = 0;
+var yourScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
 var longQuestion = true;
@@ -91,7 +91,7 @@ class _QuestLongState extends State<QuestLong> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
-                                    "Score: $finalScore",
+                                    "Score: $yourScore",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
@@ -165,14 +165,9 @@ class _QuestLongState extends State<QuestLong> {
                                   if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                      yourScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -193,18 +188,12 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][1] ==
+                                  if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    // startTimer();
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                     soloScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -225,17 +214,12 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][2] ==
+                                  if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                      yourScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -256,17 +240,12 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][3] ==
+                                  if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                      yourScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -341,7 +320,7 @@ class _QuestLongState extends State<QuestLong> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
-                                    "Score: $finalScore",
+                                    "Score: $yourScore",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
@@ -415,14 +394,9 @@ class _QuestLongState extends State<QuestLong> {
                                   if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                      yourScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -443,18 +417,12 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][1] ==
+                                  if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    // startTimer();
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
+                                    // ONLY FOR SOLO PLAY
+                                      yourScore++;
                                       updateGamePlayer1();
-                                    } else {
-                                      player2Score++;
-                                      updateGamePlayer2();
-                                    }
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -509,7 +477,7 @@ class _QuestLongState extends State<QuestLong> {
       // close current screen:
       Navigator.pop(context);
       // reset variables:
-      finalScore = 0;
+      yourScore = 0;
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
@@ -528,10 +496,11 @@ class _QuestLongState extends State<QuestLong> {
     }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
+        questionNumber = 0;
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => new Summary(score: finalScore)));
+                builder: (context) => new SummarySP(score: yourScore)));
       } else {
         questionNumber++;
       }
