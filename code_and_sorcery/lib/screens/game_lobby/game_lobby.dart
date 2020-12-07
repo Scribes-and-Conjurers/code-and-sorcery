@@ -32,26 +32,23 @@ class GameLobby extends StatefulWidget {
 class GameLobbySL extends State<GameLobby> {
   int counter = 5;
   Timer readyTimer;
-  Timer gameSessionTimer;
-  // final databaseReference = FirebaseFirestore.instance;
   final gameLinkController = TextEditingController();
-  final String _collection = 'collectionName';
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   void startTimer() {
     if (readyTimer != null) {
       readyTimer.cancel();
     }
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (counter > 0) {
-          decreaseCountdown();
-        } else {
-          readyTimer.cancel();
-          //   Navigator.push(
-          //       context, MaterialPageRoute(builder: (context) => Game1()));};
-        }
-      });
+      if (this.mounted) {
+        setState(() {
+          if (counter > 0) {
+            decreaseCountdown();
+          } else {
+            readyTimer.cancel();
+            stopCountdown();
+          }
+        });
+      }
     });
   }
 
@@ -75,15 +72,6 @@ class GameLobbySL extends State<GameLobby> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              // (counter > 0)
-              //     ? Text("")
-              //     : Text("Let's go!",
-              //         style: TextStyle(
-              //             color: Colors.white,
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 48)),
-              // Text('$counter',
-              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48)),
               startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
@@ -101,20 +89,8 @@ class GameLobbySL extends State<GameLobby> {
                   }),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
                   checkP1GO();
-                  getSetPlayers();
                   startTimer();
-
-                  gameSessionTimer =
-                      new Timer.periodic(new Duration(seconds: 6), (time) {
-                    Navigator.pushNamed(context, '/ingame');
-                    gameSessionTimer.cancel();
-                  });
-
-                  // checkIfSoloGame();
-                  // Navigator.pushNamed(context, '/ingame');
                 },
                 child: Text('Go to game'),
               ),
@@ -160,6 +136,22 @@ void decreaseCountdown() async {
   });
 }
 
+void stopCountdown() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    startCountdown = snapshot.data()['startCountdown'];
+    pushedGo = snapshot.data()['pushedGo'];
+    if (pushedGo == true && startCountdown == 0) {
+      await transaction.update(playerCheck, {
+        'startCountdown': 0,
+        'startedAt': FieldValue.serverTimestamp(),
+      });
+    }
+  });
+}
+
 void removePlayer() async {
   await FirebaseFirestore.instance.runTransaction((transaction) async {
     DocumentReference playerCheck =
@@ -184,32 +176,6 @@ void removePlayer() async {
   });
 }
 
-void getSetPlayers() async {
-  await FirebaseFirestore.instance
-      .collection('games')
-      .doc(gameID)
-      .get()
-      .then((DocumentSnapshot documentSnapshot) {
-    if (documentSnapshot.exists) {
-      print('Document data: ${documentSnapshot.data()}');
-      player1 = documentSnapshot.data()['player1'];
-      player2 = documentSnapshot.data()['player2'];
-      player3 = documentSnapshot.data()['player3'];
-      player4 = documentSnapshot.data()['player4'];
-      player1Class = documentSnapshot.data()['player1Class'];
-      player2Class = documentSnapshot.data()['player2Class'];
-      player3Class = documentSnapshot.data()['player3Class'];
-      player4Class = documentSnapshot.data()['player4Class'];
-      print(player2);
-      print(player3);
-      print(player4);
-      print(player2Class);
-      print(player3Class);
-      print(player4Class);
-    }
-  });
-}
-
 Widget buildUser(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
@@ -223,12 +189,20 @@ Widget buildUser(BuildContext context) {
         var userDocument = snapshot.data;
         return Text(
           userDocument["player1"] +
+              '  -  ' +
+              userDocument['player1Class'] +
               '\n\n' +
               userDocument["player2"] +
+              '  -  ' +
+              userDocument['player2Class'] +
               '\n\n' +
               userDocument["player3"] +
+              '  -  ' +
+              userDocument['player3Class'] +
               '\n\n' +
-              userDocument["player4"],
+              userDocument["player4"] +
+              '  -  ' +
+              userDocument['player4Class'],
           style: TextStyle(
               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         );
@@ -236,34 +210,32 @@ Widget buildUser(BuildContext context) {
 }
 
 Widget startCountdownStream(BuildContext context) {
+  Timer gameSessionTimer;
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
           .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        var fiveSecondCountdown = snapshot.data['startCountdown'];
+        var gameStarted = snapshot.data['startedAt'];
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        var fiveSecondCountdown = snapshot.data;
-        return Text(
-          fiveSecondCountdown['startCountdown'].toString(),
-          style: TextStyle(fontSize: 25),
-        );
+        if (fiveSecondCountdown == 1 && gameStarted == null) {
+          gameSessionTimer = Timer(Duration(seconds: 1), () {
+            Navigator.pushNamed(context, '/ingame');
+            gameSessionTimer.cancel();
+          });
+          return Text(
+            "1",
+            style: TextStyle(fontSize: 25),
+          );
+        } else {
+          return Text(
+            fiveSecondCountdown.toString(),
+            style: TextStyle(fontSize: 25),
+          );
+        }
       });
 }
-
-/*
-Players in lobby
-Player 1 push GO TO GAME
-      O     CHECK IF PLAYER 1 USERNAME == PLAYER1 IN GAME OBJECT
-      O     IF FALSE, DO NOTHING
-      O     IF TRUE, UPDATE GAME OBJECT PUSHEDGO FIELD TO TRUE
-
-      O     SEND THIS CHANGE TO ALL PLAYER
-      X     SEND MESSAGE TO GAME SESSION TO START LOADING ASSETS
-            IN APP, 5 SECONDS TIMER STARTS
-            WHEN TIMER REACHES 0
-            SPLASH SCREEN
-            ALL PLAYERS MOVE TO GAME SESSION.
- */

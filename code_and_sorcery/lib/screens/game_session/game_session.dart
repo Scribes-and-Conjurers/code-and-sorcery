@@ -301,6 +301,7 @@ class Game1State extends State<Game1> {
                               minWidth: 240.0,
                               height: 30.0,
                               onPressed: () {
+                                // removePlayer();
                                 resetGame();
                               },
                               child: Text(
@@ -318,6 +319,30 @@ class Game1State extends State<Game1> {
   void decreasePartyHealth() async {
     await databaseReference.collection("games").doc(gameID).update({
       'partyHealth': FieldValue.increment(-1),
+    });
+  }
+
+  void removePlayer() async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          FirebaseFirestore.instance.collection('games').doc(gameID);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player1db = snapshot.data()['player1'];
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+      if (player1db == username) {
+        await transaction.delete(playerCheck);
+      } else if (player2db == username) {
+        await transaction
+            .update(playerCheck, {'player2': "", 'player2Class': ""});
+      } else if (player3db == username) {
+        await transaction
+            .update(playerCheck, {'player3': "", 'player3Class': ""});
+      } else if (player4db == username) {
+        await transaction
+            .update(playerCheck, {'player4': "", 'player4Class': ""});
+      }
     });
   }
 
