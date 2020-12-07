@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import 'game_settings.dart';
 
-String player1;
-String player1Class;
+String player1 = username;
+String player1Class = playerClass;
 String gameLinkValue = "";
 
 class GameLobbySP extends StatelessWidget {
@@ -39,7 +39,7 @@ class GameLobbySP extends StatelessWidget {
                   if (player1Class == "Warrior") {
                     updateGameHealth();
                   }
-                  Navigator.pushNamed(context, '/ingame');
+                  Navigator.pushNamed(context, '/ingameLong');
                 },
                 child: Text('Go to game'),
               ),
