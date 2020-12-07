@@ -18,6 +18,7 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
+String questID;
 bool pushedGo;
 int startCountdown;
 
@@ -91,6 +92,7 @@ class GameLobbySL extends State<GameLobby> {
                 onPressed: () {
                   checkP1GO();
                   startTimer();
+                  updateGameContent(questID);
                 },
                 child: Text('Go to game'),
               ),
@@ -174,6 +176,50 @@ void removePlayer() async {
           .update(playerCheck, {'player4': "", 'player4Class': ""});
     }
   });
+
+  void getQuestID() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc('gameID')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        questID = documentSnapshot.data()['questID'];
+      }
+    });
+  }
+
+  void updateGameContent(String questName) async {
+    await FirebaseFirestore.instance
+        .collection('ready-quests')
+        .doc(questName)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // define questions
+        game.questions = documentSnapshot.data()['questions'];
+
+        // define choices for each question
+        game.choices0 = documentSnapshot.data()['choices1'];
+        game.choices1 = documentSnapshot.data()['choices2'];
+        game.choices2 = documentSnapshot.data()['choices3'];
+        game.choices3 = documentSnapshot.data()['choices4'];
+
+        // put all four choices arrays in one main array
+        game.choices = [
+          game.choices0,
+          game.choices1,
+          game.choices2,
+          game.choices3
+        ];
+
+        // define answers
+        game.correctAnswers = documentSnapshot.data()['answers'];
+        print('answers: ${game.correctAnswers}');
+      }
+    });
+  }
 }
 
 Widget buildUser(BuildContext context) {

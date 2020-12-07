@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
-
 import './game_image_utils.dart';
 import './game_summary.dart';
 import './long_game_session.dart';
@@ -19,6 +18,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 var player1Score = 0;
 var player2Score = 0;
+var player3Score = 0;
+var player4Score = 0;
 // int counter = 10;
 // Timer questionTimer;
 
@@ -221,6 +222,7 @@ class Game1State extends State<Game1> {
                                   if (game.choices[questionNumber][1] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
+                                    startTimer();
                                     // startTimer();
                                     finalScore++;
                                     if (player1 == username) {
@@ -233,6 +235,7 @@ class Game1State extends State<Game1> {
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
+                                    startTimer();
                                   }
                                   updateQuestion();
                                 },
@@ -252,6 +255,7 @@ class Game1State extends State<Game1> {
                                 onPressed: () {
                                   if (game.choices[questionNumber][2] ==
                                       game.correctAnswers[questionNumber]) {
+                                    startTimer();
                                     debugPrint('correctamundo');
                                     finalScore++;
                                     if (player1 == username) {
@@ -260,6 +264,7 @@ class Game1State extends State<Game1> {
                                     } else {
                                       player2Score++;
                                       updateGamePlayer2();
+                                      startTimer();
                                     }
                                   } else {
                                     decreasePartyHealth();
@@ -283,6 +288,7 @@ class Game1State extends State<Game1> {
                                 onPressed: () {
                                   if (game.choices[questionNumber][3] ==
                                       game.correctAnswers[questionNumber]) {
+                                    startTimer();
                                     debugPrint('correctamundo');
                                     finalScore++;
                                     if (player1 == username) {
@@ -294,6 +300,7 @@ class Game1State extends State<Game1> {
                                     }
                                   } else {
                                     decreasePartyHealth();
+                                    startTimer();
                                     debugPrint('oh noes... that is incorrect');
                                   }
                                   updateQuestion();
@@ -393,36 +400,36 @@ class Game1State extends State<Game1> {
     });
   }
 
-  void updateGameContent(String questName) async {
-    await FirebaseFirestore.instance
-        .collection('ready-quests')
-        .doc(questName)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // define questions
-        game.questions = documentSnapshot.data()['questions'];
+  // void updateGameContent(String questName) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('ready-quests')
+  //       .doc(questName)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       // define questions
+  //       game.questions = documentSnapshot.data()['questions'];
 
-        // define choices for each question
-        game.choices0 = documentSnapshot.data()['choices1'];
-        game.choices1 = documentSnapshot.data()['choices2'];
-        game.choices2 = documentSnapshot.data()['choices3'];
-        game.choices3 = documentSnapshot.data()['choices4'];
+  //       // define choices for each question
+  //       game.choices0 = documentSnapshot.data()['choices1'];
+  //       game.choices1 = documentSnapshot.data()['choices2'];
+  //       game.choices2 = documentSnapshot.data()['choices3'];
+  //       game.choices3 = documentSnapshot.data()['choices4'];
 
-        // put all four choices arrays in one main array
-        game.choices = [
-          game.choices0,
-          game.choices1,
-          game.choices2,
-          game.choices3
-        ];
+  //       // put all four choices arrays in one main array
+  //       game.choices = [
+  //         game.choices0,
+  //         game.choices1,
+  //         game.choices2,
+  //         game.choices3
+  //       ];
 
-        // define answers
-        game.correctAnswers = documentSnapshot.data()['answers'];
-        print('answers: ${game.correctAnswers}');
-      }
-    });
-  }
+  //       // define answers
+  //       game.correctAnswers = documentSnapshot.data()['answers'];
+  //       print('answers: ${game.correctAnswers}');
+  //     }
+  //   });
+  // }
 
   void updateGamePlayer1() async {
     await databaseReference.collection("games").doc(gameID).update({
