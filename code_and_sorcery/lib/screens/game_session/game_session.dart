@@ -65,7 +65,7 @@ class Game1State extends State<Game1> {
   void initState() {
     // update game content when Game is initiated!!
     updateGameContent('JIfrv2SOOdlxkv5RJP3i');
-    startTimer();
+    // startTimer();
   }
 
   void startTimer() {
@@ -223,7 +223,7 @@ class Game1State extends State<Game1> {
                                   if (game.choices[questionNumber][1] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    startTimer();
+                                    // startTimer();
                                     // startTimer();
                                     finalScore++;
                                     if (player1 == username) {
@@ -236,7 +236,7 @@ class Game1State extends State<Game1> {
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
-                                    startTimer();
+                                    // startTimer();
                                   }
                                   updateQuestion();
                                 },
@@ -256,7 +256,7 @@ class Game1State extends State<Game1> {
                                 onPressed: () {
                                   if (game.choices[questionNumber][2] ==
                                       game.correctAnswers[questionNumber]) {
-                                    startTimer();
+                                    // startTimer();
                                     debugPrint('correctamundo');
                                     finalScore++;
                                     if (player1 == username) {
@@ -289,7 +289,7 @@ class Game1State extends State<Game1> {
                                 onPressed: () {
                                   if (game.choices[questionNumber][3] ==
                                       game.correctAnswers[questionNumber]) {
-                                    startTimer();
+                                    // startTimer();
                                     debugPrint('correctamundo');
                                     finalScore++;
                                     if (player1 == username) {
