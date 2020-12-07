@@ -45,21 +45,7 @@ class Game1State extends State<Game1> {
   int counter = 5;
   Timer readyTimer;
   final databaseReference = FirebaseFirestore.instance;
-  // void startTimer() {
-  //   counter = 10;
-  //   if (questionTimer != null) {
-  //     questionTimer.cancel();
-  //   }
-  //   questionTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-  //     setState(() {
-  //       if (counter > 0) {
-  //         counter--;
-  //       } else {
-  //         questionTimer.cancel();
-  //       }
-  //     });
-  //   });
-  // }
+
 
   @override
   void initState() {

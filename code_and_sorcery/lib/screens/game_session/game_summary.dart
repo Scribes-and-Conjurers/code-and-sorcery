@@ -29,9 +29,7 @@ class Summary extends StatelessWidget {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          // Builder(builder: (context) {
-                          //   return multiplayerPointsStream(context);
-                          // }),
+                          multiplayerPointsStream(context),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
                               color: Colors.deepPurple,
