@@ -6,7 +6,7 @@ String player1;
 String player1Class;
 String gameLinkValue = "";
 
-class GameLobby extends StatelessWidget {
+class GameLobbySP extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -85,5 +85,4 @@ class GameLobby extends StatelessWidget {
       'partyHealth': FieldValue.increment(1),
     });
   }
-
 }
