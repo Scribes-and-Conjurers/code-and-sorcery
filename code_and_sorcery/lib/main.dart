@@ -16,7 +16,7 @@ import './screens/game_session/long_game_session.dart';
 import './screens/join_game/join_game.dart';
 import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
-
+import './screens/game_lobby/game_settings.dart';
 // import './screens/login/authenticator.dart';
 import './screens/loadingscreen/loadingscreen.dart';
 
@@ -38,6 +38,7 @@ void main() async {
       '/setup': (context) => AccountSetup(),
       '/lobby': (context) => GameLobby(),
       '/lobbySP': (context) => GameLobbySP(),
+      '/settings': (context) => GameSettings(),
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),

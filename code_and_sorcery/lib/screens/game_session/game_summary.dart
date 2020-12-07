@@ -29,18 +29,15 @@ class Summary extends StatelessWidget {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          multiplayerPointsStream(context),
+                          Builder(builder: (context) {
+                            return twoPlayersPointsStream(context);
+                          }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
-                                // if (!isMultiplayer) {
-                                //   updateSinglePlayerPoints();
-                                //   updateSPGuildPoints();
-                                // } else {
-                                //   updateMultiplayerPoints();
-                                //   updateMPGuildPoints();
-                                // }
+                                updateMultiplayerPoints();
+                                updateMPGuildPoints();
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
@@ -87,6 +84,66 @@ class Summary extends StatelessWidget {
   void updateMPGuildPoints() async {
     await databaseReference.collection("guilds").doc(guild).update({
       'totalPoints': FieldValue.increment(score + 2),
+    });
+  }
+}
+
+// This summary is for single player
+class SummarySP extends StatelessWidget {
+  final databaseReference = FirebaseFirestore.instance;
+  final int score;
+  SummarySP({Key key, @required this.score}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<QuerySnapshot>.value(
+        value: game.questionSnapshot,
+        child: WillPopScope(
+            onWillPop: () async => false,
+            child: Scaffold(
+                body: Container(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Builder(builder: (context) {
+                            return singlePlayerPointsStream(context);
+                          }),
+                          Padding(padding: EdgeInsets.all(10.0)),
+                          MaterialButton(
+                              color: Colors.deepPurple,
+                              onPressed: () {
+                                  updateSPGuildPoints();
+                                updateGame();
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              child: Text("Leave the game",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.white,
+                                  )))
+                        ])))));
+  }
+
+  // for single player game
+  void updateSinglePlayerPoints() async {
+    await databaseReference.collection("users").doc(uID).update({
+      'points': FieldValue.increment(score),
+    });
+  }
+
+  // for single player
+  void updateSPGuildPoints() async {
+    await databaseReference.collection("guilds").doc(guild).update({
+      'totalPoints': FieldValue.increment(score),
+    });
+  }
+
+  void updateGame() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      'finished': true,
     });
   }
 }
