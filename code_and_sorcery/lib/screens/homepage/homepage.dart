@@ -256,7 +256,7 @@ class Homepage extends StatelessWidget {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
-      ' finished': false,
+      'finished': false,
       'partyHealth': 3,
       'player1': username,
       'player1Points': 0,
@@ -273,6 +273,8 @@ class Homepage extends StatelessWidget {
       'nbOfPlayers': 1,
       'pushedGo': false,
       'startCountdown': 5,
+      'selectAnswer': 0,
+      // 'questionTimer': 6,
     });
   }
 
