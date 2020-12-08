@@ -223,9 +223,11 @@ class Homepage extends StatelessWidget {
                 child: Text('MULTIPLAYER'),
                 onPressed: () {
                   gameID = randomAlpha(2);
-                  createMPGame();
-                  // getQuestID();
-
+                  if (playerClass == 'Warrior')
+                    createMPGameWarrior();
+                  else {
+                    createMPGameWizard();
+                  }
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/lobby');
                 },
@@ -251,12 +253,41 @@ class Homepage extends StatelessWidget {
   }
 
   // Create a multiplayer game
-  void createMPGame() async {
+  void createMPGameWizard() async {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
       'finished': false,
       'partyHealth': 3,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+      'player1isCorrect': false,
+      'player2': '',
+      'player2Class': '',
+      'player2Points': 0,
+      'player2isCorrect': false,
+      'player3': '',
+      'player3Class': '',
+      'player3Points': 0,
+      'player3isCorrect': false,
+      'player4': '',
+      'player4Class': '',
+      'player4Points': 0,
+      'player4isCorrect': false,
+      'nbOfPlayers': 1,
+      'pushedGo': false,
+      'startCountdown': 5,
+      'selectAnswer': 0,
+    });
+  }
+
+  void createMPGameWarrior() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'createdAt': FieldValue.serverTimestamp(),
+      'startedAt': null,
+      'finished': false,
+      'partyHealth': 4,
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,

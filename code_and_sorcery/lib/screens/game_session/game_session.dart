@@ -55,6 +55,7 @@ class GameSessionState extends State<GameSession> {
     // update game content when Game is initiated!!
     updateGameContent('JIfrv2SOOdlxkv5RJP3i');
     startTimer();
+    setPlayers();
   }
 
   void startTimer() {
@@ -326,6 +327,21 @@ class GameSessionState extends State<GameSession> {
                             )),
                       ]))));
     }
+  }
+
+  void setPlayers() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        player1db = documentSnapshot.data()['player1'];
+        player2db = documentSnapshot.data()['player2'];
+        player3db = documentSnapshot.data()['player3'];
+        player4db = documentSnapshot.data()['player4'];
+      }
+    });
   }
 
   void incrementPlayerPoints() async {
