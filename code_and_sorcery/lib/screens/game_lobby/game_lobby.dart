@@ -7,10 +7,10 @@ import 'dart:async';
 // import '../login/authenticator.dart';
 import '../../global_variables/global_variables.dart';
 
-String player1;
-String player2;
-String player3;
-String player4;
+// String player1;
+// String player2;
+// String player3;
+// String player4;
 String player1db;
 String player2db;
 String player3db;
