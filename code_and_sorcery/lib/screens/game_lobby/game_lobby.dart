@@ -213,17 +213,30 @@ void removePlayer() async {
     player2db = snapshot.data()['player2'];
     player3db = snapshot.data()['player3'];
     player4db = snapshot.data()['player4'];
+    if (playerClass == "Warrior") {
+      await transaction
+          .update(playerCheck, {'partyHealth': FieldValue.increment(-1)});
+    }
     if (player1db == username) {
       await transaction.delete(playerCheck);
     } else if (player2db == username) {
-      await transaction
-          .update(playerCheck, {'player2': "", 'player2Class': ""});
+      await transaction.update(playerCheck, {
+        'player2': "",
+        'player2Class': "",
+        'nbOfPlayers': FieldValue.increment(-1)
+      });
     } else if (player3db == username) {
-      await transaction
-          .update(playerCheck, {'player3': "", 'player3Class': ""});
+      await transaction.update(playerCheck, {
+        'player3': "",
+        'player3Class': "",
+        'nbOfPlayers': FieldValue.increment(-1)
+      });
     } else if (player4db == username) {
-      await transaction
-          .update(playerCheck, {'player4': "", 'player4Class': ""});
+      await transaction.update(playerCheck, {
+        'player4': "",
+        'player4Class': "",
+        'nbOfPlayers': FieldValue.increment(-1)
+      });
     }
   });
 }
