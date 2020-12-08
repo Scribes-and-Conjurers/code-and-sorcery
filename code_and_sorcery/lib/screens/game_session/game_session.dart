@@ -372,18 +372,6 @@ class GameSessionState extends State<GameSession> {
     });
   }
 
-  void answerCounterIncrease() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'answerCount': FieldValue.increment(1),
-    });
-  }
-
-  void answerCounterReset() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'answerCount': 0,
-    });
-  }
-
   void removePlayer() async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference playerCheck =
