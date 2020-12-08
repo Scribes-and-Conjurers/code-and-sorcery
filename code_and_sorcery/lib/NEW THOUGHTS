@@ -1,0 +1,25 @@
+IN ONE ROUND :
+
+O    ALl players have a isCorrect field, which is false by default
+
+O    isCorrect only becomes true if a player clicks the correct button
+
+    At timerEnd, increment points to correct players
+
+    Decrease HP for party, for numbers of incorrect players
+
+    Reset isCorrect to false
+    Reset timer
+    Update next question
+
+
+Without updating game content, update Player1isCorrect = true
+    If true, choice becomes green and cannot click again, gets one point
+    If false, choice becomes red
+
+
+Local variable checks if the player has clicked already or not, and onPressed conditional checks if you can click or not
+
+
+FIX WARRIOR HEALTH
+ONE FUNCTION TO RESET EVERYONE TO FALSE
