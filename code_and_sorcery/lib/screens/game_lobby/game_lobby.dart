@@ -12,10 +12,7 @@ import '../join_game/join_game.dart';
 // String player2;
 // String player3;
 // String player4;
-String player1db;
-// String player2db;
-// String player3db;
-// String player4db;
+
 String player1Class;
 String player2Class;
 String player3Class;

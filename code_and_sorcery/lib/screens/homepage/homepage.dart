@@ -7,9 +7,6 @@ import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 
-String player2db;
-String player3db;
-String player4db;
 String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;

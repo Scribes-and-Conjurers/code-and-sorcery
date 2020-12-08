@@ -23,3 +23,4 @@ Local variable checks if the player has clicked already or not, and onPressed co
 
 ONE FUNCTION TO RESET EVERYONE TO FALSE
 STOP TIMER ON SUMMARY
+IF NO ANSWER AFTER TIMER, REDUCE HEALTH BY ONE
