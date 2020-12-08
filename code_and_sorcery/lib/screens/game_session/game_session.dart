@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../login/authenticator.dart';
 import '../game_lobby/game_lobby.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +20,13 @@ var player1Score = 0;
 var player2Score = 0;
 var player3Score = 0;
 var player4Score = 0;
+bool hasPlayed = false;
 // int counter = 10;
 // Timer questionTimer;
+int player1Points;
+int player2Points;
+int player3Points;
+int player4Points;
 
 // game variables
 var finalScore = 0;
@@ -33,25 +37,24 @@ var buttonNumber = 0;
 var game = new GameContent();
 
 // Game widget class
-class Game1 extends StatefulWidget {
+class GameSession extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new Game1State();
+    return new GameSessionState();
   }
 }
 
 // Game widget state
-class Game1State extends State<Game1> {
-  int counter = 5;
+class GameSessionState extends State<GameSession> {
+  int counter = 10;
   Timer readyTimer;
   final databaseReference = FirebaseFirestore.instance;
-
 
   @override
   void initState() {
     // update game content when Game is initiated!!
     updateGameContent('JIfrv2SOOdlxkv5RJP3i');
-    // startTimer();
+    startTimer();
   }
 
   void startTimer() {
@@ -64,9 +67,10 @@ class Game1State extends State<Game1> {
           if (counter > 0) {
             counter--;
           } else {
-            readyTimer.cancel();
+            // readyTimer.cancel();
             updateQuestion();
-            counter = 5;
+            setPlayerFalse();
+            counter = 10;
           }
         });
       }
@@ -116,39 +120,39 @@ class Game1State extends State<Game1> {
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
-                        // image
-                        FutureBuilder(
-                            future: getImage(
-                                context, "${game.images[questionNumber]}.png"),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width / 1,
-                                  height:
-                                      MediaQuery.of(context).size.width / 1.7,
-                                  child: snapshot.data,
-                                );
-                              }
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1,
-                                    height:
-                                        MediaQuery.of(context).size.width / 1.7,
-                                    child: SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                      child: CircularProgressIndicator(),
-                                    ));
-                              }
-                              return SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: CircularProgressIndicator(),
-                              );
-                            }),
+                        // // image
+                        // FutureBuilder(
+                        //     future: getImage(
+                        //         context, "${game.images[questionNumber]}.png"),
+                        //     builder: (context, snapshot) {
+                        //       if (snapshot.connectionState ==
+                        //           ConnectionState.done) {
+                        //         return Container(
+                        //           width: MediaQuery.of(context).size.width / 1,
+                        //           height:
+                        //               MediaQuery.of(context).size.width / 1.7,
+                        //           child: snapshot.data,
+                        //         );
+                        //       }
+                        //       if (snapshot.connectionState ==
+                        //           ConnectionState.waiting) {
+                        //         return Container(
+                        //             width:
+                        //                 MediaQuery.of(context).size.width / 1,
+                        //             height:
+                        //                 MediaQuery.of(context).size.width / 1.7,
+                        //             child: SizedBox(
+                        //               height: 10,
+                        //               width: 10,
+                        //               child: CircularProgressIndicator(),
+                        //             ));
+                        //       }
+                        //       return SizedBox(
+                        //         height: 10,
+                        //         width: 10,
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     }),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
@@ -175,22 +179,23 @@ class Game1State extends State<Game1> {
                                 padding: EdgeInsets.all(0),
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
-                                      // updateGamePlayer1();
+                                  if (hasPlayed == false) {
+                                    if (game.choices[questionNumber][0] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      incrementPlayerPoints();
+
+                                      finalScore++;
+                                      setPlayerTrue();
                                     } else {
-                                      player2Score++;
-                                      // updateGamePlayer2();
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
                                     }
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
+                                    hasPlayed = true;
                                   }
-                                  updateQuestion();
+                                  hasPlayed = true;
+                                  // updateQuestion();
                                 },
                                 child: Text(
                                   game.choices[questionNumber][0],
@@ -206,25 +211,23 @@ class Game1State extends State<Game1> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][1] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    // startTimer();
-                                    // startTimer();
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
-                                      // updateGamePlayer1();
+                                  if (hasPlayed == false) {
+                                    if (game.choices[questionNumber][1] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      incrementPlayerPoints();
+
+                                      finalScore++;
+                                      setPlayerTrue();
                                     } else {
-                                      player2Score++;
-                                      // updateGamePlayer2();
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
                                     }
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
-                                    // startTimer();
+                                    hasPlayed = true;
                                   }
-                                  updateQuestion();
+
+                                  // updateQuestion();
                                 },
                                 child: Text(
                                   game.choices[questionNumber][1],
@@ -240,24 +243,22 @@ class Game1State extends State<Game1> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][2] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    // startTimer();
-                                    debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
-                                      // updateGamePlayer1();
+                                  if (hasPlayed == false) {
+                                    if (game.choices[questionNumber][2] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      incrementPlayerPoints();
+                                      finalScore++;
+                                      setPlayerTrue();
                                     } else {
-                                      player2Score++;
-                                      // updateGamePlayer2();
-                                      // startTimer();
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
                                     }
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
+                                    hasPlayed = true;
                                   }
-                                  updateQuestion();
+
+                                  // updateQuestion();
                                 },
                                 child: Text(
                                   game.choices[questionNumber][2],
@@ -273,24 +274,22 @@ class Game1State extends State<Game1> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][3] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    // startTimer();
-                                    debugPrint('correctamundo');
-                                    finalScore++;
-                                    if (player1 == username) {
-                                      player1Score++;
-                                      // updateGamePlayer1();
+                                  if (hasPlayed == false) {
+                                    if (game.choices[questionNumber][3] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      incrementPlayerPoints();
+                                      finalScore++;
+                                      setPlayerTrue();
                                     } else {
-                                      player2Score++;
-                                      // updateGamePlayer2();
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
                                     }
-                                  } else {
-                                    decreasePartyHealth();
-                                    // startTimer();
-                                    debugPrint('oh noes... that is incorrect');
+                                    hasPlayed = true;
                                   }
-                                  updateQuestion();
+
+                                  // updateQuestion();
                                 },
                                 child: Text(
                                   game.choices[questionNumber][3],
@@ -327,6 +326,41 @@ class Game1State extends State<Game1> {
                             )),
                       ]))));
     }
+  }
+
+  void incrementPlayerPoints() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      if (player1db == username)
+        'player1Points': FieldValue.increment(1)
+      else if (player2db == username)
+        'player2Points': FieldValue.increment(1)
+      else if (player3db == username)
+        'player3Points': FieldValue.increment(1)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(1)
+    });
+  }
+
+  void setPlayerTrue() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      if (player1db == username)
+        'player1isCorrect': true
+      else if (player2db == username)
+        'player2isCorrect': true
+      else if (player3db == username)
+        'player3isCorrect': true
+      else if (player4db == username)
+        'player4isCorrect': true
+    });
+  }
+
+  void setPlayerFalse() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      'player1isCorrect': false,
+      'player2isCorrect': false,
+      'player3isCorrect': false,
+      'player4isCorrect': false,
+    });
   }
 
   void decreasePartyHealth() async {
@@ -377,12 +411,14 @@ class Game1State extends State<Game1> {
   void updateQuestion() {
     setState(() {
       if (questionNumber == game.questions.length - 1) {
+        hasPlayed = false;
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => new Summary(score: finalScore)));
       } else {
         questionNumber++;
+        hasPlayed = false;
       }
     });
   }
@@ -417,29 +453,5 @@ class Game1State extends State<Game1> {
       }
     });
     // }
-
-    void updateGamePlayer1() async {
-      await databaseReference.collection("games").doc(gameID).update({
-        'player1Points': FieldValue.increment(1),
-      });
-    }
-
-    void updateGamePlayer2() async {
-      await databaseReference.collection("games").doc(gameID).update({
-        'player2Points': FieldValue.increment(1),
-      });
-    }
-
-    void updateGamePlayer3() async {
-      await databaseReference.collection("games").doc(gameID).update({
-        'player3Points': FieldValue.increment(1),
-      });
-    }
-
-    void updateGamePlayer4() async {
-      await databaseReference.collection("games").doc(gameID).update({
-        'player4Points': FieldValue.increment(1),
-      });
-    }
   }
 }

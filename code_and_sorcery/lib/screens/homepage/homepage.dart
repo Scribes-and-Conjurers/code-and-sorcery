@@ -7,9 +7,6 @@ import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 
-String player2db;
-String player3db;
-String player4db;
 String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;
@@ -144,21 +141,21 @@ class Homepage extends StatelessWidget {
                   //   //not exists
                   // }
 
-                  if (gameNull == true) {
-                    print('null');
-                    alertGameNull(context);
-                  }
-                  // gameFullCheck();
-                  if (gameFull == false) {
-                    print('can set');
-                    setPlayer();
-                    Navigator.pushNamed(context, '/lobby');
-                    Navigator.of(context)
-                        .pop(gameLinkController.text.toString());
-                  } else if (gameFull == true) {
-                    print('game');
-                    alertGameFull(context);
-                  }
+                  // if (gameNull == true) {
+                  //   print('null');
+                  //   alertGameNull(context);
+                  // }
+                  // // gameFullCheck();
+                  // if (gameFull == false) {
+                  //   print('can set');
+                  //   // setPlayer();
+                  //   Navigator.pushNamed(context, '/lobby');
+                  //   Navigator.of(context)
+                  //       .pop(gameLinkController.text.toString());
+                  // } else if (gameFull == true) {
+                  //   print('game');
+                  //   alertGameFull(context);
+                  // }
                 },
               )
             ],
@@ -227,7 +224,7 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   gameID = randomAlpha(2);
                   createMPGame();
-                  getQuestID();
+                  // getQuestID();
 
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/lobby');
@@ -263,21 +260,23 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+      'player1isCorrect': false,
       'player2': '',
       'player2Class': '',
       'player2Points': 0,
+      'player2isCorrect': false,
       'player3': '',
       'player3Class': '',
       'player3Points': 0,
+      'player3isCorrect': false,
       'player4': '',
       'player4Class': '',
       'player4Points': 0,
+      'player4isCorrect': false,
       'nbOfPlayers': 1,
       'pushedGo': false,
       'startCountdown': 5,
       'selectAnswer': 0,
-      'questID': 'JIfrv2SOOdlxkv5RJP3i',
-      // 'questionTimer': 6,
     });
   }
 
@@ -292,60 +291,59 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  void getQuestID() async {
-    await FirebaseFirestore.instance
-        .collection('games')
-        .doc(gameID)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // define questions
-        questID = documentSnapshot.data()['questID'];
-        print(questID);
-      }
-    });
-  }
+  // void getQuestID() async {
+  //   await FirebaseFirestore.instance
+  //       .collection('games')
+  //       .doc(gameID)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       // define questions
+  //       questID = documentSnapshot.data()['questID'];
+  //       print(questID);
+  //     }
+  //   });
+  // }
 
-  void setPlayer() async {
-    await FirebaseFirestore.instance.runTransaction((transaction) async {
-      DocumentReference playerCheck =
-          FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-      DocumentSnapshot snapshot = await transaction.get(playerCheck);
-      player2db = snapshot.data()['player2'];
-      player3db = snapshot.data()['player3'];
-      player4db = snapshot.data()['player4'];
-      // gameFull = snapshot.data()['gameFull'];
-      if (playerClass == "Warrior") {
-        await transaction
-            .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
-      }
-      if (player2db == "") {
-        await transaction.update(playerCheck, {
-          'player2': username,
-          'player2Class': playerClass,
-          'nbOfPlayers': FieldValue.increment(1)
-        });
-      } else if (player2db != "") {
-        if (player3db == "") {
-          await transaction.update(playerCheck, {
-            'player3': username,
-            'player3Class': playerClass,
-            'nbOfPlayers': FieldValue.increment(1)
-          });
-        } else if (player3db != "") {
-          if (player4db == "") {
-            await transaction.update(playerCheck, {
-              'player4': username,
-              'player4Class': playerClass,
-              'nbOfPlayers': FieldValue.increment(1)
-            });
-            // } else {
-            //   await transaction.update(playerCheck, {'gameFull': true});
-          }
-        }
-      }
-    });
-  }
+  // void setPlayer() async {
+  //   await FirebaseFirestore.instance.runTransaction((transaction) async {
+  //     DocumentReference playerCheck =
+  //         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
+  //     DocumentSnapshot snapshot = await transaction.get(playerCheck);
+  //     player2db = snapshot.data()['player2'];
+  //     player3db = snapshot.data()['player3'];
+  //     player4db = snapshot.data()['player4'];
+  // gameFull = snapshot.data()['gameFull'];
+  // if (playerClass == "Warrior") {
+  //   await transaction
+  //       .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
+  // }
+  // if (player2db == "") {
+  //   await transaction.update(playerCheck, {
+  //     'player2': username,
+  //     'player2Class': playerClass,
+  //     'nbOfPlayers': FieldValue.increment(1)
+  //   });
+  // } else if (player2db != "") {
+  //   if (player3db == "") {
+  //     await transaction.update(playerCheck, {
+  //         'player3': username,
+  //         'player3Class': playerClass,
+  //         'nbOfPlayers': FieldValue.increment(1)
+  //       });
+  //     } else if (player3db != "") {
+  //       if (player4db == "") {
+  //         await transaction.update(playerCheck, {
+  //           'player4': username,
+  //           'player4Class': playerClass,
+  //           'nbOfPlayers': FieldValue.increment(1)
+  //         });
+  //         // } else {
+  //         //   await transaction.update(playerCheck, {'gameFull': true});
+  //       }
+  //     }
+  //   }
+  // });
 }
 
 // void gameFullCheck() async {
