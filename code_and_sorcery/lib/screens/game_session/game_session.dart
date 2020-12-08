@@ -346,14 +346,10 @@ class GameSessionState extends State<GameSession> {
 
   void incrementPlayerPoints() async {
     await databaseReference.collection("games").doc(gameID).update({
-      if (player1db == username)
-        'player1Points': FieldValue.increment(1)
-      else if (player2db == username)
-        'player2Points': FieldValue.increment(1)
-      else if (player3db == username)
-        'player3Points': FieldValue.increment(1)
-      else if (player4db == username)
-        'player4Points': FieldValue.increment(1)
+      if (player1db == username) 'player1Points': FieldValue.increment(1),
+      if (player2db == username) 'player2Points': FieldValue.increment(1),
+      if (player3db == username) 'player3Points': FieldValue.increment(1),
+      if (player4db == username) 'player4Points': FieldValue.increment(1)
     });
   }
 
