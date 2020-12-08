@@ -10,3 +10,5 @@ int points;
 
 // variables in relation to the game object
 String gameID;
+String questID;
+int soloScore = 0;

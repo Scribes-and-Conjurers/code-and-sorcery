@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
+import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
 // import '../login/authenticator.dart';
@@ -18,6 +19,7 @@ String player1Class;
 String player2Class;
 String player3Class;
 String player4Class;
+String questID;
 String gameLinkValue = "";
 bool pushedGo;
 int startCountdown;
@@ -31,8 +33,14 @@ class GameLobby extends StatefulWidget {
 
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
+  @override
+  // void initState() {
+  //   updateGameContent(questID);
+  // }
+
   int counter = 5;
   Timer readyTimer;
+  var game = new GameContent();
   final gameLinkController = TextEditingController();
 
   void startTimer() {
@@ -67,31 +75,43 @@ class GameLobbySL extends State<GameLobby> {
             colors: [Colors.blue[100], Colors.blue[400]],
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
+        child: Center(
+          // padding: EdgeInsets.all(15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              Text("Game link: ",
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+              Text(gameID,
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(height: 80),
               startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
               SizedBox(height: 40),
-              TextField(
-                  controller: gameLinkController,
-                  decoration: new InputDecoration(
-                      border: OutlineInputBorder(), hintText: ""),
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                  onChanged: (String text) {
-                    gameID = gameLinkController.text;
-                  }),
+              // TextField(
+              //     controller: gameLinkController,
+              //     decoration: new InputDecoration(
+              //         border: OutlineInputBorder(), hintText: ""),
+              //     style: TextStyle(
+              //         fontSize: 25,
+              //         color: Colors.white,
+              //         fontWeight: FontWeight.bold),
+              //     onChanged: (String text) {
+              //       gameID = gameLinkController.text;
+              //     }),
               ElevatedButton(
                 onPressed: () {
                   checkP1GO();
                   startTimer();
+                  // updateGameContent(questID);
                 },
                 child: Text('Go to game'),
               ),
@@ -108,6 +128,37 @@ class GameLobbySL extends State<GameLobby> {
       ),
     );
   }
+
+  // void updateGameContent(String questName) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('ready-quests')
+  //       .doc(questName)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       // define questions
+  //       game.questions = documentSnapshot.data()['questions'];
+
+  //       // define choices for each question
+  //       game.choices0 = documentSnapshot.data()['choices1'];
+  //       game.choices1 = documentSnapshot.data()['choices2'];
+  //       game.choices2 = documentSnapshot.data()['choices3'];
+  //       game.choices3 = documentSnapshot.data()['choices4'];
+
+  //       // put all four choices arrays in one main array
+  //       game.choices = [
+  //         game.choices0,
+  //         game.choices1,
+  //         game.choices2,
+  //         game.choices3
+  //       ];
+
+  //       // define answers
+  //       game.correctAnswers = documentSnapshot.data()['answers'];
+  //       print('answers: ${game.correctAnswers}');
+  //     }
+  //   });
+  // }
 }
 
 void checkP1GO() async {

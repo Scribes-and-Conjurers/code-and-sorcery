@@ -8,7 +8,7 @@ class GuildRankings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Guild Rankings')),
-      body: _buildBody(context),
+      body: guildRanker(context),
       floatingActionButton: FloatingActionButton(
         child: Text('Back'),
         onPressed: () {
@@ -19,7 +19,7 @@ class GuildRankings extends StatelessWidget {
   }
 }
 
-Widget _buildBody(BuildContext context) {
+Widget guildRanker(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance
         .collection('guilds')

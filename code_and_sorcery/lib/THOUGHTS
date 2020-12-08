@@ -1,0 +1,35 @@
+A PLAYER STARTS THE APP
+
+LOGIN
+OR IF NEW PLAYER
+    O   Chooses the username
+    X   Can choose a guild through buttons or a dropdown (BONUS : On select, background changes to the one of the selected guild)
+    O   Can choose its class
+    O   Clicks on SUBMIT, profile is uploaded and go to HOMEPAGE
+
+GET TO THE HOMEPAGE
+
+IF HE JOINS A GAME
+    Enters the link (Current Join Page ? Popup ? Keyboard Prompt ?)
+
+    Push JOIN GAME => When doing that, downloads the content of the game ? Or on splash screen at the beginning of the game? 
+    O    Get sent to the corresponding lobby
+    O    The name and class are displayed
+    X    If he/she is a warrior, we can see the party health being updated
+    O    Can wait for the game to start OR leave the game lobby
+
+    X   If the game from the link doesn't exist, he is informed by a popup
+    X   If the game from the link is already full, he is informed by a popup
+    X   If the game from the link has already started, he is informed by a popup
+
+
+
+GAME LOBBY => ON INIT => Get back the game name from the db, store it in a local variable and download the content immediately
+
+How does a player select what kind of game he wants to play ? 
+    CREATE A GAME
+        SINGLE PLAYER OR MULTIPLAYER
+        IF SINGLEPLAYER => A Settings button, where you go and have access to the settings for the game we are going to play ? With update to db ?
+        IF MULTIPLAYER => Same ? With updates that will update the game object for everyone
+
+        
