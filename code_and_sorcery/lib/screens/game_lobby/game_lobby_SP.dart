@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
+import 'game_settings.dart';
 
-String player1;
-String player1Class;
+String player1 = username;
+String player1Class = playerClass;
 String gameLinkValue = "";
 
-class GameLobby extends StatelessWidget {
+class GameLobbySP extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -23,13 +24,12 @@ class GameLobby extends StatelessWidget {
             colors: [Colors.blue[100], Colors.blue[400]],
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              SizedBox(height: 40),
+              SizedBox(height: 0),
               ElevatedButton(
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
@@ -39,10 +39,16 @@ class GameLobby extends StatelessWidget {
                   if (player1Class == "Warrior") {
                     updateGameHealth();
                   }
-                  Navigator.pushNamed(context, '/ingame');
+                  Navigator.pushNamed(context, '/ingameLong');
                 },
                 child: Text('Go to game'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settings');
+                },
+                child: Text('Settings'),
+              )
             ],
           ),
         ),
@@ -85,5 +91,4 @@ class GameLobby extends StatelessWidget {
       'partyHealth': FieldValue.increment(1),
     });
   }
-
 }

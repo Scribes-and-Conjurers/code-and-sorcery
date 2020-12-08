@@ -18,7 +18,6 @@ class UserRankings extends StatelessWidget {
   }
 }
 
-
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance.collection('users').where("guild", isEqualTo:guild).orderBy("points", descending: true).limit(3).snapshots(),
