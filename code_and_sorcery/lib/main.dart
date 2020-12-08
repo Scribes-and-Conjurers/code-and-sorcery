@@ -21,6 +21,8 @@ import './screens/game_lobby/game_settings.dart';
 import './screens/loadingscreen/loadingscreen.dart';
 import './screens/random_chest/success_chest.dart';
 import './screens/random_chest/failure_chest.dart';
+import './screens/random_beggar/success_beggar.dart';
+import './screens/random_beggar/failure_beggar.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
@@ -53,6 +55,8 @@ void main() async {
       '/splash': (context) => LoadingScreen(),
       '/successChest': (context) => SuccessChest(),
       '/failureChest': (context) => FailureChest(),
+      '/successBeggar': (context) => SuccessBeggar(),
+      '/failureBeggar': (context) => FailureBeggar(),
     },
   ));
 }

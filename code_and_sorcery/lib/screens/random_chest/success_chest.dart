@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SuccessBeggar extends StatelessWidget {
+class SuccessChest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -8,7 +8,7 @@ class SuccessBeggar extends StatelessWidget {
       child: Column(
         children: [
           Text(
-              "Amazing! He returns an hour later and gifts you three times what you donated!"),
+              "Amazing! The chest was filled with treasure! You stuff your pockets."),
           ElevatedButton(
             child: Text("Continue Adventure"),
             onPressed: () {

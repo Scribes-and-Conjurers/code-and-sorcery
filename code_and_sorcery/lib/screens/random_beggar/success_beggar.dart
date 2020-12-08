@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class SuccessChest extends StatelessWidget {
+class SuccessBeggar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Center(
       child: Column(
         children: [
-          Text("Amazing! The chest was filled with treasure!"),
+          Text(
+              "Amazing! He returns an hour later and gifts you three times what you donated!"),
           ElevatedButton(
             child: Text("Continue Adventure"),
             onPressed: () {

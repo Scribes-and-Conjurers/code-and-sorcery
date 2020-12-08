@@ -20,19 +20,19 @@ class _BeggarState extends State<Beggar> {
       child: Center(
         child: Column(
           children: [
-            Text("A mysterious chest..."),
-            Text("It whispers to you, promising riches..."),
+            Text("An old man approaches you..."),
+            Text("He asks for coins to get him through the night..."),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
-                child: Text("Open the chest"),
+                child: Text("Give 2 points"),
                 onPressed: () {
                   openChest();
                 },
               ),
             ),
             ElevatedButton(
-                child: Text("Leave the chest alone"),
+                child: Text("Leave the beggar alone"),
                 onPressed: () {
                   Navigator.pop(context);
                 })
@@ -47,7 +47,7 @@ class _BeggarState extends State<Beggar> {
       Navigator.pop(context);
     }
     if (diceRoll <= 0.4) {
-      Navigator.pushNamed(context, '/successChest');
+      Navigator.pushNamed(context, '/successBeggar');
       // Scaffold(
       //   body: Center(
       //     child: Column(
@@ -65,7 +65,7 @@ class _BeggarState extends State<Beggar> {
       //   ),
       // );
     } else {
-      Navigator.pushNamed(context, '/failureChest');
+      Navigator.pushNamed(context, '/failureBeggar');
       // return Scaffold(
       //   body: Center(
       //     child: Column(
