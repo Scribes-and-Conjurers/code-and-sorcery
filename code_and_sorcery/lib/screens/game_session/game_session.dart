@@ -23,6 +23,10 @@ var player4Score = 0;
 bool hasPlayed = false;
 // int counter = 10;
 // Timer questionTimer;
+int player1Points;
+int player2Points;
+int player3Points;
+int player4Points;
 
 // game variables
 var finalScore = 0;
@@ -65,10 +69,7 @@ class GameSessionState extends State<GameSession> {
           } else {
             // readyTimer.cancel();
             updateQuestion();
-            player1Wrong();
-            player2Wrong();
-            player3Wrong();
-            player4Wrong();
+            setPlayerFalse();
             counter = 10;
           }
         });
@@ -185,8 +186,7 @@ class GameSessionState extends State<GameSession> {
                                       incrementPlayerPoints();
 
                                       finalScore++;
-                                      player1Correct();
-                                      player2Correct();
+                                      setPlayerTrue();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -218,8 +218,7 @@ class GameSessionState extends State<GameSession> {
                                       incrementPlayerPoints();
 
                                       finalScore++;
-                                      player1Correct();
-                                      player2Correct();
+                                      setPlayerTrue();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -252,8 +251,7 @@ class GameSessionState extends State<GameSession> {
                                       incrementPlayerPoints();
 
                                       finalScore++;
-                                      player1Correct();
-                                      player2Correct();
+                                      setPlayerTrue();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -285,8 +283,7 @@ class GameSessionState extends State<GameSession> {
                                       incrementPlayerPoints();
 
                                       finalScore++;
-                                      player1Correct();
-                                      player2Correct();
+                                      setPlayerTrue();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -336,79 +333,35 @@ class GameSessionState extends State<GameSession> {
 
   void incrementPlayerPoints() async {
     await databaseReference.collection("games").doc(gameID).update({
-      if ('player1' == username)
+      if (player1db == username)
         'player1Points': FieldValue.increment(1)
-      else if ('player2' == username)
+      else if (player2db == username)
         'player2Points': FieldValue.increment(1)
-      else if ('player3' == username)
+      else if (player3db == username)
         'player3Points': FieldValue.increment(1)
-      else if ('player4' == username)
+      else if (player4db == username)
         'player4Points': FieldValue.increment(1)
     });
   }
 
-  void player1Correct() async {
+  void setPlayerTrue() async {
     await databaseReference.collection("games").doc(gameID).update({
-      'player1isCorrect': true,
+      if (player1db == username)
+        'player1isCorrect': true
+      else if (player2db == username)
+        'player2isCorrect': true
+      else if (player3db == username)
+        'player3isCorrect': true
+      else if (player4db == username)
+        'player4isCorrect': true
     });
   }
 
-  void player1Wrong() async {
+  void setPlayerFalse() async {
     await databaseReference.collection("games").doc(gameID).update({
       'player1isCorrect': false,
-    });
-  }
-
-  void incrementPlayer2Points() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player2Points': FieldValue.increment(1),
-    });
-  }
-
-  void player2Correct() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player2isCorrect': true,
-    });
-  }
-
-  void player2Wrong() async {
-    await databaseReference.collection("games").doc(gameID).update({
       'player2isCorrect': false,
-    });
-  }
-
-  void incrementPlayer3Points() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player3Points': FieldValue.increment(1),
-    });
-  }
-
-  void player3Correct() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player3isCorrect': true,
-    });
-  }
-
-  void player3Wrong() async {
-    await databaseReference.collection("games").doc(gameID).update({
       'player3isCorrect': false,
-    });
-  }
-
-  void incrementPlayer4Points() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player4Points': FieldValue.increment(1),
-    });
-  }
-
-  void player4Correct() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player4isCorrect': true,
-    });
-  }
-
-  void player4Wrong() async {
-    await databaseReference.collection("games").doc(gameID).update({
       'player4isCorrect': false,
     });
   }

@@ -97,11 +97,11 @@ Widget multiplayerPointsStream(BuildContext context) {
         }
         var userDocument = snapshot.data;
         return Text(
-          player1 +
+          userDocument['player1'] +
               "'s score: " +
               userDocument['player1Points'].toString() +
               '\n\n' +
-              player2 +
+              userDocument['player2'] +
               "'s score: " +
               userDocument['player2Points'].toString() +
               '\n\n' +
