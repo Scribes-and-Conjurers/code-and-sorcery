@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 
+class GameSettings extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new GameSettingState();
+  }
+}
 
-class GameSettings extends StatelessWidget {
+// Game widget state
+class GameSettingState extends State<GameSettings> {
+  List<bool> _difficulty = List.generate(3, (_) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +32,54 @@ class GameSettings extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(height: 0),
-              Text('Difficulty'),
-              // ToggleButtons(
-              //   children: <Widget>[
-              //     Text('Option 1')
-              //   ],
-              // onPressed: ,
-              // ),
+              Text('Difficulty',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+              ),),
+              ToggleButtons(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Easy',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                      ),),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Normal',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                      ),),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Hard',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                      ),),
+                  ),
+                ],
+                onPressed: (int index) {
+                  setState(() {
+                    for (int buttonIndex = 0;
+                        buttonIndex < _difficulty.length;
+                        buttonIndex++) {
+                      if (buttonIndex == index) {
+                        _difficulty[buttonIndex] = true;
+                      } else {
+                        _difficulty[buttonIndex] = false;
+                      }
+                    }
+                  });
+                },
+                isSelected: _difficulty,
+                fillColor: Colors.white,
+              ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
