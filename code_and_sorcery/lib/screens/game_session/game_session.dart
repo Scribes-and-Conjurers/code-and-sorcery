@@ -13,7 +13,6 @@ import 'long_game_session.dart';
 import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../join_game/join_game.dart';
 
 // SHORT ADVENTURE !!!!
 
@@ -248,9 +247,7 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][2] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-
                                       incrementPlayerPoints();
-
                                       finalScore++;
                                       setPlayerTrue();
                                     } else {
@@ -282,7 +279,6 @@ class GameSessionState extends State<GameSession> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       incrementPlayerPoints();
-
                                       finalScore++;
                                       setPlayerTrue();
                                     } else {

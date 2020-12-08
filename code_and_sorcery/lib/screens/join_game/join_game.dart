@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-String player2db;
-String player3db;
-String player4db;
-
 class JoinGame extends StatefulWidget {
   JoinGame({this.title, this.someText});
   final Widget title, someText;
