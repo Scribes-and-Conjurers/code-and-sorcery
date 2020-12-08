@@ -227,7 +227,6 @@ class Homepage extends StatelessWidget {
                 onPressed: () {
                   gameID = randomAlpha(2);
                   createMPGame();
-                  player1Warrior();
                   // getQuestID();
 
                   Navigator.of(context).pop();
@@ -292,12 +291,6 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
-    });
-  }
-
-  void player1Warrior() async {
-    await FirebaseFirestore.instance.collection("games").doc(gameID).update({
-      if (playerClass == 'Warrior') 'partyHealth': 4,
     });
   }
 

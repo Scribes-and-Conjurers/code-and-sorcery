@@ -22,4 +22,4 @@ Local variable checks if the player has clicked already or not, and onPressed co
 
 
 ONE FUNCTION TO RESET EVERYONE TO FALSE
-IF P1 IS WARRIOR, INCREASE PARTY HEALTH
+STOP TIMER ON SUMMARY
