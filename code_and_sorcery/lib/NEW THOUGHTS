@@ -21,8 +21,5 @@ Without updating game content, update Player1isCorrect = true
 Local variable checks if the player has clicked already or not, and onPressed conditional checks if you can click or not
 
 
-FIX WARRIOR HEALTH
 ONE FUNCTION TO RESET EVERYONE TO FALSE
-THE MORE YOU JOIN, NBOFPLAYERS KEEP INCREMENTING
 IF P1 IS WARRIOR, INCREASE PARTY HEALTH
-IF WARRIOR LEAVES, PARTY HEALTH DECREASES
