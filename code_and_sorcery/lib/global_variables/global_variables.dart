@@ -12,3 +12,7 @@ int points;
 String gameID;
 String questID;
 int soloScore = 0;
+String player1db;
+String player2db;
+String player3db;
+String player4db;

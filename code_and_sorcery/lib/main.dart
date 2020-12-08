@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:splashscreen/splashscreen.dart';
+
 // import 'package:firebase_auth/firebase_auth.dart';
 import './screens/homepage/homepage.dart';
 import './screens/guild_view/guild_view.dart';
@@ -23,6 +23,7 @@ import './screens/random_chest/success_chest.dart';
 import './screens/random_chest/failure_chest.dart';
 import './screens/random_beggar/success_beggar.dart';
 import './screens/random_beggar/failure_beggar.dart';
+import './screens/loadingscreen/loading_before_game.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
@@ -46,7 +47,7 @@ void main() async {
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => Game1(),
+      '/ingame': (context) => GameSession(),
       '/ingameLong': (context) => QuestLong(),
       '/guild': (context) => Guild(),
       '/change': (context) => ChangeGuild(),
@@ -57,6 +58,7 @@ void main() async {
       '/failureChest': (context) => FailureChest(),
       '/successBeggar': (context) => SuccessBeggar(),
       '/failureBeggar': (context) => FailureBeggar(),
+      '/gameLoading': (context) => LoadingBeforeGame(),
     },
   ));
 }
