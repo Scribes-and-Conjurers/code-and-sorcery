@@ -182,9 +182,11 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][0] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      player1Score++;
                                       incrementPlayer1Points();
                                       incrementPlayer2Points();
+                                      finalScore++;
+                                      player1Correct();
+                                      player2Correct();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -214,9 +216,10 @@ class GameSessionState extends State<GameSession> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       incrementPlayer1Points();
-
+                                      incrementPlayer2Points();
                                       finalScore++;
                                       player1Correct();
+                                      player2Correct();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -245,8 +248,12 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][2] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      finalScore++;
+
                                       incrementPlayer1Points();
+                                      incrementPlayer2Points();
+                                      finalScore++;
+                                      player1Correct();
+                                      player2Correct();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
@@ -275,7 +282,11 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][3] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
+                                      incrementPlayer1Points();
+                                      incrementPlayer2Points();
                                       finalScore++;
+                                      player1Correct();
+                                      player2Correct();
                                     } else {
                                       decreasePartyHealth();
                                       debugPrint(
