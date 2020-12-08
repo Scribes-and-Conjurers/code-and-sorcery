@@ -19,8 +19,8 @@ import './screens/login/account_setup.dart';
 import './screens/game_lobby/game_settings.dart';
 // import './screens/login/authenticator.dart';
 import './screens/loadingscreen/loadingscreen.dart';
-import './screens/random_events/success_chest.dart';
-import './screens/random_events/failure_chest.dart';
+import './screens/random_chest/success_chest.dart';
+import './screens/random_chest/failure_chest.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
