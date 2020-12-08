@@ -182,8 +182,8 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][0] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      incrementPlayer1Points();
-                                      incrementPlayer2Points();
+                                      incrementPlayerPoints();
+
                                       finalScore++;
                                       player1Correct();
                                       player2Correct();
@@ -215,8 +215,8 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][1] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      incrementPlayer1Points();
-                                      incrementPlayer2Points();
+                                      incrementPlayerPoints();
+
                                       finalScore++;
                                       player1Correct();
                                       player2Correct();
@@ -249,8 +249,8 @@ class GameSessionState extends State<GameSession> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
 
-                                      incrementPlayer1Points();
-                                      incrementPlayer2Points();
+                                      incrementPlayerPoints();
+
                                       finalScore++;
                                       player1Correct();
                                       player2Correct();
@@ -282,8 +282,8 @@ class GameSessionState extends State<GameSession> {
                                     if (game.choices[questionNumber][3] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      incrementPlayer1Points();
-                                      incrementPlayer2Points();
+                                      incrementPlayerPoints();
+
                                       finalScore++;
                                       player1Correct();
                                       player2Correct();
@@ -334,10 +334,16 @@ class GameSessionState extends State<GameSession> {
     }
   }
 
-  void incrementPlayer1Points() async {
+  void incrementPlayerPoints() async {
     await databaseReference.collection("games").doc(gameID).update({
-      // ignore: unrelated_type_equality_checks
-      if ('player1isCorrect' != true) 'player1Points': FieldValue.increment(1)
+      if ('player1' == username)
+        'player1Points': FieldValue.increment(1)
+      else if ('player2' == username)
+        'player2Points': FieldValue.increment(1)
+      else if ('player3' == username)
+        'player3Points': FieldValue.increment(1)
+      else if ('player4' == username)
+        'player4Points': FieldValue.increment(1)
     });
   }
 
