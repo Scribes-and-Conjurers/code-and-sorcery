@@ -19,6 +19,8 @@ import './screens/login/account_setup.dart';
 import './screens/game_lobby/game_settings.dart';
 // import './screens/login/authenticator.dart';
 import './screens/loadingscreen/loadingscreen.dart';
+import './screens/random_events/success_chest.dart';
+import './screens/random_events/failure_chest.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
@@ -49,6 +51,8 @@ void main() async {
       '/guildrankings': (context) => GuildRankings(),
       '/userrankings': (context) => UserRankings(),
       '/splash': (context) => LoadingScreen(),
+      '/successChest': (context) => SuccessChest(),
+      '/failureChest': (context) => FailureChest(),
     },
   ));
 }

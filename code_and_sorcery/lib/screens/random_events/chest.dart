@@ -28,7 +28,6 @@ class _ChestState extends State<Chest> {
                 child: Text("Open the chest"),
                 onPressed: () {
                   openChest();
-                  Navigator.pop(context);
                 },
               ),
             ),
@@ -42,7 +41,50 @@ class _ChestState extends State<Chest> {
       ),
     ));
   }
-} //end of class
+
+  void openChest() {
+    if (isOpened) {
+      Navigator.pop(context);
+    }
+    if (diceRoll <= 0.4) {
+      Navigator.pushNamed(context, '/successChest');
+      // Scaffold(
+      //   body: Center(
+      //     child: Column(
+      //       children: [
+      //         Text("Amazing! The chest was filled with treasure!"),
+      //         ElevatedButton(
+      //           child: Text("Continue Adventure"),
+      //           onPressed: () {
+      //             Navigator.pop(context);
+      //             Navigator.pop(context);
+      //           },
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // );
+    } else {
+      Navigator.pushNamed(context, '/failureChest');
+      // return Scaffold(
+      //   body: Center(
+      //     child: Column(
+      //       children: [
+      //         Text("The chest is filled with poison gas! You barely escape."),
+      //         ElevatedButton(
+      //           child: Text("Continue Adventure"),
+      //           onPressed: () {
+      //             Navigator.pop(context);
+      //             Navigator.pop(context);
+      //           },
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // );
+    }
+  }
+}
 
 /*
 
