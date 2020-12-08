@@ -42,7 +42,7 @@ void main() async {
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => Game1(),
+      '/ingame': (context) => GameSession(),
       '/ingameLong': (context) => QuestLong(),
       '/guild': (context) => Guild(),
       '/change': (context) => ChangeGuild(),
