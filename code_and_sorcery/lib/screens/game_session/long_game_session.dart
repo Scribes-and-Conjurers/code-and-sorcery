@@ -6,13 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 // import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
-
+//
 import './game_image_utils.dart';
 import './game_content_long.dart';
 import './game_summary.dart';
 import './game_general_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import './test_randomevent.dart';
+// import './test_randomevent.dart';
 import '../loadingscreen/loading_before_game.dart';
 
 // LONG ADVENTURE !!! built for singleplayer right now
