@@ -12,8 +12,10 @@ import './game_content_long.dart';
 import './game_summary.dart';
 import './game_general_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import './test_randomevent.dart';
+import '../loadingscreen/loading_before_game.dart';
 
-// LONG ADVENTURE !!!
+// LONG ADVENTURE !!! built for singleplayer right now
 
 var player1Score = 0;
 var player2Score = 0;
@@ -25,7 +27,7 @@ var buttonNumber = 0;
 var longQuestion = true;
 
 // variable that holds game object:
-var game = new GameContentLong();
+// var game = new GameContentLong();
 
 class QuestLong extends StatefulWidget {
   @override
@@ -53,7 +55,7 @@ class _QuestLongState extends State<QuestLong> {
   @override
   void initState() {
     // update game content when Game is initiated!!
-    updateGameContent('long-adv0');
+    // updateGameContent('long-adv0');
   }
 
   Widget build(BuildContext context) {
@@ -71,6 +73,7 @@ class _QuestLongState extends State<QuestLong> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(padding: EdgeInsets.all(10.0)),
+
                         // top row that displays question number and current score
                         Container(
                             alignment: Alignment.centerRight,
@@ -166,8 +169,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                      yourScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -192,8 +195,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                     soloScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -218,8 +221,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                      yourScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -244,8 +247,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                      yourScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -395,8 +398,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                      yourScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -421,8 +424,8 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                      yourScore++;
-                                      updateGamePlayer1();
+                                    yourScore++;
+                                    updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
                                     debugPrint('oh noes... that is incorrect');
@@ -475,13 +478,15 @@ class _QuestLongState extends State<QuestLong> {
   void resetGame() {
     setState(() {
       // close current screen:
-      Navigator.pop(context);
+      // Navigator.pop(context);
       // reset variables:
       yourScore = 0;
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
+
       // isMultiplayer = true;
+      Navigator.pushNamed(context, '/lobbySP');
     });
   }
 
@@ -491,6 +496,8 @@ class _QuestLongState extends State<QuestLong> {
         (questionNumber) == 3 ||
         (questionNumber) == 7) {
       longQuestion = false;
+      // randomevent trigger:
+
     } else {
       longQuestion = true;
     }
