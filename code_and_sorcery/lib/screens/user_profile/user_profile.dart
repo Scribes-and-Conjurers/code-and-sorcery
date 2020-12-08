@@ -24,7 +24,7 @@ class UserProfile extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        username,
+                        username + '  -  ' + playerClass,
                         style: TextStyle(fontSize: 25, color: Colors.black),
                       ),
                       Divider(

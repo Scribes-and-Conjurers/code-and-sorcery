@@ -89,7 +89,7 @@ Widget multiplayerPointsStream(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
-          .doc(gameID)
+          .doc(gameLinkValue)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -104,14 +104,6 @@ Widget multiplayerPointsStream(BuildContext context) {
               player2 +
               "'s score: " +
               userDocument['player2Points'].toString() +
-              '\n\n' +
-              player3 +
-              "'s score: " +
-              userDocument['player3Points'].toString() +
-              '\n\n' +
-              player4 +
-              "'s score: " +
-              userDocument['player4Points'].toString() +
               '\n\n' +
               'Multiplayer Bonus! +2',
           style: TextStyle(
