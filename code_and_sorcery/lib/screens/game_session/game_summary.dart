@@ -4,12 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
-import '../game_lobby/game_lobby.dart';
 import 'package:provider/provider.dart';
-import '../game_lobby/game_lobby.dart';
 import './game_image_utils.dart';
 import './game_general_utils.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import './game_session.dart';
 
 class Summary extends StatelessWidget {
@@ -30,7 +27,16 @@ class Summary extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Builder(builder: (context) {
-                            return twoPlayersPointsStream(context);
+                            return player1PointsStream(context);
+                          }),
+                          Builder(builder: (context) {
+                            return player2PointsStream(context);
+                          }),
+                          Builder(builder: (context) {
+                            return player3PointsStream(context);
+                          }),
+                          Builder(builder: (context) {
+                            return player4PointsStream(context);
                           }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
@@ -107,13 +113,13 @@ class SummarySP extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Builder(builder: (context) {
-                            return singlePlayerPointsStream(context);
+                            return player1PointsStream(context);
                           }),
                           Padding(padding: EdgeInsets.all(10.0)),
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
-                                  updateSPGuildPoints();
+                                updateSPGuildPoints();
                                 updateGame();
                                 Navigator.pop(context);
                                 Navigator.pop(context);

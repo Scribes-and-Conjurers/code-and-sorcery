@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-String player2db;
-String player3db;
-String player4db;
-
 class JoinGame extends StatefulWidget {
   JoinGame({this.title, this.someText});
   final Widget title, someText;
@@ -73,24 +69,40 @@ class JoinGameState extends State<JoinGame> {
   }
 
   void setPlayer() async {
-    await _firestore.runTransaction((transaction) async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference playerCheck =
-          _firestore.collection('games').doc(gameID);
+          FirebaseFirestore.instance.collection('games').doc(gameID);
       DocumentSnapshot snapshot = await transaction.get(playerCheck);
       player2db = snapshot.data()['player2'];
       player3db = snapshot.data()['player3'];
       player4db = snapshot.data()['player4'];
+      // gameFull = snapshot.data()['gameFull'];
+      if (playerClass == "Warrior") {
+        await transaction
+            .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
+      }
       if (player2db == "") {
-        await transaction.update(
-            playerCheck, {'player2': username, 'player2Class': playerClass});
+        await transaction.update(playerCheck, {
+          'player2': username,
+          'player2Class': playerClass,
+          'nbOfPlayers': FieldValue.increment(1)
+        });
       } else if (player2db != "") {
         if (player3db == "") {
-          await transaction.update(
-              playerCheck, {'player3': username, 'player3Class': playerClass});
+          await transaction.update(playerCheck, {
+            'player3': username,
+            'player3Class': playerClass,
+            'nbOfPlayers': FieldValue.increment(1)
+          });
         } else if (player3db != "") {
           if (player4db == "") {
-            await transaction.update(playerCheck,
-                {'player4': username, 'player4Class': playerClass});
+            await transaction.update(playerCheck, {
+              'player4': username,
+              'player4Class': playerClass,
+              'nbOfPlayers': FieldValue.increment(1)
+            });
+            // } else {
+            //   await transaction.update(playerCheck, {'gameFull': true});
           }
         }
       }

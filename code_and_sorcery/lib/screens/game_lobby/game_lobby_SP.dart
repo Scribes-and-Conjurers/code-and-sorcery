@@ -39,7 +39,7 @@ class GameLobbySP extends StatelessWidget {
                   if (player1Class == "Warrior") {
                     updateGameHealth();
                   }
-                  Navigator.pushNamed(context, '/ingameLong');
+                  Navigator.pushNamed(context, '/gameLoading');
                 },
                 child: Text('Go to game'),
               ),

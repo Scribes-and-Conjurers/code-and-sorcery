@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:splashscreen/splashscreen.dart';
+
 // import 'package:firebase_auth/firebase_auth.dart';
 import './screens/homepage/homepage.dart';
 import './screens/guild_view/guild_view.dart';
@@ -19,6 +19,7 @@ import './screens/login/account_setup.dart';
 import './screens/game_lobby/game_settings.dart';
 // import './screens/login/authenticator.dart';
 import './screens/loadingscreen/loadingscreen.dart';
+import './screens/loadingscreen/loading_before_game.dart';
 
 // final User _user = checkUserLoggedIn();
 void main() async {
@@ -42,13 +43,14 @@ void main() async {
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/leaderboard': (context) => Leaderboard(),
-      '/ingame': (context) => Game1(),
+      '/ingame': (context) => GameSession(),
       '/ingameLong': (context) => QuestLong(),
       '/guild': (context) => Guild(),
       '/change': (context) => ChangeGuild(),
       '/guildrankings': (context) => GuildRankings(),
       '/userrankings': (context) => UserRankings(),
       '/splash': (context) => LoadingScreen(),
+      '/gameLoading': (context) => LoadingBeforeGame(),
     },
   ));
 }
