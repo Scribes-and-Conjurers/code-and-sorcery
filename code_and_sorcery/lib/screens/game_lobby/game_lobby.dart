@@ -214,6 +214,9 @@ void removePlayer() async {
     if (playerClass == "Warrior") {
       await transaction
           .update(playerCheck, {'partyHealth': FieldValue.increment(-1)});
+    } else if (playerClass == "Wizard") {
+      await transaction
+          .update(playerCheck, {'partyWisdom': FieldValue.increment(-0.1)});
     }
     if (player1db == username) {
       await transaction.delete(playerCheck);
