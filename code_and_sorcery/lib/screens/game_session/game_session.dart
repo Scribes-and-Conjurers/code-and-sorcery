@@ -21,8 +21,6 @@ var player2Score = 0;
 var player3Score = 0;
 var player4Score = 0;
 bool hasPlayed = false;
-// int counter = 10;
-// Timer questionTimer;
 int player1Points;
 int player2Points;
 int player3Points;
@@ -109,7 +107,7 @@ class GameSessionState extends State<GameSession> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
-                                    "Score: $finalScore",
+                                    "Your score: $finalScore",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(

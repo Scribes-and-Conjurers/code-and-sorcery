@@ -4,14 +4,10 @@ import 'package:random_string/random_string.dart';
 import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
-// import '../login/authenticator.dart';
 import '../../global_variables/global_variables.dart';
 import '../join_game/join_game.dart';
 
-String player1Class;
-String player2Class;
-String player3Class;
-String player4Class;
+
 String questID;
 String gameLinkValue = "";
 bool pushedGo;
@@ -27,9 +23,6 @@ class GameLobby extends StatefulWidget {
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
   @override
-  // void initState() {
-  //   updateGameContent(questID);
-  // }
 
   int counter = 5;
   Timer readyTimer;
@@ -57,9 +50,7 @@ class GameLobbySL extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Game lobby"),
-      // ),
+
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -69,7 +60,7 @@ class GameLobbySL extends State<GameLobby> {
           ),
         ),
         child: Center(
-          // padding: EdgeInsets.all(15.0),
+         
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -84,7 +75,7 @@ class GameLobbySL extends State<GameLobby> {
                       fontSize: 50,
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
-              SizedBox(height: 80),
+              SizedBox(height: 50),
               startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
@@ -96,7 +87,7 @@ class GameLobbySL extends State<GameLobby> {
                 },
                 child: Text('Go to game'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   removePlayer();
                   Navigator.pop(context);
@@ -217,8 +208,16 @@ Widget buildUser(BuildContext context) {
           return Text("Loading");
         }
         var userDocument = snapshot.data;
+
         return Text(
-          userDocument["player1"] +
+          'Party Health: ' +
+              userDocument["partyHealth"].toString() +
+              '\n\n' +
+              'Party Wisdom: ' +
+              ((userDocument["partyWisdom"] * 100).toInt()).toString() +
+              '%'
+                  '\n\n' +
+              userDocument["player1"] +
               '  -  ' +
               userDocument['player1Class'] +
               '\n\n' +

@@ -8,16 +8,13 @@ class GameSettings extends StatefulWidget {
   }
 }
 
-// Game widget state
+// Game widget sta
 class GameSettingState extends State<GameSettings> {
   List<bool> _difficulty = List.generate(3, (_) => false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Game settings"),
-      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
