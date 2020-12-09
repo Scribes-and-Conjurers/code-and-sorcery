@@ -9,9 +9,9 @@ class Guild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your Guild'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Your Guild'),
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -64,7 +64,7 @@ class Guild extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child:Text('Back'),
+        child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/profile');
         },
@@ -88,8 +88,13 @@ class Guild extends StatelessWidget {
     child: Center(
       child: Column(
         children: [
-          Text('The Microtask Ascendancy', style: TextStyle(fontSize: 20),),
-          Divider(thickness: 5,),
+          Text(
+            'The Microtask Ascendancy',
+            style: TextStyle(fontSize: 20),
+          ),
+          Divider(
+            thickness: 5,
+          ),
         ],
       ),
     ),
@@ -100,22 +105,29 @@ class Guild extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Your Current Rank:', style: TextStyle(fontSize: 20),),
-          Text('1', style: TextStyle(fontSize: 20),),
+          Text(
+            'Your Current Rank:',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            '1',
+            style: TextStyle(fontSize: 20),
+          ),
         ],
-      )
-  );
+      ));
 
   Widget guildRanking = Container(
       padding: EdgeInsets.all(40),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Current Guild Global Rank:', style: TextStyle(fontSize: 20),),
+          Text(
+            'Current Guild Global Rank:',
+            style: TextStyle(fontSize: 20),
+          ),
           // Text('1', style: TextStyle(fontSize: 20),),
         ],
-      )
-  );
+      ));
 
   Widget changeGuildButton = Container(
     padding: EdgeInsets.all(30),
@@ -128,9 +140,12 @@ class Guild extends StatelessWidget {
             },
             color: Colors.blueGrey,
             textColor: Colors.white,
-            child: Text('Change Guild', style: TextStyle(fontSize: 20),),),
-          Text(
-              'Warning: changing your guild will reset your personal score',
+            child: Text(
+              'Change Guild',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Text('Warning: changing your guild will reset your personal score',
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
         ],
       ),
@@ -141,8 +156,10 @@ class Guild extends StatelessWidget {
 // this function fetches guild points live
 Widget guildPointsGetter(BuildContext context) {
   return StreamBuilder(
-      stream:
-      FirebaseFirestore.instance.collection('guilds').doc(guild).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('guilds')
+          .doc(guild)
+          .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Text("Loading");
@@ -158,8 +175,10 @@ Widget guildPointsGetter(BuildContext context) {
 // this function fetches guild name live
 Widget guildNameGetter(BuildContext context) {
   return StreamBuilder(
-      stream:
-      FirebaseFirestore.instance.collection('guilds').doc(guild).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('guilds')
+          .doc(guild)
+          .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Text("Loading");
@@ -175,8 +194,10 @@ Widget guildNameGetter(BuildContext context) {
 // this function fetches guild ranking live
 Widget guildRankGetter(BuildContext context) {
   return StreamBuilder(
-      stream:
-      FirebaseFirestore.instance.collection('guilds').doc(guild).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('guilds')
+          .doc(guild)
+          .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Text("Loading");
@@ -188,4 +209,3 @@ Widget guildRankGetter(BuildContext context) {
         );
       });
 }
-

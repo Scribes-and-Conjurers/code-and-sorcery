@@ -57,9 +57,9 @@ class GameLobbySL extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Game lobby"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Game lobby"),
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -89,27 +89,14 @@ class GameLobbySL extends State<GameLobby> {
               SizedBox(height: 40),
               buildUser(context),
               SizedBox(height: 40),
-              // TextField(
-              //     controller: gameLinkController,
-              //     decoration: new InputDecoration(
-              //         border: OutlineInputBorder(), hintText: ""),
-              //     style: TextStyle(
-              //         fontSize: 25,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold),
-              //     onChanged: (String text) {
-              //       gameID = gameLinkController.text;
-              //     }),
               ElevatedButton(
                 onPressed: () {
                   checkP1GO();
-                  runTimeout();
                   startTimer();
-                  // updateGameContent(questID);
                 },
                 child: Text('Go to game'),
               ),
-              ElevatedButton(
+              RaisedButton(
                 onPressed: () {
                   removePlayer();
                   Navigator.pop(context);
@@ -265,16 +252,16 @@ Widget startCountdownStream(BuildContext context) {
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        // if (fiveSecondCountdown == 1 && gameStarted == null) {
-        //   gameSessionTimer = Timer(Duration(seconds: 1), () {
-        //     Navigator.pushNamed(context, '/ingame');
-        //     gameSessionTimer.cancel();
-        //   });
-        //   return Text(
-        //     "1",
-        //     style: TextStyle(fontSize: 25),
-        //   );
-        else {
+        if (fiveSecondCountdown == 1 && gameStarted == null) {
+          gameSessionTimer = Timer(Duration(seconds: 1), () {
+            Navigator.pushNamed(context, '/ingame');
+            gameSessionTimer.cancel();
+          });
+          return Text(
+            "1",
+            style: TextStyle(fontSize: 25),
+          );
+        } else {
           return Text(
             fiveSecondCountdown.toString(),
             style: TextStyle(fontSize: 25),

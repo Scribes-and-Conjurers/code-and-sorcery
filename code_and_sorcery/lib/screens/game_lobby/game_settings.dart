@@ -15,9 +15,9 @@ class GameSettingState extends State<GameSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Game settings"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Game settings"),
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -32,36 +32,44 @@ class GameSettingState extends State<GameSettings> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(height: 0),
-              Text('Difficulty',
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.black,
-              ),),
+              Text(
+                'Difficulty',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.black,
+                ),
+              ),
               ToggleButtons(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('Easy',
+                    child: Text(
+                      'Easy',
                       style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
-                      ),),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('Normal',
+                    child: Text(
+                      'Normal',
                       style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
-                      ),),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('Hard',
+                    child: Text(
+                      'Hard',
                       style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
-                      ),),
+                      ),
+                    ),
                   ),
                 ],
                 onPressed: (int index) {

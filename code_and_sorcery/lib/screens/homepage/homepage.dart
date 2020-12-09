@@ -20,9 +20,9 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Homepage"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Homepage"),
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -259,7 +259,7 @@ class Homepage extends StatelessWidget {
       'startedAt': null,
       'finished': false,
       'partyHealth': 3,
-      'partyWisdom': 0.4,
+      'partyWisdom': 0.5,
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
@@ -289,7 +289,7 @@ class Homepage extends StatelessWidget {
       'startedAt': null,
       'finished': false,
       'partyHealth': 4,
-      'partyWisdom': 0.5,
+      'partyWisdom': 0.4,
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,

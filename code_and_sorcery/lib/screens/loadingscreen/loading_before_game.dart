@@ -29,7 +29,7 @@ class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
         child: Column(children: [
           Image.asset('assets/logo.png'),
           Text(
-            "Game loading...",
+            "Conjuring game...",
             style:
                 DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.6),
           )

@@ -6,10 +6,10 @@ class UserRankings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('User Rankings')),
+      // appBar: AppBar(title: Text('User Rankings')),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
-        child:Text('Guild'),
+        child: Text('Guild'),
         onPressed: () {
           Navigator.pushNamed(context, '/guild');
         },
@@ -20,19 +20,26 @@ class UserRankings extends StatelessWidget {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection('users').where("guild", isEqualTo:guild).orderBy("points", descending: true).limit(3).snapshots(),
+    stream: FirebaseFirestore.instance
+        .collection('users')
+        .where("guild", isEqualTo: guild)
+        .orderBy("points", descending: true)
+        .limit(3)
+        .snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
       return _buildList(context, snapshot.data.docs);
     },
   );
 }
+
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
   );
 }
+
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final record = Record.fromSnapshot(data);
   return Padding(
