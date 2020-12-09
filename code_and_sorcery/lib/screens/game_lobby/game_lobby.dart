@@ -8,11 +8,6 @@ import 'dart:async';
 import '../../global_variables/global_variables.dart';
 import '../join_game/join_game.dart';
 
-// String player1;
-// String player2;
-// String player3;
-// String player4;
-
 String player1Class;
 String player2Class;
 String player3Class;
@@ -108,6 +103,7 @@ class GameLobbySL extends State<GameLobby> {
               ElevatedButton(
                 onPressed: () {
                   checkP1GO();
+                  runTimeout();
                   startTimer();
                   // updateGameContent(questID);
                 },
@@ -127,36 +123,17 @@ class GameLobbySL extends State<GameLobby> {
     );
   }
 
-  // void updateGameContent(String questName) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('ready-quests')
-  //       .doc(questName)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       // define questions
-  //       game.questions = documentSnapshot.data()['questions'];
+  Future<bool> goNextPage(int id, int duration) async {
+    await Future.delayed(Duration(seconds: duration));
+    Navigator.pushNamed(context, '/ingame');
+    ;
+  }
 
-  //       // define choices for each question
-  //       game.choices0 = documentSnapshot.data()['choices1'];
-  //       game.choices1 = documentSnapshot.data()['choices2'];
-  //       game.choices2 = documentSnapshot.data()['choices3'];
-  //       game.choices3 = documentSnapshot.data()['choices4'];
-
-  //       // put all four choices arrays in one main array
-  //       game.choices = [
-  //         game.choices0,
-  //         game.choices1,
-  //         game.choices2,
-  //         game.choices3
-  //       ];
-
-  //       // define answers
-  //       game.correctAnswers = documentSnapshot.data()['answers'];
-  //       print('answers: ${game.correctAnswers}');
-  //     }
-  //   });
-  // }
+  Future runTimeout() async {
+    await goNextPage(0, 5).timeout(Duration(seconds: 2), onTimeout: () {
+      print('test');
+    });
+  }
 }
 
 void checkP1GO() async {
@@ -288,16 +265,16 @@ Widget startCountdownStream(BuildContext context) {
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        if (fiveSecondCountdown == 1 && gameStarted == null) {
-          gameSessionTimer = Timer(Duration(seconds: 1), () {
-            Navigator.pushNamed(context, '/ingame');
-            gameSessionTimer.cancel();
-          });
-          return Text(
-            "1",
-            style: TextStyle(fontSize: 25),
-          );
-        } else {
+        // if (fiveSecondCountdown == 1 && gameStarted == null) {
+        //   gameSessionTimer = Timer(Duration(seconds: 1), () {
+        //     Navigator.pushNamed(context, '/ingame');
+        //     gameSessionTimer.cancel();
+        //   });
+        //   return Text(
+        //     "1",
+        //     style: TextStyle(fontSize: 25),
+        //   );
+        else {
           return Text(
             fiveSecondCountdown.toString(),
             style: TextStyle(fontSize: 25),
