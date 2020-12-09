@@ -4,19 +4,10 @@ import 'package:random_string/random_string.dart';
 import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
-// import '../login/authenticator.dart';
 import '../../global_variables/global_variables.dart';
 import '../join_game/join_game.dart';
 
-// String player1;
-// String player2;
-// String player3;
-// String player4;
 
-String player1Class;
-String player2Class;
-String player3Class;
-String player4Class;
 String questID;
 String gameLinkValue = "";
 bool pushedGo;
@@ -32,9 +23,6 @@ class GameLobby extends StatefulWidget {
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
   @override
-  // void initState() {
-  //   updateGameContent(questID);
-  // }
 
   int counter = 5;
   Timer readyTimer;
@@ -62,9 +50,7 @@ class GameLobbySL extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Game lobby"),
-      ),
+
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -74,7 +60,7 @@ class GameLobbySL extends State<GameLobby> {
           ),
         ),
         child: Center(
-          // padding: EdgeInsets.all(15.0),
+         
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -89,27 +75,15 @@ class GameLobbySL extends State<GameLobby> {
                       fontSize: 50,
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
-              SizedBox(height: 80),
+              SizedBox(height: 50),
               startCountdownStream(context),
               SizedBox(height: 40),
               buildUser(context),
               SizedBox(height: 40),
-              // TextField(
-              //     controller: gameLinkController,
-              //     decoration: new InputDecoration(
-              //         border: OutlineInputBorder(), hintText: ""),
-              //     style: TextStyle(
-              //         fontSize: 25,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold),
-              //     onChanged: (String text) {
-              //       gameID = gameLinkController.text;
-              //     }),
               ElevatedButton(
                 onPressed: () {
                   checkP1GO();
                   startTimer();
-                  // updateGameContent(questID);
                 },
                 child: Text('Go to game'),
               ),
@@ -127,36 +101,17 @@ class GameLobbySL extends State<GameLobby> {
     );
   }
 
-  // void updateGameContent(String questName) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('ready-quests')
-  //       .doc(questName)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       // define questions
-  //       game.questions = documentSnapshot.data()['questions'];
+  Future<bool> goNextPage(int id, int duration) async {
+    await Future.delayed(Duration(seconds: duration));
+    Navigator.pushNamed(context, '/ingame');
+    ;
+  }
 
-  //       // define choices for each question
-  //       game.choices0 = documentSnapshot.data()['choices1'];
-  //       game.choices1 = documentSnapshot.data()['choices2'];
-  //       game.choices2 = documentSnapshot.data()['choices3'];
-  //       game.choices3 = documentSnapshot.data()['choices4'];
-
-  //       // put all four choices arrays in one main array
-  //       game.choices = [
-  //         game.choices0,
-  //         game.choices1,
-  //         game.choices2,
-  //         game.choices3
-  //       ];
-
-  //       // define answers
-  //       game.correctAnswers = documentSnapshot.data()['answers'];
-  //       print('answers: ${game.correctAnswers}');
-  //     }
-  //   });
-  // }
+  Future runTimeout() async {
+    await goNextPage(0, 5).timeout(Duration(seconds: 2), onTimeout: () {
+      print('test');
+    });
+  }
 }
 
 void checkP1GO() async {
@@ -253,8 +208,16 @@ Widget buildUser(BuildContext context) {
           return Text("Loading");
         }
         var userDocument = snapshot.data;
+
         return Text(
-          userDocument["player1"] +
+          'Party Health: ' +
+              userDocument["partyHealth"].toString() +
+              '\n\n' +
+              'Party Wisdom: ' +
+              ((userDocument["partyWisdom"] * 100).toInt()).toString() +
+              '%'
+                  '\n\n' +
+              userDocument["player1"] +
               '  -  ' +
               userDocument['player1Class'] +
               '\n\n' +

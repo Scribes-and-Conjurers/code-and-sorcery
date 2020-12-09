@@ -13,9 +13,9 @@ class GameLobbySP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Game lobby"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Game lobby"),
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -48,7 +48,14 @@ class GameLobbySP extends StatelessWidget {
                   Navigator.pushNamed(context, '/settings');
                 },
                 child: Text('Settings'),
-              )
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  removePlayer();
+                  Navigator.pop(context);
+                },
+                child: Text('Go back to homepage'),
+              ),
             ],
           ),
         ),
@@ -89,6 +96,46 @@ class GameLobbySP extends StatelessWidget {
   void updateGameHealth() async {
     await databaseReference.collection("games").doc(gameLinkValue).update({
       'partyHealth': FieldValue.increment(1),
+    });
+  }
+
+  void removePlayer() async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          FirebaseFirestore.instance.collection('games').doc(gameID);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player1db = snapshot.data()['player1'];
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+      if (playerClass == "Warrior") {
+        await transaction
+            .update(playerCheck, {'partyHealth': FieldValue.increment(-1)});
+      } else if (playerClass == "Wizard") {
+        await transaction
+            .update(playerCheck, {'partyWisdom': FieldValue.increment(-0.1)});
+      }
+      if (player1db == username) {
+        await transaction.delete(playerCheck);
+      } else if (player2db == username) {
+        await transaction.update(playerCheck, {
+          'player2': "",
+          'player2Class': "",
+          'nbOfPlayers': FieldValue.increment(-1)
+        });
+      } else if (player3db == username) {
+        await transaction.update(playerCheck, {
+          'player3': "",
+          'player3Class': "",
+          'nbOfPlayers': FieldValue.increment(-1)
+        });
+      } else if (player4db == username) {
+        await transaction.update(playerCheck, {
+          'player4': "",
+          'player4Class': "",
+          'nbOfPlayers': FieldValue.increment(-1)
+        });
+      }
     });
   }
 }

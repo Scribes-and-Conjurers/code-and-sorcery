@@ -18,18 +18,12 @@ class JoinGameState extends State<JoinGame> {
   @override
   Widget build(BuildContext ctxt) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: widget.title,
-        ),
+        // appBar: AppBar(
+        //   title: widget.title,
+        // ),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blue[100], Colors.blue[400]],
-            ),
-          ),
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: Column(
@@ -38,7 +32,8 @@ class JoinGameState extends State<JoinGame> {
                 TextField(
                   controller: gameLinkController,
                   decoration: new InputDecoration(
-                      border: OutlineInputBorder(), hintText: "ADD LINK"),
+                      border: OutlineInputBorder(),
+                      hintText: "ADD YOUR ROOM CODE"),
                   onChanged: (String text) {
                     setState(() {
                       gameID = gameLinkController.text;

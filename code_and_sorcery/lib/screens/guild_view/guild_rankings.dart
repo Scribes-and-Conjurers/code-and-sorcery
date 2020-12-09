@@ -7,7 +7,7 @@ class GuildRankings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Guild Rankings')),
+      // appBar: AppBar(title: Text('Guild Rankings')),
       body: guildRanker(context),
       floatingActionButton: FloatingActionButton(
         child: Text('Back'),
