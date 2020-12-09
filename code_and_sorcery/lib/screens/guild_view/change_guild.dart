@@ -17,7 +17,7 @@ class ChangeGuild extends StatefulWidget {
 class ChangeGuildState extends State<ChangeGuild> {
   final databaseReference = FirebaseFirestore.instance;
   final guildController = TextEditingController();
-  String guildValue = "";
+  // String guildValue = "";
 
   @override
   Widget build(BuildContext ctxt) {
@@ -33,10 +33,10 @@ class ChangeGuildState extends State<ChangeGuild> {
               colors: [Colors.blue[100], Colors.blue[400]],
             ),
           ),
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
+          child: Center(
             child: Column(
               children: <Widget>[
+                SizedBox(height: 50),
                 DropdownButton<String>(
                   value: dropdownValue,
                   icon: Icon(Icons.arrow_downward),
@@ -50,6 +50,7 @@ class ChangeGuildState extends State<ChangeGuild> {
                   onChanged: (String newValue) {
                     setState(() {
                       dropdownValue = newValue;
+                      guild = dropdownValue;
                     });
                   },
                   items: <String>['Backenders', 'Frontenders', 'Fullstackers']
@@ -70,11 +71,11 @@ class ChangeGuildState extends State<ChangeGuild> {
                 //     });
                 //   },
                 // ),
-                new Text("\n\n"),
+                SizedBox(height: 100),
                 ElevatedButton(
                   onPressed: () {
                     changeGuild();
-                    guild = guildValue;
+                    // guild = guildValue;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Guild()));
                   },
@@ -98,7 +99,7 @@ class ChangeGuildState extends State<ChangeGuild> {
 
   void changeGuild() async {
     await databaseReference.collection("users").doc(uID).update({
-      'guild': guildValue,
+      'guild': dropdownValue,
     });
   }
 }
