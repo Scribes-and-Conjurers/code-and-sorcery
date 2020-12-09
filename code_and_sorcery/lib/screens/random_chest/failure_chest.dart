@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class FailureChest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+        body: Center(
       child: Center(
         child: Column(
           children: [
@@ -18,6 +19,6 @@ class FailureChest extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
