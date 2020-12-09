@@ -274,7 +274,7 @@ Widget startCountdownStream(BuildContext context) {
         //     "1",
         //     style: TextStyle(fontSize: 25),
         //   );
-        } else {
+        else {
           return Text(
             fiveSecondCountdown.toString(),
             style: TextStyle(fontSize: 25),
