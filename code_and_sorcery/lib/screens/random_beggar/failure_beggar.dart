@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class FailureBeggar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+        body: Center(
       child: Center(
         child: Column(
           children: [
@@ -19,6 +20,6 @@ class FailureBeggar extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

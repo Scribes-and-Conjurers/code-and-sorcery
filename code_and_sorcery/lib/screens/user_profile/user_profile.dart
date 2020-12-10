@@ -2,14 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
+import './avatar_selector.dart';
+
+var profileImage = 'assets/logo.png';
 
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Your Profile"),
-      ),
+      // appBar: AppBar(
+      //   title: Text("Your Profile"),
+      // ),
       body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -20,9 +23,32 @@ class UserProfile extends StatelessWidget {
           ),
           child: Center(
               child: Padding(
-                  padding: EdgeInsets.all(70),
+                  padding: EdgeInsets.all(50),
                   child: Column(
                     children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          profileImage,
+                        ),
+                        radius: 60,
+                        backgroundColor: Colors.white,
+                      ),
+                      Padding(padding: EdgeInsets.all(5)),
+                      FloatingActionButton.extended(
+                        heroTag: "avatarbtn",
+                        onPressed: () {
+                          // Add your onPressed code here!
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AvatarPicker()),
+                          );
+                        },
+                        label: Text('Avatars'),
+                        icon: Icon(Icons.add),
+                        backgroundColor: Colors.pink,
+                      ),
+                      Padding(padding: EdgeInsets.all(15)),
                       Text(
                         username + '  -  ' + playerClass,
                         style: TextStyle(fontSize: 25, color: Colors.black),
