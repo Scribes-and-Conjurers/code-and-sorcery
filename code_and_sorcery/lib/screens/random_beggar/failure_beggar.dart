@@ -4,8 +4,7 @@ class FailureBeggar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Center(
+      body: Center(
         child: Column(
           children: [
             Text(
@@ -20,6 +19,6 @@ class FailureBeggar extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

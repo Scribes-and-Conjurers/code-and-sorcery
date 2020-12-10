@@ -4,9 +4,9 @@ class FailureChest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Center(
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("The chest was filled with poison gas! You barely escaped."),
             ElevatedButton(
@@ -19,6 +19,6 @@ class FailureChest extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

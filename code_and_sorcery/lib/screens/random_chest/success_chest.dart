@@ -5,7 +5,6 @@ class SuccessChest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-            child: Center(
       child: Column(
         children: [
           Text(
@@ -19,6 +18,6 @@ class SuccessChest extends StatelessWidget {
           )
         ],
       ),
-    )));
+    ));
   }
 }

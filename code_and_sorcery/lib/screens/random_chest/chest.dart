@@ -15,9 +15,7 @@ class _ChestState extends State<Chest> {
     Random random = new Random();
     diceRoll = random.nextDouble();
     return Scaffold(
-        body: Container(
-      padding: EdgeInsets.symmetric(vertical: 200),
-      child: Center(
+      body: Center(
         child: Column(
           children: [
             Text("A mysterious chest..."),
@@ -39,7 +37,7 @@ class _ChestState extends State<Chest> {
           ],
         ),
       ),
-    ));
+    );
   }
 
   void openChest() {
