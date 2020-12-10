@@ -9,6 +9,8 @@ var profileImage = 'assets/logo.png';
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // fetch image avatar no. from database
+
     return Scaffold(
       // appBar: AppBar(
       //   title: Text("Your Profile"),
@@ -26,13 +28,7 @@ class UserProfile extends StatelessWidget {
                   padding: EdgeInsets.all(50),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                          profileImage,
-                        ),
-                        radius: 60,
-                        backgroundColor: Colors.white,
-                      ),
+                      avatarGetter(context),
                       Padding(padding: EdgeInsets.all(5)),
                       FloatingActionButton.extended(
                         heroTag: "avatarbtn",
@@ -101,6 +97,27 @@ Widget pointGetter(BuildContext context) {
         return Text(
           userDocument['points'].toString(),
           style: TextStyle(fontSize: 25),
+        );
+      });
+}
+
+// this function fetches the current avatar index
+Widget avatarGetter(BuildContext context) {
+  return StreamBuilder(
+      stream:
+          FirebaseFirestore.instance.collection('users').doc(uID).snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        var imageIndexString = snapshot.data['profileImg'];
+        var imageIndex = int.parse(imageIndexString);
+        return CircleAvatar(
+          backgroundImage: AssetImage(
+            avatars[imageIndex],
+          ),
+          radius: 60,
+          backgroundColor: Colors.white,
         );
       });
 }
