@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './user_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../global_variables/global_variables.dart';
 
 var avatars = [
   'assets/mushroom_purple.png',
@@ -15,6 +17,8 @@ var avatars = [
 class AvatarPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //final databaseReference = FirebaseFirestore.instance;
+
     return Scaffold(
       body: Center(
           // padding: EdgeInsets.all(20.0),
@@ -26,10 +30,12 @@ class AvatarPicker extends StatelessWidget {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             // Padding(padding: EdgeInsets.all(5.0)),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[0];
+                // profileImage = avatars[0];
+                setNewAvatar('0');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -43,10 +49,12 @@ class AvatarPicker extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
             ),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[1];
+                // profileImage = avatars[1];
+                setNewAvatar('1');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -60,10 +68,11 @@ class AvatarPicker extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
             ),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[2];
+                setNewAvatar('2');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -81,7 +90,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[3];
+                setNewAvatar('3');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -99,7 +108,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[4];
+                setNewAvatar('4');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -117,7 +126,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = avatars[5];
+                setNewAvatar('5');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -134,8 +143,8 @@ class AvatarPicker extends StatelessWidget {
 
             GestureDetector(
               onTap: () {
-                //do what you want here
-                profileImage = avatars[6];
+                // change user property 'profileImg'
+                setNewAvatar('6');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -172,4 +181,13 @@ class AvatarPicker extends StatelessWidget {
       )),
     );
   }
+}
+
+// FirebaseFirestore.instance.collection('users').doc(uID).snapshots()
+
+void setNewAvatar(index) async {
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uID)
+      .update({'profileImg': index});
 }
