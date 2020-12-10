@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import './user_profile.dart';
 
+var avatars = [
+  'assets/mushroom_purple.png',
+  'assets/mushroom_yellow.png',
+  'assets/mushroom_green.png',
+  'assets/ghost_black.png',
+  'assets/ghost_blue.png',
+  'assets/ghost_white.png',
+  'assets/tree_pink.png',
+  'assets/zombie_green.png',
+];
+
 class AvatarPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_purple.png';
+                profileImage = avatars[0];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -35,7 +46,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_yellow.png';
+                profileImage = avatars[1];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -52,7 +63,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_green.png';
+                profileImage = avatars[2];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -70,7 +81,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_black.png';
+                profileImage = avatars[3];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -88,7 +99,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_blue.png';
+                profileImage = avatars[4];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -106,7 +117,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_white.png';
+                profileImage = avatars[5];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -124,7 +135,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/tree_pink.png';
+                profileImage = avatars[6];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -142,7 +153,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/zombie_green.png';
+                profileImage = avatars[7];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
