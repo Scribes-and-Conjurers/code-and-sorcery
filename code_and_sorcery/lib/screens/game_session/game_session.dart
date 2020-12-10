@@ -116,9 +116,9 @@ class GameSessionState extends State<GameSession> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   partyHealthModifier(context),
-                                  gameOverStream(context),
                                 ])
                         ),
+                        gameOverStream(context),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
@@ -491,8 +491,7 @@ class GameSessionState extends State<GameSession> {
           }
           if (snapshot.data['partyHealth'] == 0) {
             readyTimer.cancel();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => GameOver()));
+            Navigator.pushNamed(context, '/gameOver');
             return Text(
               "",
               style: TextStyle(fontSize: 1),

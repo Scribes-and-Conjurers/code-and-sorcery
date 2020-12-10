@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:provider/provider.dart';
 import '../game_session/game_general_utils.dart';
-import '../game_session//game_session.dart';
+import '../game_session/game_session.dart';
+import '../homepage/homepage.dart';
 
 class GameOver extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -56,10 +57,10 @@ class GameOver extends StatelessWidget {
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                // removePlayer();
+                                Navigator.pushNamed(context, '/homepage');
+                                // Navigator.pop(context);
+                                // Navigator.push(
+                                //     context, MaterialPageRoute(builder: (context) => Homepage()));
                               },
                               child: Text("Leave the game",
                                   style: TextStyle(
