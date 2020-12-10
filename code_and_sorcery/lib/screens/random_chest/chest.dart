@@ -18,19 +18,34 @@ class _ChestState extends State<Chest> {
       body: Center(
         child: Column(
           children: [
-            Text("A mysterious chest..."),
-            Text("It whispers to you, promising riches..."),
+            SizedBox(
+              height: 200,
+            ),
+            Text(
+              "A mysterious chest...",
+              style: TextStyle(fontSize: 30),
+            ),
+            Text(
+              "It whispers to you, promising riches...",
+              style: TextStyle(fontSize: 20),
+            ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
-                child: Text("Open the chest"),
+                child: Text(
+                  "Open the chest",
+                  style: TextStyle(fontSize: 20),
+                ),
                 onPressed: () {
                   openChest();
                 },
               ),
             ),
             ElevatedButton(
-                child: Text("Leave the chest alone"),
+                child: Text(
+                  "Leave the chest alone",
+                  style: TextStyle(fontSize: 20),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 })
