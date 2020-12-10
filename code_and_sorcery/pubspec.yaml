@@ -56,6 +56,14 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/mushroom_green.png
+    - assets/mushroom_yellow.png
+    - assets/mushroom_purple.png
+    - assets/ghost_black.png
+    - assets/ghost_blue.png
+    - assets/ghost_white.png
+    - assets/tree_pink.png
+    - assets/zombie_green.png
   # To add assets to your application, add an assets section, like this:
   #   - images/a_dot_ham.jpeg
 
