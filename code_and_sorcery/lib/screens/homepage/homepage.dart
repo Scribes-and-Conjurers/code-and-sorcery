@@ -7,11 +7,67 @@ import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 import '../user_profile/user_profile.dart';
+import './colors.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;
 int nbOfPlayers;
+
+const mainColor = Color(0xffb74093);
+
+// color test stuff:
+// turning normal color into material color
+// Map<int, Color> colorBase1 = {
+//   50: Color.fromRGBO(255, 67, 1, .1),
+//   100: Color.fromRGBO(255, 67, 1, .2),
+//   200: Color.fromRGBO(255, 67, 1, .3),
+//   300: Color.fromRGBO(255, 67, 1, .4),
+//   400: Color.fromRGBO(255, 67, 1, .5),
+//   500: Color.fromRGBO(255, 67, 1, .6),
+//   600: Color.fromRGBO(255, 67, 1, .7),
+//   700: Color.fromRGBO(255, 67, 1, .8),
+//   800: Color.fromRGBO(255, 67, 1, .9),
+//   900: Color.fromRGBO(255, 67, 1, 1),
+// };
+
+// MaterialColor colorMain1 = MaterialColor(0xFFff4301, colorBase1);
+
+Color getColorButton1(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return colorMain2;
+}
+
+Color getColorButton2(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return colorSide1;
+}
+
+Color getColorButton3(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return colorSide2;
+}
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -26,11 +82,12 @@ class Homepage extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
+          color: colorMain1,
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   colors: [Colors.blue[100], Colors.blue[400]],
+          // ),
         ),
         child: Center(
           child: Column(
@@ -54,16 +111,28 @@ class Homepage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  updateUserProfile();
-                  Navigator.pushNamed(context, '/profile');
-                },
-                child: Text('Profile page'),
+              ButtonTheme(
+                minWidth: 200,
+                height: 20,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColorButton1),
+                  ),
+                  onPressed: () {
+                    // Navigate back to the first screen by popping the current route
+                    // off the stack.
+                    updateUserProfile();
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: Text('Profile page'),
+                ),
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.resolveWith(getColorButton2),
+                ),
                 onPressed: () {
                   chooseGameTypePopUp(context);
 
@@ -73,6 +142,10 @@ class Homepage extends StatelessWidget {
                 child: Text('Create a game'),
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.resolveWith(getColorButton3),
+                ),
                 onPressed: () {
                   // createJoinGamePopUp(context)
                   //     .then((value) => gameLinkValue = value);
@@ -372,6 +445,23 @@ class Homepage extends StatelessWidget {
   //     }
   //   }
   // });
+}
+
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }
 
 // void gameFullCheck() async {
