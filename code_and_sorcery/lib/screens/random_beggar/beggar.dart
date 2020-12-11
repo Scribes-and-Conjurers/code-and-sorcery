@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../../global_variables/global_variables.dart';
 
 class Beggar extends StatefulWidget {
   @override
@@ -64,7 +65,7 @@ class _BeggarState extends State<Beggar> {
     if (isOpened) {
       Navigator.pop(context);
     }
-    if (diceRoll <= 0.4) {
+    if (diceRoll <= partyWisdom) {
       Navigator.pushNamed(context, '/successBeggar');
     } else {
       Navigator.pushNamed(context, '/failureBeggar');

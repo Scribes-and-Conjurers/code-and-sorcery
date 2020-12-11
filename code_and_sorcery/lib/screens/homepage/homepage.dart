@@ -207,7 +207,20 @@ class Homepage extends StatelessWidget {
                 child: Text('SINGLEPLAYER'),
                 onPressed: () {
                   gameID = randomNumeric(2);
-                  createSPGame();
+                  switch (playerClass) {
+                    case 'Warrior': {
+                      createSPGameWarrior();
+                    }
+                      break;
+                    case 'Wizard': {
+                      createSPGameWizard();
+                    }
+                      break;
+                    default: {
+                      createSPGameWarrior();
+                    }
+                      break;
+                  }
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/lobbySP');
                 },
@@ -308,11 +321,24 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  void createSPGame() async {
+  void createSPGameWarrior() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'partyHealth': 4,
+      'partyWisdom': 0.5,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+    });
+  }
+
+  void createSPGameWizard() async {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
       'partyHealth': 3,
+      'partyWisdom': 0.6,
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
