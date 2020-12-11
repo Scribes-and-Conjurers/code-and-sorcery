@@ -66,6 +66,7 @@ class QuestLongMPState extends State<QuestLongMP> {
             counter--;
           } else {
             // readyTimer.cancel();
+            hasPlayed = false;
             updateQuestion();
             setPlayerFalse();
             counter = 10;
@@ -198,7 +199,8 @@ class QuestLongMPState extends State<QuestLongMP> {
                                   // updateQuestion();
                                 },
                                 child: Text(
-                                  game.choices[questionNumber][0],
+                                  'Hi',
+                                  // game.choices[questionNumber][0],
                                   style: TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,
