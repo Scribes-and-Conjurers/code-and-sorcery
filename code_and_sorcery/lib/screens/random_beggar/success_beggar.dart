@@ -4,12 +4,19 @@ class SuccessBeggar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
+        body: Container(
             child: Center(
       child: Column(
         children: [
-          Text(
-              "Amazing! He returns an hour later and gifts you three times what you donated!"),
+          SizedBox(
+            height: 200,
+          ),
+          Padding(
+              padding: EdgeInsets.all(30),
+              child: Text(
+                "Amazing! He returned and gifts you three times what you donated!",
+                style: TextStyle(fontSize: 20),
+              )),
           ElevatedButton(
             child: Text("Continue Adventure"),
             onPressed: () {

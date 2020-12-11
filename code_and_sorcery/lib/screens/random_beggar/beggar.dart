@@ -16,23 +16,41 @@ class _BeggarState extends State<Beggar> {
     diceRoll = random.nextDouble();
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.symmetric(vertical: 200),
       child: Center(
         child: Column(
           children: [
-            Text("An old man approaches you..."),
-            Text("He asks for coins to get him through the night..."),
+            SizedBox(
+              height: 200,
+            ),
+            Padding(
+                padding: EdgeInsets.all(30),
+                child: Text(
+                  "An old man approaches you...",
+                  style: TextStyle(fontSize: 20),
+                )),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  "He asks for coins to get him through the night...",
+                  style: TextStyle(fontSize: 20),
+                )),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
-                child: Text("Give 2 points"),
+                child: Text(
+                  "Give 2 points",
+                  style: TextStyle(fontSize: 20),
+                ),
                 onPressed: () {
                   openChest();
                 },
               ),
             ),
             ElevatedButton(
-                child: Text("Leave the beggar alone"),
+                child: Text(
+                  "Leave the beggar alone",
+                  style: TextStyle(fontSize: 20),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 })
@@ -48,40 +66,8 @@ class _BeggarState extends State<Beggar> {
     }
     if (diceRoll <= 0.4) {
       Navigator.pushNamed(context, '/successBeggar');
-      // Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("Amazing! The chest was filled with treasure!"),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     } else {
       Navigator.pushNamed(context, '/failureBeggar');
-      // return Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("The chest is filled with poison gas! You barely escape."),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     }
   }
 }

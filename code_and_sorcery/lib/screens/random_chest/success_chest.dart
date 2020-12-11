@@ -4,12 +4,17 @@ class SuccessChest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
+        body: Container(
             child: Center(
       child: Column(
         children: [
+          SizedBox(
+            height: 200,
+          ),
           Text(
-              "Amazing! The chest was filled with treasure! You stuff your pockets."),
+            "Amazing! The chest was filled with treasure! You stuff your pockets.",
+            style: TextStyle(fontSize: 30),
+          ),
           ElevatedButton(
             child: Text("Continue Adventure"),
             onPressed: () {
