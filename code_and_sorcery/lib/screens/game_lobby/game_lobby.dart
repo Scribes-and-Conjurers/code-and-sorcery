@@ -7,7 +7,6 @@ import 'dart:async';
 import '../../global_variables/global_variables.dart';
 import '../join_game/join_game.dart';
 
-
 String questID;
 String gameLinkValue = "";
 bool pushedGo;
@@ -23,7 +22,6 @@ class GameLobby extends StatefulWidget {
 // Game widget state
 class GameLobbySL extends State<GameLobby> {
   @override
-
   int counter = 5;
   Timer readyTimer;
   var game = new GameContent();
@@ -50,7 +48,6 @@ class GameLobbySL extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -60,7 +57,6 @@ class GameLobbySL extends State<GameLobby> {
           ),
         ),
         child: Center(
-         
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -213,7 +209,7 @@ Widget buildUser(BuildContext context) {
           'Party Health: ' +
               userDocument["partyHealth"].toString() +
               '\n\n' +
-              'Party Wisdom: ' +
+              'Perception rate: ' +
               ((userDocument["partyWisdom"] * 100).toInt()).toString() +
               '%'
                   '\n\n' +

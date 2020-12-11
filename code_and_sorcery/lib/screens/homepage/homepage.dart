@@ -10,7 +10,9 @@ import 'package:random_string/random_string.dart';
 String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;
+bool gameStarted = false;
 int nbOfPlayers;
+int startCountdown;
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -79,12 +81,12 @@ class Homepage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // createJoinGamePopUp(context)
+                  createJoinGamePopUp(context);
                   //     .then((value) => gameLinkValue = value);
                   // // if (!gameFull) {
                   // //   Navigator.pushNamed(context, '/lobby');
                   // // }
-                  Navigator.pushNamed(context, '/join');
+                  // Navigator.pushNamed(context, '/join');
                 },
                 child: Text('Join a game'),
               ),
@@ -117,45 +119,54 @@ class Homepage extends StatelessWidget {
 
   Future<String> createJoinGamePopUp(BuildContext context) {
     TextEditingController gameLinkController = TextEditingController();
+    String gameState = '';
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Enter the game link"),
-            content: TextField(controller: gameLinkController),
+            title: Text("ENTER YOUR ROOM CODE"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(gameState),
+                  TextField(
+                    controller: gameLinkController,
+                    onChanged: (text) {
+                      gameJoinLink = text;
+                      checkGameState();
+                    },
+                    decoration: new InputDecoration(
+                        // border: OutlineInputBorder(),
+                        hintText: "Type here"),
+                  ),
+                ],
+              ),
+            ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
-                child: Text('Submit'),
+                child: Text('Send', style: TextStyle(fontSize: 23)),
                 onPressed: () {
                   gameJoinLink = gameLinkController.text.toString();
+                  checkGameState();
 
-                  // final snapShot = FirebaseFirestore.instance
-                  //     .collection('games')
-                  //     .doc(gameJoinLink)
-                  //     .get();
-
-                  // if (snapShot.exists) {
-                  //   //it exists
-                  // } else {
-                  //   //not exists
-                  // }
-
-                  // if (gameNull == true) {
-                  //   print('null');
-                  //   alertGameNull(context);
-                  // }
-                  // // gameFullCheck();
-                  // if (gameFull == false) {
-                  //   print('can set');
-                  //   // setPlayer();
-                  //   Navigator.pushNamed(context, '/lobby');
-                  //   Navigator.of(context)
-                  //       .pop(gameLinkController.text.toString());
-                  // } else if (gameFull == true) {
-                  //   print('game');
-                  //   alertGameFull(context);
-                  // }
+                  if (gameJoinLink == '') {
+                    alertGameNoCode(context);
+                  } else if (gameNull == true) {
+                    alertGameNull(context);
+                    gameNull = false;
+                  } else if (gameFull == true) {
+                    alertGameFull(context);
+                    gameFull = false;
+                  } else if (gameStarted == true) {
+                    alertGameStarted(context);
+                    gameStarted = false;
+                  } else {
+                    // setPlayer();
+                    // Navigator.pushNamed(context, '/lobby');
+                    // Navigator.of(context)
+                    //     .pop(gameLinkController.text.toString());
+                  }
                 },
               )
             ],
@@ -169,14 +180,6 @@ class Homepage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             title: Text("The game you tried to join is already full"),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
           );
         });
   }
@@ -187,14 +190,26 @@ class Homepage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             title: Text("The game you tried to join doesn't exist"),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
+          );
+        });
+  }
+
+  Future<String> alertGameStarted(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("The game you tried to join already started"),
+          );
+        });
+  }
+
+  Future<String> alertGameNoCode(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("You didn't enter a room code"),
           );
         });
   }
@@ -248,6 +263,26 @@ class Homepage extends StatelessWidget {
         username = documentSnapshot.data()['username'];
         guild = documentSnapshot.data()['guild'];
         points = documentSnapshot.data()['points'];
+      }
+    });
+  }
+
+  void checkGameState() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameJoinLink)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        nbOfPlayers = documentSnapshot.data()['nbOfPlayers'];
+        startCountdown = documentSnapshot.data()['startCountdown'];
+        if (nbOfPlayers == 4) {
+          gameFull = true;
+        } else if (startCountdown != 5) {
+          gameStarted = true;
+        }
+      } else {
+        gameNull = true;
       }
     });
   }
@@ -338,46 +373,46 @@ class Homepage extends StatelessWidget {
   //   });
   // }
 
-  // void setPlayer() async {
-  //   await FirebaseFirestore.instance.runTransaction((transaction) async {
-  //     DocumentReference playerCheck =
-  //         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-  //     DocumentSnapshot snapshot = await transaction.get(playerCheck);
-  //     player2db = snapshot.data()['player2'];
-  //     player3db = snapshot.data()['player3'];
-  //     player4db = snapshot.data()['player4'];
-  // gameFull = snapshot.data()['gameFull'];
-  // if (playerClass == "Warrior") {
-  //   await transaction
-  //       .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
-  // }
-  // if (player2db == "") {
-  //   await transaction.update(playerCheck, {
-  //     'player2': username,
-  //     'player2Class': playerClass,
-  //     'nbOfPlayers': FieldValue.increment(1)
-  //   });
-  // } else if (player2db != "") {
-  //   if (player3db == "") {
-  //     await transaction.update(playerCheck, {
-  //         'player3': username,
-  //         'player3Class': playerClass,
-  //         'nbOfPlayers': FieldValue.increment(1)
-  //       });
-  //     } else if (player3db != "") {
-  //       if (player4db == "") {
-  //         await transaction.update(playerCheck, {
-  //           'player4': username,
-  //           'player4Class': playerClass,
-  //           'nbOfPlayers': FieldValue.increment(1)
-  //         });
-  //         // } else {
-  //         //   await transaction.update(playerCheck, {'gameFull': true});
-  //       }
-  //     }
-  //   }
-  // });
-}
+  void setPlayer() async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentReference playerCheck =
+          FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
+      DocumentSnapshot snapshot = await transaction.get(playerCheck);
+      player2db = snapshot.data()['player2'];
+      player3db = snapshot.data()['player3'];
+      player4db = snapshot.data()['player4'];
+      gameFull = snapshot.data()['gameFull'];
+      if (playerClass == "Warrior") {
+        await transaction
+            .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
+      }
+      if (player2db == "") {
+        await transaction.update(playerCheck, {
+          'player2': username,
+          'player2Class': playerClass,
+          'nbOfPlayers': FieldValue.increment(1)
+        });
+      } else if (player2db != "") {
+        if (player3db == "") {
+          await transaction.update(playerCheck, {
+            'player3': username,
+            'player3Class': playerClass,
+            'nbOfPlayers': FieldValue.increment(1)
+          });
+        } else if (player3db != "") {
+          if (player4db == "") {
+            await transaction.update(playerCheck, {
+              'player4': username,
+              'player4Class': playerClass,
+              'nbOfPlayers': FieldValue.increment(1)
+            });
+            // } else {
+            //   await transaction.update(playerCheck, {'gameFull': true});
+          }
+        }
+      }
+    });
+  }
 
 // void gameFullCheck() async {
 //   await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -427,3 +462,4 @@ class Homepage extends StatelessWidget {
 //     }
 //   });
 // }
+}
