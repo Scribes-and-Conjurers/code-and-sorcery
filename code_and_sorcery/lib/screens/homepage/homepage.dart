@@ -69,6 +69,18 @@ Color getColorButton3(Set<MaterialState> states) {
   return colorSide2;
 }
 
+Color getColorMain(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return colorMain1;
+}
+
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
 
@@ -101,19 +113,19 @@ class Homepage extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                    color: colorSide2),
               ),
+              SizedBox(height: 10),
               Text(
                 username,
                 style: TextStyle(
                     fontSize: 25,
-                    color: Colors.white,
+                    color: colorSide2,
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              ButtonTheme(
-                minWidth: 200,
-                height: 20,
+              SizedBox(
+                width: 200.0,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -128,34 +140,41 @@ class Homepage extends StatelessWidget {
                   child: Text('Profile page'),
                 ),
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.resolveWith(getColorButton2),
-                ),
-                onPressed: () {
-                  chooseGameTypePopUp(context);
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColorButton2),
+                  ),
+                  onPressed: () {
+                    chooseGameTypePopUp(context);
 
-                  // Navigator.pushNamed(context, '/lobby');
-                  // createRecord();
-                },
-                child: Text('Create a game'),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.resolveWith(getColorButton3),
+                    // Navigator.pushNamed(context, '/lobby');
+                    // createRecord();
+                  },
+                  child: Text('Create a game'),
                 ),
-                onPressed: () {
-                  // createJoinGamePopUp(context)
-                  //     .then((value) => gameLinkValue = value);
-                  // // if (!gameFull) {
-                  // //   Navigator.pushNamed(context, '/lobby');
-                  // // }
-                  Navigator.pushNamed(context, '/join');
-                },
-                child: Text('Join a game'),
               ),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColorButton3),
+                  ),
+                  onPressed: () {
+                    // createJoinGamePopUp(context)
+                    //     .then((value) => gameLinkValue = value);
+                    // // if (!gameFull) {
+                    // //   Navigator.pushNamed(context, '/lobby');
+                    // // }
+                    Navigator.pushNamed(context, '/join');
+                  },
+                  child: Text('Join a game'),
+                ),
+              ),
+              SizedBox(height: 20),
               RaisedButton(
                 onPressed: () {
                   // signOutGoogle();
@@ -164,7 +183,7 @@ class Homepage extends StatelessWidget {
                     return LoginPage();
                   }), ModalRoute.withName('/'));
                 },
-                color: Colors.deepPurple,
+                color: colorMain2,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
