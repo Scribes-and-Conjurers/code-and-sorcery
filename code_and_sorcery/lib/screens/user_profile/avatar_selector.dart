@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import './user_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../global_variables/global_variables.dart';
+
+var avatars = [
+  'assets/mushroom_purple.png',
+  'assets/mushroom_yellow.png',
+  'assets/mushroom_green.png',
+  'assets/ghost_black.png',
+  'assets/ghost_blue.png',
+  'assets/ghost_white.png',
+  'assets/tree_pink.png',
+  'assets/zombie_green.png',
+];
 
 class AvatarPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //final databaseReference = FirebaseFirestore.instance;
+
     return Scaffold(
       body: Center(
           // padding: EdgeInsets.all(20.0),
@@ -15,10 +30,12 @@ class AvatarPicker extends StatelessWidget {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             // Padding(padding: EdgeInsets.all(5.0)),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_purple.png';
+                // profileImage = avatars[0];
+                setNewAvatar('0');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -32,10 +49,12 @@ class AvatarPicker extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
             ),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_yellow.png';
+                // profileImage = avatars[1];
+                setNewAvatar('1');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -49,10 +68,11 @@ class AvatarPicker extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
             ),
+
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/mushroom_green.png';
+                setNewAvatar('2');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -70,7 +90,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_black.png';
+                setNewAvatar('3');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -88,7 +108,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_blue.png';
+                setNewAvatar('4');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -106,7 +126,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/ghost_white.png';
+                setNewAvatar('5');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -123,8 +143,8 @@ class AvatarPicker extends StatelessWidget {
 
             GestureDetector(
               onTap: () {
-                //do what you want here
-                profileImage = 'assets/tree_pink.png';
+                // change user property 'profileImg'
+                setNewAvatar('6');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -142,7 +162,7 @@ class AvatarPicker extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 //do what you want here
-                profileImage = 'assets/zombie_green.png';
+                profileImage = avatars[7];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => UserProfile()),
@@ -161,4 +181,13 @@ class AvatarPicker extends StatelessWidget {
       )),
     );
   }
+}
+
+// FirebaseFirestore.instance.collection('users').doc(uID).snapshots()
+
+void setNewAvatar(index) async {
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uID)
+      .update({'profileImg': index});
 }
