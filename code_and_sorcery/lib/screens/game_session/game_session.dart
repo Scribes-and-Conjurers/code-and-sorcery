@@ -13,6 +13,7 @@ import 'long_game_session.dart';
 import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../game_over/game_over.dart';
 
 // SHORT ADVENTURE !!!!
 
@@ -115,7 +116,9 @@ class GameSessionState extends State<GameSession> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   partyHealthModifier(context),
-                                ])),
+                                ])
+                        ),
+                        gameOverStream(context),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
@@ -323,7 +326,10 @@ class GameSessionState extends State<GameSession> {
                                 ),
                               ),
                             )),
-                      ]))));
+                      ],
+                  )
+              ),
+          ));
     }
   }
 
@@ -469,5 +475,32 @@ class GameSessionState extends State<GameSession> {
       }
     });
     // }
+  }
+
+  // This stream checks party health and goes to game over screen
+  Widget gameOverStream(BuildContext context) {
+    Timer gameSessionTimer;
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('games')
+            .doc(gameID)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading");
+          }
+          if (snapshot.data['partyHealth'] == 0) {
+            readyTimer.cancel();
+            Navigator.pushNamed(context, '/gameOver');
+            return Text(
+              "",
+              style: TextStyle(fontSize: 1),
+            );
+          } else {
+            return Text('',
+              style: TextStyle(fontSize: 1),
+            );
+          }
+        });
   }
 }

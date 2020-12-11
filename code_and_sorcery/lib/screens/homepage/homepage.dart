@@ -6,6 +6,7 @@ import '../../model/user.dart';
 import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
+import '../user_profile/user_profile.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
@@ -36,13 +37,7 @@ class Homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  profileImg,
-                ),
-                radius: 60,
-                backgroundColor: Colors.white,
-              ),
+              avatarGetter(context),
               SizedBox(height: 40),
               Text(
                 'WELCOME',
