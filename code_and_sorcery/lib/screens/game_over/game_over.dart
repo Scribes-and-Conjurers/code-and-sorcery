@@ -21,53 +21,56 @@ class GameOver extends StatelessWidget {
             child: Scaffold(
                 body: Container(
                     alignment: Alignment.topCenter,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Game Over!',
-                            style: TextStyle(
-                              fontSize: 36,
-                              color: Colors.black,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Game Over!',
+                              style: TextStyle(
+                                fontSize: 36,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Your party ran out of health!',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
+                            Text(
+                              'Your party ran out of health!',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Builder(builder: (context) {
-                            return player1PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player2PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player3PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player4PointsStream(context);
-                          }),
-                          Padding(padding: EdgeInsets.all(10.0)),
-                          MaterialButton(
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                updateGame();
-                                questionNumber = 0;
-                                finalScore = 0;
-                                // Navigator.pushNamed(context, '/homepage');
-                                Navigator.pop(context);
-                                // Navigator.push(
-                                //     context, MaterialPageRoute(builder: (context) => Homepage()));
-                              },
-                              child: Text("Leave the game",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: Colors.white,
-                                  )))
-                        ])))));
+                            Builder(builder: (context) {
+                              return player1PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player2PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player3PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player4PointsStream(context);
+                            }),
+                            Padding(padding: EdgeInsets.all(10.0)),
+                            MaterialButton(
+                                color: Colors.deepPurple,
+                                onPressed: () {
+                                  updateGame();
+                                  questionNumber = 0;
+                                  finalScore = 0;
+                                  // Navigator.pushNamed(context, '/homepage');
+                                  Navigator.pop(context);
+                                  // Navigator.push(
+                                  //     context, MaterialPageRoute(builder: (context) => Homepage()));
+                                },
+                                child: Text("Leave the game",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.white,
+                                    )))
+                          ]),
+                    )))));
   }
 
   void updateGame() async {
