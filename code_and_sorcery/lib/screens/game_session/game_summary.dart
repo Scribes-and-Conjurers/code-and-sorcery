@@ -24,41 +24,44 @@ class Summary extends StatelessWidget {
             child: Scaffold(
                 body: Container(
                     alignment: Alignment.topCenter,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Builder(builder: (context) {
-                            return player1PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player2PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player3PointsStream(context);
-                          }),
-                          Builder(builder: (context) {
-                            return player4PointsStream(context);
-                          }),
-                          Padding(padding: EdgeInsets.all(10.0)),
-                          MaterialButton(
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                updateMultiplayerPoints();
-                                updateMPGuildPoints();
-                                updateGame();
-                                questionNumber = 0;
-                                finalScore = 0;
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                // removePlayer();
-                              },
-                              child: Text("Leave the game",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: Colors.white,
-                                  )))
-                        ])))));
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Builder(builder: (context) {
+                              return player1PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player2PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player3PointsStream(context);
+                            }),
+                            Builder(builder: (context) {
+                              return player4PointsStream(context);
+                            }),
+                            Padding(padding: EdgeInsets.all(10.0)),
+                            MaterialButton(
+                                color: Colors.deepPurple,
+                                onPressed: () {
+                                  updateMultiplayerPoints();
+                                  updateMPGuildPoints();
+                                  updateGame();
+                                  questionNumber = 0;
+                                  finalScore = 0;
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  // removePlayer();
+                                },
+                                child: Text("Leave the game",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.white,
+                                    )))
+                          ]),
+                    )))));
   }
 
   // for single player game
