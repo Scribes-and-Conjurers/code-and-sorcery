@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'guild_view.dart';
+// import 'guild_view.dart';
 
 String dropdownValue = guild;
 
@@ -62,8 +62,8 @@ class ChangeGuildState extends State<ChangeGuild> {
                 ElevatedButton(
                   onPressed: () {
                     changeGuild();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Guild()));
+                    // Navigator.push(context,
+                    // MaterialPageRoute(builder: (context) => GuildView()));
                   },
                   child: Text('Submit'),
                 ),

@@ -1,3 +1,4 @@
+// import 'package:code_and_sorcery/screens/guild_view/change_guild.dart';
 import 'package:code_and_sorcery/screens/guild_view/guild_rankings.dart';
 import 'package:code_and_sorcery/screens/guild_view/user_rankings.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import '../../global_variables/global_variables.dart';
 import '../homepage/colors.dart';
 import '../homepage/homepage.dart';
 
-String dropdownValue = "Backenders";
+String dropdownValue = guild;
 
 class Guild extends StatefulWidget {
   Guild({this.title, this.someText});
@@ -80,10 +81,6 @@ class GuildView extends State<Guild> {
                 ),
                 onPressed: () {
                   changeGuildPopUp(context);
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => ChangeGuild()));
                 },
                 child: Text(
                   'Change Guild',
@@ -190,7 +187,7 @@ class GuildView extends State<Guild> {
 
   void changeGuild() async {
     await FirebaseFirestore.instance.collection("users").doc(uID).update({
-      'guild': dropdownValue,
+      'guild': guild,
     });
   }
 
