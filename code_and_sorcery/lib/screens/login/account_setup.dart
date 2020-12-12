@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 
-// if username != null && guild != null then go to homepage
-
-// void main() {
-//   runApp(new AccountSetup (
-//     title: new Text("My App"), someText: new Text("Some Text>>>"),));
-// }
 class AccountSetup extends StatefulWidget {
   AccountSetup({this.title, this.someText});
   final Widget title, someText;
@@ -20,8 +14,7 @@ class AccountSetupState extends State<AccountSetup> {
   final usernameController = TextEditingController();
   final guildController = TextEditingController();
   String usernameValue = "";
-  String guildValue = "";
-  // String dropdownValue = "The";
+  String dropdownGuildValue = "";
 
   @override
   Widget build(BuildContext ctxt) {
@@ -30,12 +23,15 @@ class AccountSetupState extends State<AccountSetup> {
         appBar: new AppBar(
           title: widget.title,
         ),
-        body: new Column(
+        body: Column(
           children: <Widget>[
-            new TextField(
+            SizedBox(height: 30),
+            Text("Choose your username"),
+            SizedBox(height: 30),
+            TextField(
               controller: usernameController,
-              decoration:
-                  new InputDecoration.collapsed(hintText: "ADD USERNAME"),
+              decoration: new InputDecoration(
+                  border: OutlineInputBorder(), hintText: "Type your username"),
               onChanged: (String text) {
                 setState(() {
                   usernameValue = usernameController.text;
@@ -45,35 +41,50 @@ class AccountSetupState extends State<AccountSetup> {
                 });
               },
             ),
-            new Text("\n\n"),
-            new TextField(
-              controller: guildController,
-              decoration: new InputDecoration.collapsed(hintText: "ADD GUILD"),
-              onChanged: (String text) {
+            SizedBox(height: 50),
+            Text("Choose your guild"),
+            SizedBox(height: 30),
+            DropdownButton<String>(
+              value: dropdownGuildValue,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
                 setState(() {
-                  guildValue = guildController.text;
-                  guild = guildValue;
+                  dropdownGuildValue = newValue;
+                  guild = dropdownGuildValue;
                 });
-                // TextEditingController().clear();
               },
+              items: <String>['Backenders', 'Frontenders', 'Fullstackers']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            new Text("\n\n"),
-            new Text("Choose your class"),
-            new Text("\n\n"),
+            SizedBox(height: 50),
+            Text("Choose your class"),
+            SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 playerClass = 'Warrior';
               },
               child: Text('Warrior'),
             ),
-            new Text("\n\n"),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 playerClass = 'Wizard';
               },
               child: Text('Wizard'),
             ),
-            new Text("\n\n"),
+            SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
                 setUsernameGuildClass();
@@ -98,28 +109,3 @@ class AccountSetupState extends State<AccountSetup> {
     });
   }
 }
-
-// Widget guildMenu(BuildContext context) {
-//   return DropdownButton<String>(
-//     value: dropdownValue,
-//     icon: Icon(Icons.arrow_downward),
-//     iconSize: 24,
-//     elevation: 16,
-//     style: TextStyle(color: Colors.deepPurple),
-//     underline: Container(
-//       height: 2,
-//       color: Colors.deepPurpleAccent,
-//     ),
-//     onChanged: (String newValue) {
-//       setState(() {
-//         dropdownValue = newValue;
-//       });
-//     },
-//     items: <String>['One', 'Two', 'Free', 'Four']
-//         .map<DropdownMenuItem<String>>((String value) {
-//       return DropdownMenuItem<String>(
-//         value: value,
-//         child: Text(value),
-//       );
-//     }).toList(),
-//   );

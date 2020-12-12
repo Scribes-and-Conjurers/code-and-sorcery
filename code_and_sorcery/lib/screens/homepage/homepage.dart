@@ -370,7 +370,9 @@ class Homepage extends StatelessWidget {
                     } else if (gameFull == true) {
                       alertGameFull(context);
                       gameFull = false;
-                    } else {
+                    } else if (gameFull == false &&
+                        gameNull == false &&
+                        gameStarted == false) {
                       setPlayer();
                       Navigator.pushNamed(context, '/lobby');
                       Navigator.of(context)
@@ -393,23 +395,6 @@ class Homepage extends StatelessWidget {
           );
         });
   }
-
-// void gameFullCheck() async {
-//   await FirebaseFirestore.instance.runTransaction((transaction) async {
-//     DocumentReference playerCheck =
-//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-//     DocumentSnapshot snapshot = await transaction.get(playerCheck);
-//     nbOfPlayers = snapshot.data()['nbOfPlayers'];
-//     if (nbOfPlayers >= 1 && nbOfPlayers > 4) {
-//       gameFull = false;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     } else if (nbOfPlayers == 4) {
-//       gameFull = true;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     }
-//   });
 
   Future<String> alertGameNull(BuildContext context) {
     return showDialog(
