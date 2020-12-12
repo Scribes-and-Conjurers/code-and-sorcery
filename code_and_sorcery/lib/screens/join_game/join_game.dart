@@ -44,7 +44,6 @@ class JoinGameState extends State<JoinGame> {
                 ElevatedButton(
                   onPressed: () {
                     setPlayer();
-                    getQuestID();
                     Navigator.pushNamed(context, '/lobby');
                   },
                   child: Text('Submit'),

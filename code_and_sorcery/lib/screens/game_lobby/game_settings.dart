@@ -10,7 +10,22 @@ class GameSettings extends StatefulWidget {
 
 // Game widget sta
 class GameSettingState extends State<GameSettings> {
-  List<bool> _difficulty = List.generate(3, (_) => false);
+  List<bool> difficultyList;
+
+  @override
+  void initState() {
+    if (difficulty == 'normal') {
+      difficultyList = [
+        false,
+        true,
+      ];
+    } else {
+      difficultyList = [
+        true,
+        false,
+      ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,31 +73,21 @@ class GameSettingState extends State<GameSettings> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Hard',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
                 ],
                 onPressed: (int index) {
                   setState(() {
                     for (int buttonIndex = 0;
-                        buttonIndex < _difficulty.length;
+                        buttonIndex < difficultyList.length;
                         buttonIndex++) {
                       if (buttonIndex == index) {
-                        _difficulty[buttonIndex] = true;
+                        difficultyList[buttonIndex] = true;
                       } else {
-                        _difficulty[buttonIndex] = false;
+                        difficultyList[buttonIndex] = false;
                       }
                     }
                   });
                 },
-                isSelected: _difficulty,
+                isSelected: difficultyList,
                 fillColor: Colors.white,
               ),
               ElevatedButton(
