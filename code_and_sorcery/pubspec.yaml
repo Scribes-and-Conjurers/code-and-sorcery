@@ -64,6 +64,8 @@ flutter:
     - assets/ghost_white.png
     - assets/tree_pink.png
     - assets/zombie_green.png
+    - assets/skeleton_white.pgn
+    - assets/scorpio_red.png
   # To add assets to your application, add an assets section, like this:
   #   - images/a_dot_ham.jpeg
 
