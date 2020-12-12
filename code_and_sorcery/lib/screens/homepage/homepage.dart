@@ -12,8 +12,6 @@ String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;
 bool gameStarted = false;
-int nbOfPlayers;
-int startCountdown;
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -74,8 +72,6 @@ class Homepage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   createJoinGamePopUp(context);
-
-                  // Navigator.pushNamed(context, '/join');
                 },
                 child: Text('Join a game'),
               ),
@@ -105,6 +101,158 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
+
+  void updateUserProfile() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        username = documentSnapshot.data()['username'];
+        guild = documentSnapshot.data()['guild'];
+        points = documentSnapshot.data()['points'];
+      }
+    });
+  }
+
+  // Elements related to creating a game [AlertDialog to choose the kind of game / Functions to creates game in the DB]
+
+  Future<void> chooseGameTypePopUp(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Choose your game mode'),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                color: Colors.blue,
+                child: Text('SINGLEPLAYER'),
+                onPressed: () {
+                  gameID = randomNumeric(2);
+                  switch (playerClass) {
+                    case 'Warrior':
+                      {
+                        createSPGameWarrior();
+                      }
+                      break;
+                    case 'Wizard':
+                      {
+                        createSPGameWizard();
+                      }
+                      break;
+                  }
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/lobbySP');
+                },
+              ),
+              MaterialButton(
+                elevation: 5.0,
+                color: Colors.blue,
+                child: Text('MULTIPLAYER'),
+                onPressed: () {
+                  gameID = randomAlpha(2);
+                  if (playerClass == 'Warrior')
+                    createMPGameWarrior();
+                  else {
+                    createMPGameWizard();
+                  }
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/lobby');
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  void createMPGameWizard() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'createdAt': FieldValue.serverTimestamp(),
+      'startedAt': null,
+      'finished': false,
+      'partyHealth': 3,
+      'partyWisdom': 0.6,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+      'player1isCorrect': false,
+      'player2': '',
+      'player2Class': '',
+      'player2Points': 0,
+      'player2isCorrect': false,
+      'player3': '',
+      'player3Class': '',
+      'player3Points': 0,
+      'player3isCorrect': false,
+      'player4': '',
+      'player4Class': '',
+      'player4Points': 0,
+      'player4isCorrect': false,
+      'nbOfPlayers': 1,
+      'pushedGo': false,
+      'startCountdown': 5,
+      'selectAnswer': 0,
+    });
+  }
+
+  void createMPGameWarrior() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'createdAt': FieldValue.serverTimestamp(),
+      'startedAt': null,
+      'finished': false,
+      'partyHealth': 4,
+      'partyWisdom': 0.5,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+      'player1isCorrect': false,
+      'player2': '',
+      'player2Class': '',
+      'player2Points': 0,
+      'player2isCorrect': false,
+      'player3': '',
+      'player3Class': '',
+      'player3Points': 0,
+      'player3isCorrect': false,
+      'player4': '',
+      'player4Class': '',
+      'player4Points': 0,
+      'player4isCorrect': false,
+      'nbOfPlayers': 1,
+      'pushedGo': false,
+      'startCountdown': 5,
+      'selectAnswer': 0,
+    });
+  }
+
+  void createSPGameWarrior() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'partyHealth': 4,
+      'partyWisdom': 0.5,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+    });
+  }
+
+  void createSPGameWizard() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'partyHealth': 3,
+      'partyWisdom': 0.6,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+    });
+  }
+
+  // Elements related to the join game popup [AlertDialogs / Function to check the DB / Function to put new players in the game]
 
   Future<String> createJoinGamePopUp(BuildContext context) {
     TextEditingController gameLinkController = TextEditingController();
@@ -200,71 +348,9 @@ class Homepage extends StatelessWidget {
         });
   }
 
-  Future<void> chooseGameTypePopUp(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Choose your game mode'),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                color: Colors.blue,
-                child: Text('SINGLEPLAYER'),
-                onPressed: () {
-                  gameID = randomNumeric(2);
-                  switch (playerClass) {
-                    case 'Warrior':
-                      {
-                        createSPGameWarrior();
-                      }
-                      break;
-                    case 'Wizard':
-                      {
-                        createSPGameWizard();
-                      }
-                      break;
-                  }
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/lobbySP');
-                },
-              ),
-              MaterialButton(
-                elevation: 5.0,
-                color: Colors.blue,
-                child: Text('MULTIPLAYER'),
-                onPressed: () {
-                  gameID = randomAlpha(2);
-                  if (playerClass == 'Warrior')
-                    createMPGameWarrior();
-                  else {
-                    createMPGameWizard();
-                  }
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/lobby');
-                },
-              )
-            ],
-          );
-        });
-  }
-
-  void updateUserProfile() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uID)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document data: ${documentSnapshot.data()}');
-        username = documentSnapshot.data()['username'];
-        guild = documentSnapshot.data()['guild'];
-        points = documentSnapshot.data()['points'];
-      }
-    });
-  }
-
   Future checkGameState() async {
+    int nbOfPlayers;
+    int startCountdown;
     await FirebaseFirestore.instance
         .collection('games')
         .doc(gameJoinLink)
@@ -284,91 +370,6 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  // Create a multiplayer game
-  void createMPGameWizard() async {
-    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
-      'createdAt': FieldValue.serverTimestamp(),
-      'startedAt': null,
-      'finished': false,
-      'partyHealth': 3,
-      'partyWisdom': 0.6,
-      'player1': username,
-      'player1Points': 0,
-      'player1Class': playerClass,
-      'player1isCorrect': false,
-      'player2': '',
-      'player2Class': '',
-      'player2Points': 0,
-      'player2isCorrect': false,
-      'player3': '',
-      'player3Class': '',
-      'player3Points': 0,
-      'player3isCorrect': false,
-      'player4': '',
-      'player4Class': '',
-      'player4Points': 0,
-      'player4isCorrect': false,
-      'nbOfPlayers': 1,
-      'pushedGo': false,
-      'startCountdown': 5,
-      'selectAnswer': 0,
-    });
-  }
-
-  void createMPGameWarrior() async {
-    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
-      'createdAt': FieldValue.serverTimestamp(),
-      'startedAt': null,
-      'finished': false,
-      'partyHealth': 4,
-      'partyWisdom': 0.5,
-      'player1': username,
-      'player1Points': 0,
-      'player1Class': playerClass,
-      'player1isCorrect': false,
-      'player2': '',
-      'player2Class': '',
-      'player2Points': 0,
-      'player2isCorrect': false,
-      'player3': '',
-      'player3Class': '',
-      'player3Points': 0,
-      'player3isCorrect': false,
-      'player4': '',
-      'player4Class': '',
-      'player4Points': 0,
-      'player4isCorrect': false,
-      'nbOfPlayers': 1,
-      'pushedGo': false,
-      'startCountdown': 5,
-      'selectAnswer': 0,
-    });
-  }
-
-  void createSPGameWarrior() async {
-    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
-      'created': FieldValue.serverTimestamp(),
-      'finished': false,
-      'partyHealth': 4,
-      'partyWisdom': 0.5,
-      'player1': username,
-      'player1Points': 0,
-      'player1Class': playerClass,
-    });
-  }
-
-  void createSPGameWizard() async {
-    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
-      'created': FieldValue.serverTimestamp(),
-      'finished': false,
-      'partyHealth': 3,
-      'partyWisdom': 0.6,
-      'player1': username,
-      'player1Points': 0,
-      'player1Class': playerClass,
-    });
-  }
-
   void setPlayer() async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference playerCheck =
@@ -381,6 +382,9 @@ class Homepage extends StatelessWidget {
       if (playerClass == "Warrior") {
         await transaction
             .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
+      } else if (playerClass == "Wizard") {
+        await transaction
+            .update(playerCheck, {'partyWisdom': FieldValue.increment(0.1)});
       }
       if (player2db == "") {
         await transaction.update(playerCheck, {
@@ -402,8 +406,6 @@ class Homepage extends StatelessWidget {
               'player4Class': playerClass,
               'nbOfPlayers': FieldValue.increment(1)
             });
-            // } else {
-            //   await transaction.update(playerCheck, {'gameFull': true});
           }
         }
       }
