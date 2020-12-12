@@ -18,7 +18,7 @@ class Summary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(
-        value: game.questionSnapshot,
+        // value: game.questionSnapshot,
         child: WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(
@@ -53,6 +53,7 @@ class Summary extends StatelessWidget {
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
+                                  Navigator.pushNamed(context, '/homepage');
                                   // removePlayer();
                                 },
                                 child: Text("Leave the game",
@@ -108,7 +109,7 @@ class SummarySP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(
-        value: game.questionSnapshot,
+        // value: game.questionSnapshot,
         child: WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(

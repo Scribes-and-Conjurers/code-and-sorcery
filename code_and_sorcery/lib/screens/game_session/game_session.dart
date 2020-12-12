@@ -15,25 +15,16 @@ import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../game_over/game_over.dart';
 import '../random_beggar/beggar.dart';
+import '../loadingscreen/loading_before_gameMP.dart';
 
 // SHORT ADVENTURE !!!!
-
-var player1Score = 0;
-var player2Score = 0;
-var player3Score = 0;
-var player4Score = 0;
-bool hasPlayed = false;
-int player1Points;
-int player2Points;
-int player3Points;
-int player4Points;
-
 // game variables
+bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
 
 // variable that holds game object:
-var game = new GameContent();
+// var game = new GameContent();
 
 // Game widget class
 class GameSession extends StatefulWidget {
@@ -52,7 +43,6 @@ class GameSessionState extends State<GameSession> {
   @override
   void initState() {
     // update game content when Game is initiated!!
-    updateGameContent('JIfrv2SOOdlxkv5RJP3i');
     startTimer();
     setPlayers();
     setPartyWisdom();
@@ -122,14 +112,14 @@ class GameSessionState extends State<GameSession> {
                     Padding(padding: EdgeInsets.all(5.0)),
 
                     // image
-                    Image.asset('assets/${game.images[questionNumber]}.png',
+                    Image.asset('assets/${gameShort.images[questionNumber]}.png',
                         height: 200),
 
                     Padding(padding: EdgeInsets.all(5.0)),
 
                     // question
                     Text(
-                      game.questions[questionNumber],
+                      gameShort.questions[questionNumber],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15.0,
@@ -151,8 +141,8 @@ class GameSessionState extends State<GameSession> {
                             color: Colors.blue,
                             onPressed: () {
                               if (hasPlayed == false) {
-                                if (game.choices[questionNumber][0] ==
-                                    game.correctAnswers[questionNumber]) {
+                                if (gameShort.choices[questionNumber][0] ==
+                                    gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
 
@@ -168,7 +158,7 @@ class GameSessionState extends State<GameSession> {
                               // updateQuestion();
                             },
                             child: Text(
-                              game.choices[questionNumber][0],
+                              gameShort.choices[questionNumber][0],
                               style: TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.white,
@@ -182,8 +172,8 @@ class GameSessionState extends State<GameSession> {
                             color: Colors.blue,
                             onPressed: () {
                               if (hasPlayed == false) {
-                                if (game.choices[questionNumber][1] ==
-                                    game.correctAnswers[questionNumber]) {
+                                if (gameShort.choices[questionNumber][1] ==
+                                    gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
 
@@ -199,7 +189,7 @@ class GameSessionState extends State<GameSession> {
                               // updateQuestion();
                             },
                             child: Text(
-                              game.choices[questionNumber][1],
+                              gameShort.choices[questionNumber][1],
                               style: TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.white,
@@ -213,8 +203,8 @@ class GameSessionState extends State<GameSession> {
                             color: Colors.blue,
                             onPressed: () {
                               if (hasPlayed == false) {
-                                if (game.choices[questionNumber][2] ==
-                                    game.correctAnswers[questionNumber]) {
+                                if (gameShort.choices[questionNumber][2] ==
+                                    gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
                                   finalScore++;
@@ -229,7 +219,7 @@ class GameSessionState extends State<GameSession> {
                               // updateQuestion();
                             },
                             child: Text(
-                              game.choices[questionNumber][2],
+                              gameShort.choices[questionNumber][2],
                               style: TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.white,
@@ -243,8 +233,8 @@ class GameSessionState extends State<GameSession> {
                             color: Colors.blue,
                             onPressed: () {
                               if (hasPlayed == false) {
-                                if (game.choices[questionNumber][3] ==
-                                    game.correctAnswers[questionNumber]) {
+                                if (gameShort.choices[questionNumber][3] ==
+                                    gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
                                   finalScore++;
@@ -259,7 +249,7 @@ class GameSessionState extends State<GameSession> {
                               // updateQuestion();
                             },
                             child: Text(
-                              game.choices[questionNumber][3],
+                              gameShort.choices[questionNumber][3],
                               style: TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.white,
@@ -282,6 +272,7 @@ class GameSessionState extends State<GameSession> {
                           onPressed: () {
                             // removePlayer();
                             resetGame();
+                            // Navigator.pushNamed(context, '/homepage');
                           },
                           child: Text(
                             "Quit",
@@ -402,15 +393,13 @@ class GameSessionState extends State<GameSession> {
       // reset variables:
       finalScore = 0;
       questionNumber = 0;
-      player1Score = 0;
-      player2Score = 0;
     });
   }
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
     setState(() {
-      if (questionNumber == game.questions.length - 1) {
+      if (questionNumber == gameShort.questions.length - 1) {
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -427,37 +416,7 @@ class GameSessionState extends State<GameSession> {
     });
   }
 
-  void updateGameContent(String questName) async {
-    await FirebaseFirestore.instance
-        .collection('ready-quests')
-        .doc(questName)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // define questions
-        game.questions = documentSnapshot.data()['questions'];
 
-        // define choices for each question
-        game.choices0 = documentSnapshot.data()['choices1'];
-        game.choices1 = documentSnapshot.data()['choices2'];
-        game.choices2 = documentSnapshot.data()['choices3'];
-        game.choices3 = documentSnapshot.data()['choices4'];
-
-        // put all four choices arrays in one main array
-        game.choices = [
-          game.choices0,
-          game.choices1,
-          game.choices2,
-          game.choices3
-        ];
-
-        // define answers
-        game.correctAnswers = documentSnapshot.data()['answers'];
-        print('answers: ${game.correctAnswers}');
-      }
-    });
-    // }
-  }
 
   // This stream checks party health and goes to game over screen
   Widget gameOverStream(BuildContext context) {

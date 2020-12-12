@@ -15,7 +15,7 @@ class GameOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<QuerySnapshot>.value(
-        value: game.questionSnapshot,
+        // value: game.questionSnapshot,
         child: WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(

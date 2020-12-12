@@ -268,8 +268,7 @@ Widget startCountdownStream(BuildContext context) {
         }
         if (fiveSecondCountdown == 1 && gameStarted == null) {
           gameSessionTimer = Timer(Duration(seconds: 1), () {
-            Navigator.pushNamed(context, '/ingame');
-            gameSessionTimer.cancel();
+            Navigator.pushNamed(context, '/gameLoadingMP');
           });
           return Text(
             "1",
