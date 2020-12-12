@@ -33,7 +33,7 @@ const mainColor = Color(0xffb74093);
 
 // MaterialColor colorMain1 = MaterialColor(0xFFff4301, colorBase1);
 
-Color getColorButton1(Set<MaterialState> states) {
+Color getColor1(Set<MaterialState> states) {
   const Set<MaterialState> interactiveStates = <MaterialState>{
     MaterialState.pressed,
     MaterialState.hovered,
@@ -42,10 +42,10 @@ Color getColorButton1(Set<MaterialState> states) {
   if (states.any(interactiveStates.contains)) {
     return Colors.blue;
   }
-  return colorMain2;
+  return color1;
 }
 
-Color getColorButton2(Set<MaterialState> states) {
+Color getColor2(Set<MaterialState> states) {
   const Set<MaterialState> interactiveStates = <MaterialState>{
     MaterialState.pressed,
     MaterialState.hovered,
@@ -54,10 +54,10 @@ Color getColorButton2(Set<MaterialState> states) {
   if (states.any(interactiveStates.contains)) {
     return Colors.blue;
   }
-  return colorSide1;
+  return color2;
 }
 
-Color getColorButton3(Set<MaterialState> states) {
+Color getColor3(Set<MaterialState> states) {
   const Set<MaterialState> interactiveStates = <MaterialState>{
     MaterialState.pressed,
     MaterialState.hovered,
@@ -66,10 +66,10 @@ Color getColorButton3(Set<MaterialState> states) {
   if (states.any(interactiveStates.contains)) {
     return Colors.blue;
   }
-  return colorSide2;
+  return color3;
 }
 
-Color getColorMain(Set<MaterialState> states) {
+Color getColor4(Set<MaterialState> states) {
   const Set<MaterialState> interactiveStates = <MaterialState>{
     MaterialState.pressed,
     MaterialState.hovered,
@@ -78,7 +78,7 @@ Color getColorMain(Set<MaterialState> states) {
   if (states.any(interactiveStates.contains)) {
     return Colors.blue;
   }
-  return colorMain1;
+  return color4;
 }
 
 class Homepage extends StatelessWidget {
@@ -94,7 +94,7 @@ class Homepage extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          color: colorMain1,
+          color: color1,
           // gradient: LinearGradient(
           //   begin: Alignment.topRight,
           //   end: Alignment.bottomLeft,
@@ -111,17 +111,13 @@ class Homepage extends StatelessWidget {
               Text(
                 'WELCOME',
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: colorSide2),
+                    fontSize: 15, fontWeight: FontWeight.bold, color: color4),
               ),
               SizedBox(height: 10),
               Text(
                 username,
                 style: TextStyle(
-                    fontSize: 25,
-                    color: colorSide2,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 25, color: color4, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
               SizedBox(
@@ -129,7 +125,7 @@ class Homepage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColorButton1),
+                        MaterialStateProperty.resolveWith(getColor2),
                   ),
                   onPressed: () {
                     // Navigate back to the first screen by popping the current route
@@ -145,7 +141,7 @@ class Homepage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColorButton2),
+                        MaterialStateProperty.resolveWith(getColor3),
                   ),
                   onPressed: () {
                     chooseGameTypePopUp(context);
@@ -161,7 +157,7 @@ class Homepage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColorButton3),
+                        MaterialStateProperty.resolveWith(getColor4),
                   ),
                   onPressed: () {
                     // createJoinGamePopUp(context)
@@ -183,7 +179,7 @@ class Homepage extends StatelessWidget {
                     return LoginPage();
                   }), ModalRoute.withName('/'));
                 },
-                color: colorMain2,
+                color: color2,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -295,7 +291,7 @@ class Homepage extends StatelessWidget {
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
-                color: Colors.blue,
+                color: color4,
                 child: Text('SINGLEPLAYER'),
                 onPressed: () {
                   gameID = randomNumeric(2);
@@ -306,7 +302,7 @@ class Homepage extends StatelessWidget {
               ),
               MaterialButton(
                 elevation: 5.0,
-                color: Colors.blue,
+                color: color4,
                 child: Text('MULTIPLAYER'),
                 onPressed: () {
                   gameID = randomAlpha(2);
