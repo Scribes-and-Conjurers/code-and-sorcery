@@ -5,11 +5,8 @@ import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
 import '../../global_variables/global_variables.dart';
-<<<<<<< HEAD
-=======
-import '../join_game/join_game.dart';
+// import '../join_game/join_game.dart';
 import '../homepage/colors.dart';
->>>>>>> ccfed51a836a17563704f9df5a612329cd4ee44e
 
 String gameLinkValue = "";
 bool pushedGo;

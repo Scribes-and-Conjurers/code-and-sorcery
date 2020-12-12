@@ -89,3 +89,50 @@ class ChangeGuildState extends State<ChangeGuild> {
     });
   }
 }
+
+// Future<String> changeGuildPopUp(BuildContext context) {
+//   TextEditingController gameLinkController = TextEditingController();
+//   return showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           title: Text("Select your new guild"),
+//           content: SingleChildScrollView(
+//               child: ListBody(children: <Widget>[
+//             DropdownButton<String>(
+//               value: dropdownValue,
+//               icon: Icon(Icons.arrow_downward),
+//               iconSize: 24,
+//               elevation: 16,
+//               style: TextStyle(color: Colors.deepPurple),
+//               underline: Container(
+//                 height: 2,
+//                 color: Colors.deepPurpleAccent,
+//               ),
+//               onChanged: (String newValue) {
+//                 setState(() {
+//                   dropdownValue = newValue;
+//                   guild = dropdownValue;
+//                 });
+//               },
+//               items: <String>['Backenders', 'Frontenders', 'Fullstackers']
+//                   .map<DropdownMenuItem<String>>((String value) {
+//                 return DropdownMenuItem<String>(
+//                   value: value,
+//                   child: Text(value),
+//                 );
+//               }).toList(),
+//             )
+//           ])),
+//           actions: <Widget>[
+//             MaterialButton(
+//                 elevation: 5.0,
+//                 child: Text('Send', style: TextStyle(fontSize: 23)),
+//                 onPressed: () {
+//                   changeGuild();
+//                   Navigator.of(context).pop(gameLinkController.text.toString());
+//                 })
+//           ],
+//         );
+//       });
+// }

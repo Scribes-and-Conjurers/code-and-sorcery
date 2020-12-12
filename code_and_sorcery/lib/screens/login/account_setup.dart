@@ -45,7 +45,7 @@ class AccountSetupState extends State<AccountSetup> {
             Text("Choose your guild"),
             SizedBox(height: 30),
             DropdownButton<String>(
-              value: dropdownGuildValue,
+              value: "Backenders",
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
