@@ -10,23 +10,6 @@ class GameSettings extends StatefulWidget {
 
 // Game widget sta
 class GameSettingState extends State<GameSettings> {
-  List<bool> difficultyList;
-
-  @override
-  void initState() {
-    if (difficulty == 'normal') {
-      difficultyList = [
-        false,
-        true,
-      ];
-    } else {
-      difficultyList = [
-        true,
-        false,
-      ];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,44 +34,31 @@ class GameSettingState extends State<GameSettings> {
                   color: Colors.black,
                 ),
               ),
-              ToggleButtons(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Easy',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Normal',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-                onPressed: (int index) {
-                  setState(() {
-                    for (int buttonIndex = 0;
-                        buttonIndex < difficultyList.length;
-                        buttonIndex++) {
-                      if (buttonIndex == index) {
-                        difficultyList[buttonIndex] = true;
-                      } else {
-                        difficultyList[buttonIndex] = false;
+              ElevatedButton(
+                onPressed: () {
+                  switch (difficulty) {
+                    case 'Normal':
+                      {
+                        setState(() {
+                          difficulty = 'Easy';
+                          print('easy');
+                        });
                       }
-                    }
-                  });
+                      break;
+                    case 'Easy':
+                      {
+                        setState(() {
+                          difficulty = 'Normal';
+                          print('normal');
+                        });
+                      }
+                  }
                 },
-                isSelected: difficultyList,
-                fillColor: Colors.white,
+                child: Text(difficulty,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),),
               ),
               ElevatedButton(
                 onPressed: () {
