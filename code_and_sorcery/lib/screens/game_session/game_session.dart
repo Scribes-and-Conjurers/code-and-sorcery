@@ -14,6 +14,7 @@ import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../game_over/game_over.dart';
+import '../random_beggar/beggar.dart';
 
 // SHORT ADVENTURE !!!!
 
@@ -28,7 +29,6 @@ int player3Points;
 int player4Points;
 
 // game variables
-var finalScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
 
@@ -322,6 +322,7 @@ class GameSessionState extends State<GameSession> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         partyWisdom = documentSnapshot.data()['partyWisdom'];
+        print('party wisdom is $partyWisdom');
       } else {
         print('document snapshot doesnt exist!');
       }
@@ -403,7 +404,6 @@ class GameSessionState extends State<GameSession> {
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
-      partyWisdom = 0.0;
     });
   }
 
@@ -411,12 +411,15 @@ class GameSessionState extends State<GameSession> {
   void updateQuestion() {
     setState(() {
       if (questionNumber == game.questions.length - 1) {
-        hasPlayed = false;
-        readyTimer.cancel();
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => new Summary(score: finalScore)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => new Beggar()));
+        hasPlayed = false;
+        readyTimer.cancel();
+
       } else {
         questionNumber++;
         hasPlayed = false;
