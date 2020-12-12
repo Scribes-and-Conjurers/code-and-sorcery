@@ -72,227 +72,236 @@ class _QuestLongState extends State<QuestLong> {
               body: new Container(
                   margin: const EdgeInsets.all(10.0),
                   alignment: Alignment.topCenter,
-                  child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(padding: EdgeInsets.all(10.0)),
+                  child: Center(
+                    child: ListView(shrinkWrap: true,
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(padding: EdgeInsets.all(10.0)),
 
-                        // top row that displays question number and current score
-                        Container(
-                            alignment: Alignment.centerRight,
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  // (counter > 0)
-                                  //     ? Text("")
-                                  //     : Text("OVER",
-                                  //         style: TextStyle(color: Colors.red)),
-                                  // Text('$counter',
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 48)),
-                                  Text(
-                                    "Question ${questionNumber + 1}",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                  Text(
-                                    "Score: $yourScore",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                  Text(
-                                    "Party Health:",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                  partyHealthModifier(context),
-                                ])),
+                          // top row that displays question number and current score
+                          Container(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    // (counter > 0)
+                                    //     ? Text("")
+                                    //     : Text("OVER",
+                                    //         style: TextStyle(color: Colors.red)),
+                                    // Text('$counter',
+                                    //     style: TextStyle(
+                                    //         fontWeight: FontWeight.bold,
+                                    //         fontSize: 48)),
+                                    Text(
+                                      "Question ${questionNumber + 1}",
+                                      style: TextStyle(fontSize: 15.0),
+                                    ),
+                                    Text(
+                                      "Score: $yourScore",
+                                      style: TextStyle(fontSize: 15.0),
+                                    ),
+                                    Text(
+                                      "Party Health:",
+                                      style: TextStyle(fontSize: 15.0),
+                                    ),
+                                    partyHealthModifier(context),
+                                  ])),
 
-                        Padding(padding: EdgeInsets.all(5.0)),
+                          Padding(padding: EdgeInsets.all(5.0)),
 
-                        // image
-                        FutureBuilder(
-                            future: getImage(
-                                context, "${game.images[questionNumber]}.png"),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width / 1,
-                                  height:
-                                      MediaQuery.of(context).size.width / 1.7,
-                                  child: snapshot.data,
-                                );
-                              }
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1,
-                                    height:
-                                        MediaQuery.of(context).size.width / 1.7,
-                                    child: SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                      child: CircularProgressIndicator(),
-                                    ));
-                              }
-                              return SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: CircularProgressIndicator(),
-                              );
-                            }),
+                          // image
+                          Image.asset(
+                              'assets/${game.images[questionNumber]}.png',
+                              height: 200),
+                          // FutureBuilder(
+                          //     future: getImage(
+                          //         context, "${game.images[questionNumber]}.png"),
+                          //     builder: (context, snapshot) {
+                          //       if (snapshot.connectionState ==
+                          //           ConnectionState.done) {
+                          //         return Container(
+                          //           width: MediaQuery.of(context).size.width / 1,
+                          //           height:
+                          //               MediaQuery.of(context).size.width / 1.7,
+                          //           child: snapshot.data,
+                          //         );
+                          //       }
+                          //       if (snapshot.connectionState ==
+                          //           ConnectionState.waiting) {
+                          //         return Container(
+                          //             width:
+                          //                 MediaQuery.of(context).size.width / 1,
+                          //             height:
+                          //                 MediaQuery.of(context).size.width / 1.7,
+                          //             child: SizedBox(
+                          //               height: 10,
+                          //               width: 10,
+                          //               child: CircularProgressIndicator(),
+                          //             ));
+                          //       }
+                          //       return SizedBox(
+                          //         height: 10,
+                          //         width: 10,
+                          //         child: CircularProgressIndicator(),
+                          //       );
+                          //     }),
 
-                        Padding(padding: EdgeInsets.all(5.0)),
+                          Padding(padding: EdgeInsets.all(15.0)),
 
-                        // question
-                        Text(
-                          game.questions[questionNumber],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
+                          // question
+                          Text(
+                            game.questions[questionNumber],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
                           ),
-                        ),
 
-                        Padding(
-                          padding: EdgeInsets.all(5.0),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.all(5.0),
+                          ),
 
-                        // answers: conditional depending on question
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              // button 1
-                              MaterialButton(
-                                minWidth: 250.0,
-                                padding: EdgeInsets.all(0),
-                                color: Colors.blue,
+                          // answers: conditional depending on question
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                // button 1
+                                MaterialButton(
+                                  minWidth: 250.0,
+                                  padding: EdgeInsets.all(0),
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    if (game.choices[questionNumber][0] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      // ONLY FOR SOLO PLAY
+                                      yourScore++;
+                                      updateGamePlayer1();
+                                    } else {
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
+                                    }
+                                    updateQuestion();
+                                  },
+                                  child: Text(
+                                    game.choices[questionNumber][0],
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+
+                                // button 2
+                                MaterialButton(
+                                  minWidth: 250.0,
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    if (game.choices[questionNumber][0] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      // ONLY FOR SOLO PLAY
+
+                                      yourScore++;
+
+                                      updateGamePlayer1();
+                                    } else {
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
+                                    }
+                                    updateQuestion();
+                                  },
+                                  child: Text(
+                                    game.choices[questionNumber][1],
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+
+                                // button 3
+                                MaterialButton(
+                                  minWidth: 250.0,
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    if (game.choices[questionNumber][0] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      // ONLY FOR SOLO PLAY
+                                      yourScore++;
+                                      updateGamePlayer1();
+                                    } else {
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
+                                    }
+                                    updateQuestion();
+                                  },
+                                  child: Text(
+                                    game.choices[questionNumber][2],
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+
+                                // button 4
+                                MaterialButton(
+                                  minWidth: 250.0,
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    if (game.choices[questionNumber][0] ==
+                                        game.correctAnswers[questionNumber]) {
+                                      debugPrint('correctamundo');
+                                      // ONLY FOR SOLO PLAY
+                                      yourScore++;
+                                      updateGamePlayer1();
+                                    } else {
+                                      decreasePartyHealth();
+                                      debugPrint(
+                                          'oh noes... that is incorrect');
+                                    }
+                                    updateQuestion();
+                                  },
+                                  child: Text(
+                                    game.choices[questionNumber][3],
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                          ),
+
+                          // reset button
+                          Container(
+                              alignment: Alignment.bottomCenter,
+                              child: MaterialButton(
+                                color: Colors.deepPurple,
+                                minWidth: 240.0,
+                                height: 30.0,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
-                                    yourScore++;
-                                    updateGamePlayer1();
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
-                                  }
-                                  updateQuestion();
+                                  resetGame();
                                 },
                                 child: Text(
-                                  game.choices[questionNumber][0],
+                                  "Quit",
                                   style: TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: 18.0,
                                     color: Colors.white,
                                   ),
                                 ),
-                              ),
-
-                              // button 2
-                              MaterialButton(
-                                minWidth: 250.0,
-                                color: Colors.blue,
-                                onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
-
-                                    yourScore++;
-
-                                    updateGamePlayer1();
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
-                                  }
-                                  updateQuestion();
-                                },
-                                child: Text(
-                                  game.choices[questionNumber][1],
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-
-                              // button 3
-                              MaterialButton(
-                                minWidth: 250.0,
-                                color: Colors.blue,
-                                onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
-                                    yourScore++;
-                                    updateGamePlayer1();
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
-                                  }
-                                  updateQuestion();
-                                },
-                                child: Text(
-                                  game.choices[questionNumber][2],
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-
-                              // button 4
-                              MaterialButton(
-                                minWidth: 250.0,
-                                color: Colors.blue,
-                                onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
-                                      game.correctAnswers[questionNumber]) {
-                                    debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
-                                    yourScore++;
-                                    updateGamePlayer1();
-                                  } else {
-                                    decreasePartyHealth();
-                                    debugPrint('oh noes... that is incorrect');
-                                  }
-                                  updateQuestion();
-                                },
-                                child: Text(
-                                  game.choices[questionNumber][3],
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ]),
-
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                        ),
-
-                        // reset button
-                        Container(
-                            alignment: Alignment.bottomCenter,
-                            child: MaterialButton(
-                              color: Colors.deepPurple,
-                              minWidth: 240.0,
-                              height: 30.0,
-                              onPressed: () {
-                                resetGame();
-                              },
-                              child: Text(
-                                "Quit",
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )),
-                      ]))));
+                              )),
+                        ]),
+                  ))));
     } else {
       //SHORT question format
       // return true or false question
@@ -341,40 +350,43 @@ class _QuestLongState extends State<QuestLong> {
                         Padding(padding: EdgeInsets.all(5.0)),
 
                         // image
-                        FutureBuilder(
-                            future: getImage(
-                                context, "${game.images[questionNumber]}.png"),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width / 1,
-                                  height:
-                                      MediaQuery.of(context).size.width / 1.7,
-                                  child: snapshot.data,
-                                );
-                              }
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1,
-                                    height:
-                                        MediaQuery.of(context).size.width / 1.7,
-                                    child: SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                      child: CircularProgressIndicator(),
-                                    ));
-                              }
-                              return SizedBox(
-                                height: 10,
-                                width: 10,
-                                child: CircularProgressIndicator(),
-                              );
-                            }),
+                        Image.asset('assets/${game.images[questionNumber]}.png',
+                            height: 200),
 
-                        Padding(padding: EdgeInsets.all(5.0)),
+                        // FutureBuilder(
+                        //     future: getImage(
+                        //         context, "${game.images[questionNumber]}.png"),
+                        //     builder: (context, snapshot) {
+                        //       if (snapshot.connectionState ==
+                        //           ConnectionState.done) {
+                        //         return Container(
+                        //           width: MediaQuery.of(context).size.width / 1,
+                        //           height:
+                        //               MediaQuery.of(context).size.width / 1.7,
+                        //           child: snapshot.data,
+                        //         );
+                        //       }
+                        //       if (snapshot.connectionState ==
+                        //           ConnectionState.waiting) {
+                        //         return Container(
+                        //             width:
+                        //                 MediaQuery.of(context).size.width / 1,
+                        //             height:
+                        //                 MediaQuery.of(context).size.width / 1.7,
+                        //             child: SizedBox(
+                        //               height: 10,
+                        //               width: 10,
+                        //               child: CircularProgressIndicator(),
+                        //             ));
+                        //       }
+                        //       return SizedBox(
+                        //         height: 10,
+                        //         width: 10,
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     }),
+
+                        Padding(padding: EdgeInsets.all(15.0)),
 
                         // question
                         Text(
