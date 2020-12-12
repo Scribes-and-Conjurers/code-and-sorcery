@@ -5,12 +5,11 @@ import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
 import '../../global_variables/global_variables.dart';
-import '../join_game/join_game.dart';
 import '../homepage/colors.dart';
 
-String questID;
 String gameLinkValue = "";
 bool pushedGo;
+bool player1Start = false;
 int startCountdown;
 
 class GameLobby extends StatefulWidget {
@@ -40,6 +39,7 @@ class GameLobbySL extends State<GameLobby> {
           } else {
             readyTimer.cancel();
             stopCountdown();
+            player1Start = false;
           }
         });
       }
@@ -116,6 +116,19 @@ class GameLobbySL extends State<GameLobby> {
 }
 
 void checkP1GO() async {
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    DocumentReference playerCheck =
+        FirebaseFirestore.instance.collection('games').doc(gameID);
+    DocumentSnapshot snapshot = await transaction.get(playerCheck);
+    player1db = snapshot.data()['player1'];
+    if (player1db == username) {
+      await transaction.update(playerCheck, {'pushedGo': true});
+      player1Start = true;
+    }
+  });
+}
+
+void player1Leave() async {
   await FirebaseFirestore.instance.runTransaction((transaction) async {
     DocumentReference playerCheck =
         FirebaseFirestore.instance.collection('games').doc(gameID);
@@ -256,7 +269,6 @@ Widget startCountdownStream(BuildContext context) {
           gameSessionTimer = Timer(Duration(seconds: 1), () {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/gameLoadingMP');
-            //
           });
           return Text(
             "1",

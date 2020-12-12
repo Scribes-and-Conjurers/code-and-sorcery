@@ -8,6 +8,7 @@ import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 import '../user_profile/user_profile.dart';
 import './colors.dart';
+import '../game_lobby/game_lobby.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
@@ -357,6 +358,11 @@ class Homepage extends StatelessWidget {
                 child: Text('Send', style: TextStyle(fontSize: 23)),
                 onPressed: () async {
                   gameJoinLink = gameLinkController.text.toString();
+                  gameID = gameJoinLink;
+                  print(gameJoinLink);
+                  print(gameNull);
+                  print(gameFull);
+                  print(gameStarted);
                   if (gameJoinLink == '') {
                     alertGameNoCode(context);
                   } else {
@@ -372,9 +378,9 @@ class Homepage extends StatelessWidget {
                       gameFull = false;
                     } else {
                       setPlayer();
-                      Navigator.pushNamed(context, '/lobby');
                       Navigator.of(context)
                           .pop(gameLinkController.text.toString());
+                      Navigator.pushNamed(context, '/lobby');
                     }
                   }
                 },
@@ -393,23 +399,6 @@ class Homepage extends StatelessWidget {
           );
         });
   }
-
-// void gameFullCheck() async {
-//   await FirebaseFirestore.instance.runTransaction((transaction) async {
-//     DocumentReference playerCheck =
-//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-//     DocumentSnapshot snapshot = await transaction.get(playerCheck);
-//     nbOfPlayers = snapshot.data()['nbOfPlayers'];
-//     if (nbOfPlayers >= 1 && nbOfPlayers > 4) {
-//       gameFull = false;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     } else if (nbOfPlayers == 4) {
-//       gameFull = true;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     }
-//   });
 
   Future<String> alertGameNull(BuildContext context) {
     return showDialog(
@@ -471,7 +460,6 @@ class Homepage extends StatelessWidget {
       player2db = snapshot.data()['player2'];
       player3db = snapshot.data()['player3'];
       player4db = snapshot.data()['player4'];
-      gameFull = snapshot.data()['gameFull'];
       if (playerClass == "Warrior") {
         await transaction
             .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
