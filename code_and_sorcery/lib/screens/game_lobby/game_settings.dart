@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GameSettings extends StatefulWidget {
   @override
@@ -8,25 +9,8 @@ class GameSettings extends StatefulWidget {
   }
 }
 
-// Game widget sta
 class GameSettingState extends State<GameSettings> {
-  List<bool> difficultyList;
-
-  @override
-  void initState() {
-    if (difficulty == 'normal') {
-      difficultyList = [
-        false,
-        true,
-      ];
-    } else {
-      difficultyList = [
-        true,
-        false,
-      ];
-    }
-  }
-
+  final databaseReference = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,45 +35,91 @@ class GameSettingState extends State<GameSettings> {
                   color: Colors.black,
                 ),
               ),
-              ToggleButtons(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Easy',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Normal',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-                onPressed: (int index) {
-                  setState(() {
-                    for (int buttonIndex = 0;
-                        buttonIndex < difficultyList.length;
-                        buttonIndex++) {
-                      if (buttonIndex == index) {
-                        difficultyList[buttonIndex] = true;
-                      } else {
-                        difficultyList[buttonIndex] = false;
-                      }
+              SizedBox(height: 12),
+              Container(
+                height: 64,
+                width: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.orange,
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(primary: Colors.transparent),
+                  onPressed: () {
+                    switch (difficulty) {
+                      case 'Normal':
+                        {
+                          setState(() {
+                            difficulty = 'Easy';
+                            setDifficulty(difficulty);
+                            print('easy');
+                          });
+                        }
+                        break;
+                      case 'Easy':
+                        {
+                          setState(() {
+                            difficulty = 'Normal';
+                            setDifficulty(difficulty);
+                            print('normal');
+                          });
+                        }
                     }
-                  });
-                },
-                isSelected: difficultyList,
-                fillColor: Colors.white,
+                  },
+                  child: Text(difficulty,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),),
+                ),
               ),
+              SizedBox(height: 48),
+              Text(
+                'Adventure Length',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: 12),
+              Container(
+                height: 64,
+                width: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.orange,
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(primary: Colors.transparent),
+                  onPressed: () {
+                    switch (adventureLength) {
+                      case 'Short':
+                        {
+                          setState(() {
+                            adventureLength = 'Long';
+                            setGameLength(adventureLength);
+                            print('Long');
+                          });
+                        }
+                        break;
+                      case 'Long':
+                        {
+                          setState(() {
+                            adventureLength = 'Short';
+                            setGameLength(adventureLength);
+                            print('Short');
+                          });
+                        }
+                    }
+                  },
+                  child: Text(adventureLength,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),),
+                ),
+              ),
+              SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -101,5 +131,17 @@ class GameSettingState extends State<GameSettings> {
         ),
       ),
     );
+  }
+
+  void setDifficulty(String difficulty) async {
+    await databaseReference.collection("games").doc(gameID).update({
+        'gameDifficulty': difficulty
+    });
+  }
+
+  void setGameLength(String difficulty) async {
+    await databaseReference.collection("games").doc(gameID).update({
+      'gameLength': adventureLength
+    });
   }
 }

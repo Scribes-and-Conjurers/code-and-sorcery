@@ -103,6 +103,7 @@ class AccountSetupState extends State<AccountSetup> {
     await databaseReference.collection("users").doc(uID).update({
       'guild': guild,
       'username': username,
+      'profileImg': '1',
       'points': 0,
       'playerClass': playerClass
     });

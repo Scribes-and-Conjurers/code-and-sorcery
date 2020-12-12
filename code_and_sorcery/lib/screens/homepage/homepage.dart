@@ -14,25 +14,6 @@ bool gameFull = false;
 bool gameNull = false;
 bool gameStarted = false;
 
-const mainColor = Color(0xffb74093);
-
-// color test stuff:
-// turning normal color into material color
-// Map<int, Color> colorBase1 = {
-//   50: Color.fromRGBO(255, 67, 1, .1),
-//   100: Color.fromRGBO(255, 67, 1, .2),
-//   200: Color.fromRGBO(255, 67, 1, .3),
-//   300: Color.fromRGBO(255, 67, 1, .4),
-//   400: Color.fromRGBO(255, 67, 1, .5),
-//   500: Color.fromRGBO(255, 67, 1, .6),
-//   600: Color.fromRGBO(255, 67, 1, .7),
-//   700: Color.fromRGBO(255, 67, 1, .8),
-//   800: Color.fromRGBO(255, 67, 1, .9),
-//   900: Color.fromRGBO(255, 67, 1, 1),
-// };
-
-// MaterialColor colorMain1 = MaterialColor(0xFFff4301, colorBase1);
-
 Color getColor1(Set<MaterialState> states) {
   const Set<MaterialState> interactiveStates = <MaterialState>{
     MaterialState.pressed,
@@ -89,105 +70,100 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Homepage"),
-      // ),
       body: Container(
         decoration: BoxDecoration(
           color: color1,
-          // gradient: LinearGradient(
-          //   begin: Alignment.topRight,
-          //   end: Alignment.bottomLeft,
-          //   colors: [Colors.blue[100], Colors.blue[400]],
-          // ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              avatarGetter(context),
-              SizedBox(height: 40),
-              Text(
-                'WELCOME',
-                style: TextStyle(
-                    fontSize: 15, fontWeight: FontWeight.bold, color: color4),
-              ),
-              SizedBox(height: 10),
-              Text(
-                username,
-                style: TextStyle(
-                    fontSize: 25, color: color4, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: 200.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor2),
-                  ),
-                  onPressed: () {
-                    // Navigate back to the first screen by popping the current route
-                    // off the stack.
-                    updateUserProfile();
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  child: Text('Profile page'),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                avatarGetter(context),
+                SizedBox(height: 40),
+                Text(
+                  'WELCOME',
+                  style: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold, color: color4),
                 ),
-              ),
-              SizedBox(
-                width: 200.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                SizedBox(height: 10),
+                Text(
+                  username,
+                  style: TextStyle(
+                      fontSize: 25, color: color4, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor2),
+                    ),
+                    onPressed: () {
+                      // Navigate back to the first screen by popping the current route
+                      // off the stack.
+                      updateUserProfile();
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    child: Text('Profile page'),
                   ),
-                  onPressed: () {
-                    chooseGameTypePopUp(context);
+                ),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    onPressed: () {
+                      chooseGameTypePopUp(context);
 
-                    // Navigator.pushNamed(context, '/lobby');
-                    // createRecord();
-                  },
-                  child: Text('Create a game'),
-                ),
-              ),
-              SizedBox(
-                width: 200.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor4),
+                      // Navigator.pushNamed(context, '/lobby');
+                      // createRecord();
+                    },
+                    child: Text('Create a game'),
                   ),
+                ),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor4),
+                    ),
+                    onPressed: () {
+                      createJoinGamePopUp(context);
+                      // Navigator.pushNamed(context, '/join');
+                    },
+                    child: Text('Join a game'),
+                  ),
+                ),
+                SizedBox(height: 20),
+                RaisedButton(
                   onPressed: () {
-                    createJoinGamePopUp(context);
-                    // Navigator.pushNamed(context, '/join');
+                    // signOutGoogle();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    }), ModalRoute.withName('/'));
                   },
-                  child: Text('Join a game'),
-                ),
-              ),
-              SizedBox(height: 20),
-              RaisedButton(
-                onPressed: () {
-                  // signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
-                },
-                color: color2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  color: color2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
                   ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              )
-            ],
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -287,6 +263,8 @@ class Homepage extends StatelessWidget {
       'pushedGo': false,
       'startCountdown': 5,
       'selectAnswer': 0,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -317,6 +295,8 @@ class Homepage extends StatelessWidget {
       'pushedGo': false,
       'startCountdown': 5,
       'selectAnswer': 0,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -329,6 +309,8 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -341,6 +323,8 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
