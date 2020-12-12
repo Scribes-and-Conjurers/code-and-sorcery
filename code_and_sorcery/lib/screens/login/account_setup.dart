@@ -44,30 +44,30 @@ class AccountSetupState extends State<AccountSetup> {
             SizedBox(height: 50),
             Text("Choose your guild"),
             SizedBox(height: 30),
-            // DropdownButton<String>(
-            //   value: dropdownGuildValue,
-            //   icon: Icon(Icons.arrow_downward),
-            //   iconSize: 24,
-            //   elevation: 16,
-            //   style: TextStyle(color: Colors.deepPurple),
-            //   underline: Container(
-            //     height: 2,
-            //     color: Colors.deepPurpleAccent,
-            //   ),
-            //   onChanged: (String newValue) {
-            //     setState(() {
-            //       dropdownGuildValue = newValue;
-            //       guild = dropdownGuildValue;
-            //     });
-            //   },
-            //   items: <String>['Backenders', 'Frontenders', 'Fullstackers']
-            //       .map<DropdownMenuItem<String>>((String value) {
-            //     return DropdownMenuItem<String>(
-            //       value: value,
-            //       child: Text(value),
-            //     );
-            //   }).toList(),
-            // ),
+            DropdownButton<String>(
+              value: dropdownGuildValue,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownGuildValue = newValue;
+                  guild = dropdownGuildValue;
+                });
+              },
+              items: <String>['Backenders', 'Frontenders', 'Fullstackers']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
             SizedBox(height: 50),
             Text("Choose your class"),
             SizedBox(height: 30),
