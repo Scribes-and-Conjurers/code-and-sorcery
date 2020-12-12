@@ -15,50 +15,53 @@ class _BeggarState extends State<Beggar> {
   Widget build(BuildContext context) {
     Random random = new Random();
     diceRoll = random.nextDouble();
-    return Scaffold(
-        body: Container(
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200,
-            ),
-            Padding(
-                padding: EdgeInsets.all(30),
-                child: Text(
-                  "An old man approaches you...",
-                  style: TextStyle(fontSize: 20),
-                )),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  "He asks for coins to get him through the night...",
-                  style: TextStyle(fontSize: 20),
-                )),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(
-                child: Text(
-                  "Give 2 points",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  openChest();
-                },
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          body: Container(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(30),
+                      child: Text(
+                        "An old man approaches you...",
+                        style: TextStyle(fontSize: 20),
+                      )),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        "He asks for coins to get him through the night...",
+                        style: TextStyle(fontSize: 20),
+                      )),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: ElevatedButton(
+                      child: Text(
+                        "Give 2 points",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        openChest();
+                      },
+                    ),
+                  ),
+                  ElevatedButton(
+                      child: Text(
+                        "Leave the beggar alone",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      })
+                ],
               ),
             ),
-            ElevatedButton(
-                child: Text(
-                  "Leave the beggar alone",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
-        ),
-      ),
-    ));
+          ))
+    );
   }
 
   void openChest() {

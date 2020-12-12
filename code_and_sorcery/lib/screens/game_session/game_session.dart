@@ -14,6 +14,7 @@ import './game_general_utils.dart';
 import './game_content_short.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../game_over/game_over.dart';
+import '../random_beggar/beggar.dart';
 
 // SHORT ADVENTURE !!!!
 
@@ -28,7 +29,6 @@ int player3Points;
 int player4Points;
 
 // game variables
-var finalScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
 
@@ -410,13 +410,14 @@ class GameSessionState extends State<GameSession> {
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
     setState(() {
+      if (questionNumber == 3) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => new Beggar()));
+      }
       if (questionNumber == game.questions.length - 1) {
         hasPlayed = false;
         readyTimer.cancel();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => new Summary(score: finalScore)));
+
       } else {
         questionNumber++;
         hasPlayed = false;

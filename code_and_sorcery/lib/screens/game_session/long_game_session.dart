@@ -24,7 +24,6 @@ var player1Score = 0;
 var player2Score = 0;
 
 // game variables
-var yourScore = 0;
 var questionNumber = 0;
 var buttonNumber = 0;
 var longQuestion = true;
@@ -98,7 +97,7 @@ class _QuestLongState extends State<QuestLong> {
                                       style: TextStyle(fontSize: 15.0),
                                     ),
                                     Text(
-                                      "Score: $yourScore",
+                                      "Score: $finalScore",
                                       style: TextStyle(fontSize: 15.0),
                                     ),
                                     Text(
@@ -176,7 +175,7 @@ class _QuestLongState extends State<QuestLong> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
-                                      yourScore++;
+                                      finalScore++;
                                       updateGamePlayer1();
                                     } else {
                                       decreasePartyHealth();
@@ -204,7 +203,7 @@ class _QuestLongState extends State<QuestLong> {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
 
-                                      yourScore++;
+                                      finalScore++;
 
                                       updateGamePlayer1();
                                     } else {
@@ -232,7 +231,7 @@ class _QuestLongState extends State<QuestLong> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
-                                      yourScore++;
+                                      finalScore++;
                                       updateGamePlayer1();
                                     } else {
                                       decreasePartyHealth();
@@ -259,7 +258,7 @@ class _QuestLongState extends State<QuestLong> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
-                                      yourScore++;
+                                      finalScore++;
                                       updateGamePlayer1();
                                     } else {
                                       decreasePartyHealth();
@@ -337,7 +336,7 @@ class _QuestLongState extends State<QuestLong> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
-                                    "Score: $yourScore",
+                                    "Score: $finalScore",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   Text(
@@ -415,7 +414,7 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                    yourScore++;
+                                    finalScore++;
                                     updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
@@ -441,7 +440,7 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
-                                    yourScore++;
+                                    finalScore++;
                                     updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
@@ -497,13 +496,9 @@ class _QuestLongState extends State<QuestLong> {
       // close current screen:
       // Navigator.pop(context);
       // reset variables:
-      yourScore = 0;
+      finalScore = 0;
       questionNumber = 0;
-      player1Score = 0;
-      player2Score = 0;
-
-      // isMultiplayer = true;
-      Navigator.pushNamed(context, '/lobbySP');
+      Navigator.pushNamed(context, '/homepage');
     });
   }
 
@@ -524,7 +519,7 @@ class _QuestLongState extends State<QuestLong> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => new SummarySP(score: yourScore)));
+                builder: (context) => new SummarySP(score: finalScore)));
       } else {
         if (questionNumber == 2) {
           questionNumber++;

@@ -11,7 +11,7 @@ int points;
 // variables in relation to the game object
 String gameID;
 String questID;
-int soloScore = 0;
+var finalScore = 0;
 String player1db;
 String player2db;
 String player3db;
