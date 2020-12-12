@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import 'change_guild.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 class Guild extends StatelessWidget {
   @override
@@ -14,56 +16,87 @@ class Guild extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
+          color: color2,
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   colors: [Colors.blue[100], Colors.blue[400]],
+          // ),
         ),
         child: Center(
           child: Column(
             children: [
               // guildNameSection,
+              Padding(padding: EdgeInsets.all(40.0)),
               guildNameGetter(context),
+              Padding(padding: EdgeInsets.all(30.0)),
               totalPointsSection,
+              Padding(padding: EdgeInsets.all(16.0)),
               guildPointsGetter(context),
               // userRanking,
               // guildRanking,
               // guildRankGetter(context),
-              SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserRankings()));
-                },
-                child: Text(' User Rankings'),
+              SizedBox(height: 60),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor4),
+                  ),
+                  onPressed: () {
+                    // Navigate back to the first screen by popping the current route
+                    // off the stack.
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserRankings()));
+                  },
+                  child: Text(' User Rankings'),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GuildRankings()));
-                },
-                child: Text('Guild Rankings'),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor2),
+                  ),
+                  onPressed: () {
+                    // Navigate back to the first screen by popping the current route
+                    // off the stack.
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GuildRankings()));
+                  },
+                  child: Text('Guild Rankings'),
+                ),
               ),
-              SizedBox(height: 40),
+
+              SizedBox(height: 70),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith(getColor1),
+                ),
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
                   // off the stack.
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ChangeGuild()));
                 },
-                child: Text('Change Guild'),
+                child: Text(
+                  'Change Guild',
+                  style: TextStyle(color: color3),
+                ),
               ),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: color1,
+        foregroundColor: color3,
         child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/profile');
@@ -73,13 +106,16 @@ class Guild extends StatelessWidget {
   }
 
   Widget totalPointsSection = Container(
-    padding: EdgeInsets.all(40),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('Current Guild Points:', style: TextStyle(fontSize: 20)),
-        // Text('[76,432]', style: TextStyle(fontSize: 20)),
-      ],
+    // padding: EdgeInsets.all(10),
+    child: Center(
+      child: Column(
+        children: [
+          Text('Current Guild Points:',
+              style: TextStyle(fontSize: 20, color: color1)),
+          // Text('[76,432]', style: TextStyle(fontSize: 20)),
+        ],
+      ),
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
     ),
   );
 
@@ -90,7 +126,7 @@ class Guild extends StatelessWidget {
         children: [
           Text(
             'The Microtask Ascendancy',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: color1),
           ),
           Divider(
             thickness: 5,
@@ -123,7 +159,7 @@ class Guild extends StatelessWidget {
         children: [
           Text(
             'Current Guild Global Rank:',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: color1),
           ),
           // Text('1', style: TextStyle(fontSize: 20),),
         ],
@@ -167,7 +203,7 @@ Widget guildPointsGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['totalPoints'].toString(),
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: color1),
         );
       });
 }
@@ -186,7 +222,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: color1),
         );
       });
 }

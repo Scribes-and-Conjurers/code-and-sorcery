@@ -113,12 +113,15 @@ Widget avatarGetter(BuildContext context) {
         var imageIndexString = snapshot.data['profileImg'];
         var imageIndex = int.parse(imageIndexString);
         return CircleAvatar(
-          backgroundImage: AssetImage(
-            avatars[imageIndex],
-          ),
-          radius: 60,
-          backgroundColor: Colors.white,
-        );
+            radius: 63,
+            backgroundColor: Colors.grey,
+            child: CircleAvatar(
+              backgroundImage: AssetImage(
+                avatars[imageIndex],
+              ),
+              radius: 60,
+              backgroundColor: Colors.white,
+            ));
       });
 }
 

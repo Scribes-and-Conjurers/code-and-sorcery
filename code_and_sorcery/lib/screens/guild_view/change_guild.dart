@@ -61,16 +61,6 @@ class ChangeGuildState extends State<ChangeGuild> {
                     );
                   }).toList(),
                 ),
-                // new TextField(
-                //   controller: guildController,
-                //   decoration: InputDecoration(
-                //       border: OutlineInputBorder(), hintText: "Change Guild"),
-                //   onChanged: (String text) {
-                //     setState(() {
-                //       guildValue = guildController.text;
-                //     });
-                //   },
-                // ),
                 SizedBox(height: 100),
                 ElevatedButton(
                   onPressed: () {

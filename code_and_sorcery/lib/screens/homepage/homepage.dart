@@ -7,11 +7,79 @@ import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 import '../user_profile/user_profile.dart';
+import './colors.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
 bool gameNull = false;
 bool gameStarted = false;
+
+const mainColor = Color(0xffb74093);
+
+// color test stuff:
+// turning normal color into material color
+// Map<int, Color> colorBase1 = {
+//   50: Color.fromRGBO(255, 67, 1, .1),
+//   100: Color.fromRGBO(255, 67, 1, .2),
+//   200: Color.fromRGBO(255, 67, 1, .3),
+//   300: Color.fromRGBO(255, 67, 1, .4),
+//   400: Color.fromRGBO(255, 67, 1, .5),
+//   500: Color.fromRGBO(255, 67, 1, .6),
+//   600: Color.fromRGBO(255, 67, 1, .7),
+//   700: Color.fromRGBO(255, 67, 1, .8),
+//   800: Color.fromRGBO(255, 67, 1, .9),
+//   900: Color.fromRGBO(255, 67, 1, 1),
+// };
+
+// MaterialColor colorMain1 = MaterialColor(0xFFff4301, colorBase1);
+
+Color getColor1(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return color1;
+}
+
+Color getColor2(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return color2;
+}
+
+Color getColor3(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return color3;
+}
+
+Color getColor4(Set<MaterialState> states) {
+  const Set<MaterialState> interactiveStates = <MaterialState>{
+    MaterialState.pressed,
+    MaterialState.hovered,
+    MaterialState.focused,
+  };
+  if (states.any(interactiveStates.contains)) {
+    return Colors.blue;
+  }
+  return color4;
+}
 
 class Homepage extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -26,11 +94,12 @@ class Homepage extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
+          color: color1,
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   colors: [Colors.blue[100], Colors.blue[400]],
+          // ),
         ),
         child: Center(
           child: Column(
@@ -42,39 +111,62 @@ class Homepage extends StatelessWidget {
               Text(
                 'WELCOME',
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                    fontSize: 15, fontWeight: FontWeight.bold, color: color4),
               ),
+              SizedBox(height: 10),
               Text(
                 username,
                 style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 25, color: color4, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  updateUserProfile();
-                  Navigator.pushNamed(context, '/profile');
-                },
-                child: Text('Profile page'),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor2),
+                  ),
+                  onPressed: () {
+                    // Navigate back to the first screen by popping the current route
+                    // off the stack.
+                    updateUserProfile();
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: Text('Profile page'),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  chooseGameTypePopUp(context);
-                },
-                child: Text('Create a game'),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                  ),
+                  onPressed: () {
+                    chooseGameTypePopUp(context);
+
+                    // Navigator.pushNamed(context, '/lobby');
+                    // createRecord();
+                  },
+                  child: Text('Create a game'),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  createJoinGamePopUp(context);
-                },
-                child: Text('Join a game'),
+              SizedBox(
+                width: 200.0,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor4),
+                  ),
+                  onPressed: () {
+                    createJoinGamePopUp(context);
+                    // Navigator.pushNamed(context, '/join');
+                  },
+                  child: Text('Join a game'),
+                ),
               ),
+              SizedBox(height: 20),
               RaisedButton(
                 onPressed: () {
                   // signOutGoogle();
@@ -83,7 +175,7 @@ class Homepage extends StatelessWidget {
                     return LoginPage();
                   }), ModalRoute.withName('/'));
                 },
-                color: Colors.deepPurple,
+                color: color2,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -128,7 +220,7 @@ class Homepage extends StatelessWidget {
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
-                color: Colors.blue,
+                color: color4,
                 child: Text('SINGLEPLAYER'),
                 onPressed: () {
                   gameID = randomNumeric(2);
@@ -150,7 +242,7 @@ class Homepage extends StatelessWidget {
               ),
               MaterialButton(
                 elevation: 5.0,
-                color: Colors.blue,
+                color: color4,
                 child: Text('MULTIPLAYER'),
                 onPressed: () {
                   gameID = randomAlpha(2);
@@ -294,7 +386,9 @@ class Homepage extends StatelessWidget {
                     } else if (gameFull == true) {
                       alertGameFull(context);
                       gameFull = false;
-                    } else {
+                    } else if (gameFull == false &&
+                        gameNull == false &&
+                        gameStarted == false) {
                       setPlayer();
                       Navigator.pushNamed(context, '/lobby');
                       Navigator.of(context)
