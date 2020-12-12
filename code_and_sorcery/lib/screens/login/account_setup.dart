@@ -101,7 +101,7 @@ class AccountSetupState extends State<AccountSetup> {
   // update username and guild for user in database
   void setUsernameGuildClass() async {
     await databaseReference.collection("users").doc(uID).update({
-      'guild': guild,
+      'guild': dropdownGuildValue,
       'username': username,
       'profileImg': '1',
       'points': 0,

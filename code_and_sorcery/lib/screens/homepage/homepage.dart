@@ -8,6 +8,7 @@ import '../login/login.dart';
 import 'package:random_string/random_string.dart';
 import '../user_profile/user_profile.dart';
 import './colors.dart';
+import '../game_lobby/game_lobby.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
@@ -357,6 +358,11 @@ class Homepage extends StatelessWidget {
                 child: Text('Send', style: TextStyle(fontSize: 23)),
                 onPressed: () async {
                   gameJoinLink = gameLinkController.text.toString();
+                  gameID = gameJoinLink;
+                  print(gameJoinLink);
+                  print(gameNull);
+                  print(gameFull);
+                  print(gameStarted);
                   if (gameJoinLink == '') {
                     alertGameNoCode(context);
                   } else {
@@ -370,13 +376,11 @@ class Homepage extends StatelessWidget {
                     } else if (gameFull == true) {
                       alertGameFull(context);
                       gameFull = false;
-                    } else if (gameFull == false &&
-                        gameNull == false &&
-                        gameStarted == false) {
+                    } else {
                       setPlayer();
-                      Navigator.pushNamed(context, '/lobby');
                       Navigator.of(context)
                           .pop(gameLinkController.text.toString());
+                      Navigator.pushNamed(context, '/lobby');
                     }
                   }
                 },
@@ -456,7 +460,6 @@ class Homepage extends StatelessWidget {
       player2db = snapshot.data()['player2'];
       player3db = snapshot.data()['player3'];
       player4db = snapshot.data()['player4'];
-      gameFull = snapshot.data()['gameFull'];
       if (playerClass == "Warrior") {
         await transaction
             .update(playerCheck, {'partyHealth': FieldValue.increment(1)});
