@@ -6,6 +6,7 @@ import '../game_session/game_session.dart';
 import 'dart:async';
 import '../../global_variables/global_variables.dart';
 import '../join_game/join_game.dart';
+import '../homepage/colors.dart';
 
 String questID;
 String gameLinkValue = "";
@@ -50,47 +51,51 @@ class GameLobbySL extends State<GameLobby> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
+          color: color1,
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   colors: [Colors.blue[100], Colors.blue[400]],
+          // ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text("Game link: ",
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              Text(gameID,
-                  style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: 50),
-              startCountdownStream(context),
-              SizedBox(height: 40),
-              buildUser(context),
-              SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  checkP1GO();
-                  startTimer();
-                },
-                child: Text('Go to game'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  removePlayer();
-                  Navigator.pop(context);
-                },
-                child: Text('Go back to homepage'),
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text("Game link: ",
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                Text(gameID,
+                    style: TextStyle(
+                        fontSize: 50,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(height: 50),
+                startCountdownStream(context),
+                SizedBox(height: 40),
+                buildUser(context),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    checkP1GO();
+                    startTimer();
+                  },
+                  child: Text('Go to game'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    removePlayer();
+                    Navigator.pop(context);
+                  },
+                  child: Text('Go back to homepage'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
