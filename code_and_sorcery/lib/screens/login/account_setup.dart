@@ -46,17 +46,30 @@ class AccountSetupState extends State<AccountSetup> {
               },
             ),
             new Text("\n\n"),
-            new TextField(
-              controller: guildController,
-              decoration: new InputDecoration.collapsed(hintText: "ADD GUILD"),
-              onChanged: (String text) {
-                setState(() {
-                  guildValue = guildController.text;
-                  guild = guildValue;
-                });
-                // TextEditingController().clear();
-              },
-            ),
+            DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                      guild = dropdownValue;
+                    });
+                  },
+                  items: <String>['Backenders', 'Frontenders', 'Fullstackers']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
             new Text("\n\n"),
             new Text("Choose your class"),
             new Text("\n\n"),
