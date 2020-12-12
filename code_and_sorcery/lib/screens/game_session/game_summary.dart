@@ -126,7 +126,7 @@ class SummarySP extends StatelessWidget {
                               onPressed: () {
                                 updateSPGuildPoints();
                                 updateGame();
-                                partyWisdom = 0.0;
+                                finalScore = 0;
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                                 Navigator.pop(context);

@@ -322,6 +322,7 @@ class GameSessionState extends State<GameSession> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         partyWisdom = documentSnapshot.data()['partyWisdom'];
+        print('party wisdom is $partyWisdom');
       } else {
         print('document snapshot doesnt exist!');
       }
@@ -403,18 +404,19 @@ class GameSessionState extends State<GameSession> {
       questionNumber = 0;
       player1Score = 0;
       player2Score = 0;
-      partyWisdom = 0.0;
     });
   }
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
     setState(() {
-      if (questionNumber == 3) {
+      if (questionNumber == game.questions.length - 1) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => new Summary(score: finalScore)));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => new Beggar()));
-      }
-      if (questionNumber == game.questions.length - 1) {
         hasPlayed = false;
         readyTimer.cancel();
 
