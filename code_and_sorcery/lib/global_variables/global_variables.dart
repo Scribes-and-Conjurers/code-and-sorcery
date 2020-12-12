@@ -16,4 +16,6 @@ String player1db;
 String player2db;
 String player3db;
 String player4db;
-String partyWisdom;
+double partyWisdom;
+String difficulty = 'normal';
+String adventureLength = 'long';

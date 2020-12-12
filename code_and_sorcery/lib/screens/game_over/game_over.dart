@@ -57,8 +57,8 @@ class GameOver extends StatelessWidget {
                                 updateGame();
                                 questionNumber = 0;
                                 finalScore = 0;
-                                Navigator.pushNamed(context, '/homepage');
-                                // Navigator.pop(context);
+                                // Navigator.pushNamed(context, '/homepage');
+                                Navigator.pop(context);
                                 // Navigator.push(
                                 //     context, MaterialPageRoute(builder: (context) => Homepage()));
                               },
