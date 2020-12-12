@@ -19,13 +19,13 @@ class GameContentLong {
     "ghost_white",
     "ghost_blue",
     "ghost_black",
-    "medghost_white",
-    "medghost_black",
-    "medghost_red",
-    "zombie_green",
-    "boss001",
-    "boss001",
-    "boss001",
+    "mushroom_green",
+    "mushroom_purple",
+    "mushroom_yellow",
+    "skeleton_white",
+    "tree_pink",
+    "tree_pink",
+    "tree_pink",
   ];
 
   final CollectionReference questionCollection =
