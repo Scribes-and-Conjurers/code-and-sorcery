@@ -68,19 +68,13 @@ class Homepage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   chooseGameTypePopUp(context);
-
-                  // Navigator.pushNamed(context, '/lobby');
-                  // createRecord();
                 },
                 child: Text('Create a game'),
               ),
               ElevatedButton(
                 onPressed: () {
                   createJoinGamePopUp(context);
-                  //     .then((value) => gameLinkValue = value);
-                  // // if (!gameFull) {
-                  // //   Navigator.pushNamed(context, '/lobby');
-                  // // }
+
                   // Navigator.pushNamed(context, '/join');
                 },
                 child: Text('Join a game'),
@@ -139,25 +133,25 @@ class Homepage extends StatelessWidget {
                 child: Text('Send', style: TextStyle(fontSize: 23)),
                 onPressed: () async {
                   gameJoinLink = gameLinkController.text.toString();
-                  await checkGameState();
-
                   if (gameJoinLink == '') {
                     alertGameNoCode(context);
-                  } else if (gameNull == true) {
-                    alertGameNull(context);
-                    gameNull = false;
-                  } else if (gameFull == true) {
-                    alertGameFull(context);
-                    gameFull = false;
-                  } else if ((gameStarted == true && gameFull == true) ||
-                      (gameStarted == true && gameFull == false)) {
-                    alertGameStarted(context);
-                    gameStarted = false;
                   } else {
-                    // setPlayer();
-                    // Navigator.pushNamed(context, '/lobby');
-                    // Navigator.of(context)
-                    //     .pop(gameLinkController.text.toString());
+                    await checkGameState();
+                    if (gameNull == true) {
+                      alertGameNull(context);
+                      gameNull = false;
+                    } else if (gameStarted == true) {
+                      alertGameStarted(context);
+                      gameStarted = false;
+                    } else if (gameFull == true) {
+                      alertGameFull(context);
+                      gameFull = false;
+                    } else {
+                      setPlayer();
+                      Navigator.pushNamed(context, '/lobby');
+                      Navigator.of(context)
+                          .pop(gameLinkController.text.toString());
+                    }
                   }
                 },
               )
@@ -219,7 +213,18 @@ class Homepage extends StatelessWidget {
                 child: Text('SINGLEPLAYER'),
                 onPressed: () {
                   gameID = randomNumeric(2);
-                  createSPGame();
+                  switch (playerClass) {
+                    case 'Warrior':
+                      {
+                        createSPGameWarrior();
+                      }
+                      break;
+                    case 'Wizard':
+                      {
+                        createSPGameWizard();
+                      }
+                      break;
+                  }
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/lobbySP');
                 },
@@ -268,7 +273,7 @@ class Homepage extends StatelessWidget {
       if (documentSnapshot.exists) {
         nbOfPlayers = documentSnapshot.data()['nbOfPlayers'];
         startCountdown = documentSnapshot.data()['startCountdown'];
-        if (nbOfPlayers == 4) {
+        if (nbOfPlayers == 4 && startCountdown == 5) {
           gameFull = true;
         } else if (startCountdown != 5) {
           gameStarted = true;
@@ -340,11 +345,24 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  void createSPGame() async {
+  void createSPGameWarrior() async {
+    await FirebaseFirestore.instance.collection("games").doc(gameID).set({
+      'created': FieldValue.serverTimestamp(),
+      'finished': false,
+      'partyHealth': 4,
+      'partyWisdom': 0.5,
+      'player1': username,
+      'player1Points': 0,
+      'player1Class': playerClass,
+    });
+  }
+
+  void createSPGameWizard() async {
     await FirebaseFirestore.instance.collection("games").doc(gameID).set({
       'created': FieldValue.serverTimestamp(),
       'finished': false,
       'partyHealth': 3,
+      'partyWisdom': 0.6,
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
