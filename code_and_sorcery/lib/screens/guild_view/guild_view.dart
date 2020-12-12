@@ -16,7 +16,7 @@ class Guild extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          color: colorMain2,
+          color: color2,
           // gradient: LinearGradient(
           //   begin: Alignment.topRight,
           //   end: Alignment.bottomLeft,
@@ -42,7 +42,7 @@ class Guild extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColorButton3),
+                        MaterialStateProperty.resolveWith(getColor4),
                   ),
                   onPressed: () {
                     // Navigate back to the first screen by popping the current route
@@ -60,7 +60,7 @@ class Guild extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColorButton2),
+                        MaterialStateProperty.resolveWith(getColor2),
                   ),
                   onPressed: () {
                     // Navigate back to the first screen by popping the current route
@@ -77,8 +77,7 @@ class Guild extends StatelessWidget {
               SizedBox(height: 70),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.resolveWith(getColorMain),
+                  backgroundColor: MaterialStateProperty.resolveWith(getColor1),
                 ),
                 onPressed: () {
                   // Navigate back to the first screen by popping the current route
@@ -88,7 +87,7 @@ class Guild extends StatelessWidget {
                 },
                 child: Text(
                   'Change Guild',
-                  style: TextStyle(color: colorSide1),
+                  style: TextStyle(color: color3),
                 ),
               ),
             ],
@@ -96,8 +95,8 @@ class Guild extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: colorMain1,
-        foregroundColor: colorSide1,
+        backgroundColor: color1,
+        foregroundColor: color3,
         child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/profile');
@@ -112,7 +111,7 @@ class Guild extends StatelessWidget {
       child: Column(
         children: [
           Text('Current Guild Points:',
-              style: TextStyle(fontSize: 20, color: colorMain1)),
+              style: TextStyle(fontSize: 20, color: color1)),
           // Text('[76,432]', style: TextStyle(fontSize: 20)),
         ],
       ),
@@ -127,7 +126,7 @@ class Guild extends StatelessWidget {
         children: [
           Text(
             'The Microtask Ascendancy',
-            style: TextStyle(fontSize: 20, color: colorMain1),
+            style: TextStyle(fontSize: 20, color: color1),
           ),
           Divider(
             thickness: 5,
@@ -160,7 +159,7 @@ class Guild extends StatelessWidget {
         children: [
           Text(
             'Current Guild Global Rank:',
-            style: TextStyle(fontSize: 20, color: colorMain1),
+            style: TextStyle(fontSize: 20, color: color1),
           ),
           // Text('1', style: TextStyle(fontSize: 20),),
         ],
@@ -204,7 +203,7 @@ Widget guildPointsGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['totalPoints'].toString(),
-          style: TextStyle(fontSize: 20, color: colorMain1),
+          style: TextStyle(fontSize: 20, color: color1),
         );
       });
 }
@@ -223,7 +222,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 20, color: colorMain1),
+          style: TextStyle(fontSize: 20, color: color1),
         );
       });
 }
