@@ -6,6 +6,7 @@ import '../../model/user.dart';
 import '../../global_variables/global_variables.dart';
 import '../login/login.dart';
 import 'package:random_string/random_string.dart';
+import '../user_profile/user_profile.dart';
 
 String gameJoinLink = "";
 bool gameFull = false;
@@ -38,13 +39,7 @@ class Homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  profileImg,
-                ),
-                radius: 60,
-                backgroundColor: Colors.white,
-              ),
+              avatarGetter(context),
               SizedBox(height: 40),
               Text(
                 'WELCOME',
@@ -131,10 +126,6 @@ class Homepage extends StatelessWidget {
                   Text(gameState),
                   TextField(
                     controller: gameLinkController,
-                    onChanged: (text) {
-                      gameJoinLink = text;
-                      checkGameState();
-                    },
                     decoration: new InputDecoration(
                         // border: OutlineInputBorder(),
                         hintText: "Type here"),
@@ -146,9 +137,9 @@ class Homepage extends StatelessWidget {
               MaterialButton(
                 elevation: 5.0,
                 child: Text('Send', style: TextStyle(fontSize: 23)),
-                onPressed: () {
+                onPressed: () async {
                   gameJoinLink = gameLinkController.text.toString();
-                  checkGameState();
+                  await checkGameState();
 
                   if (gameJoinLink == '') {
                     alertGameNoCode(context);
@@ -158,7 +149,8 @@ class Homepage extends StatelessWidget {
                   } else if (gameFull == true) {
                     alertGameFull(context);
                     gameFull = false;
-                  } else if (gameStarted == true) {
+                  } else if ((gameStarted == true && gameFull == true) ||
+                      (gameStarted == true && gameFull == false)) {
                     alertGameStarted(context);
                     gameStarted = false;
                   } else {
@@ -267,7 +259,7 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  void checkGameState() async {
+  Future checkGameState() async {
     await FirebaseFirestore.instance
         .collection('games')
         .doc(gameJoinLink)
@@ -359,20 +351,6 @@ class Homepage extends StatelessWidget {
     });
   }
 
-  // void getQuestID() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('games')
-  //       .doc(gameID)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       // define questions
-  //       questID = documentSnapshot.data()['questID'];
-  //       print(questID);
-  //     }
-  //   });
-  // }
-
   void setPlayer() async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference playerCheck =
@@ -413,53 +391,4 @@ class Homepage extends StatelessWidget {
       }
     });
   }
-
-// void gameFullCheck() async {
-//   await FirebaseFirestore.instance.runTransaction((transaction) async {
-//     DocumentReference playerCheck =
-//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-//     DocumentSnapshot snapshot = await transaction.get(playerCheck);
-//     nbOfPlayers = snapshot.data()['nbOfPlayers'];
-//     if (nbOfPlayers >= 1 && nbOfPlayers > 4) {
-//       gameFull = false;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     } else if (nbOfPlayers == 4) {
-//       gameFull = true;
-//       print(nbOfPlayers);
-//       print(nbOfPlayers);
-//     }
-//   });
-
-// void gameNullCheck() async {
-//   await FirebaseFirestore.instance.runTransaction((transaction) async {
-//     DocumentReference gameCheck =
-//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-//     DocumentSnapshot snapshot = await transaction.get(gameCheck);
-//     if (gameCheck) {
-//       gameNull = true;
-//     }
-//     if (!gameCheck.exists) {
-//       gameNull = false;
-//     }
-//   });
-// }
-//   }
-// }
-
-// void checkGameFull() async {
-//   await FirebaseFirestore.instance.runTransaction((transaction) async {
-//     DocumentReference playerCheck =
-//         FirebaseFirestore.instance.collection('games').doc(gameJoinLink);
-//     DocumentSnapshot snapshot = await transaction.get(playerCheck);
-//     player2db = snapshot.data()['player2'];
-//     player3db = snapshot.data()['player3'];
-//     player4db = snapshot.data()['player4'];
-//     if (player2db != "" && player3db != "" && player4db != "") {
-//       gameFull = true;
-//     } else {
-//       gameFull = false;
-//     }
-//   });
-// }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:code_and_sorcery/screens/random_beggar/beggar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,8 @@ import './game_content_long.dart';
 import './game_summary.dart';
 import './game_general_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../random_chest/chest.dart';
+import '../random_beggar/beggar.dart';
 // import './test_randomevent.dart';
 import '../loadingscreen/loading_before_game.dart';
 
@@ -195,7 +198,9 @@ class _QuestLongState extends State<QuestLong> {
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
+
                                     yourScore++;
+
                                     updateGamePlayer1();
                                   } else {
                                     decreasePartyHealth();
@@ -509,7 +514,17 @@ class _QuestLongState extends State<QuestLong> {
             MaterialPageRoute(
                 builder: (context) => new SummarySP(score: yourScore)));
       } else {
-        questionNumber++;
+        if (questionNumber == 2) {
+          questionNumber++;
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => new Chest()));
+        } else if (questionNumber == 6) {
+          questionNumber++;
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => new Beggar()));
+        } else {
+          questionNumber++;
+        }
       }
     });
   }

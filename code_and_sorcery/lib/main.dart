@@ -15,7 +15,12 @@ import './screens/login/login.dart';
 import './screens/login/account_setup.dart';
 import './screens/game_lobby/game_settings.dart';
 import './screens/loadingscreen/loadingscreen.dart';
+import './screens/random_chest/success_chest.dart';
+import './screens/random_chest/failure_chest.dart';
+import './screens/random_beggar/success_beggar.dart';
+import './screens/random_beggar/failure_beggar.dart';
 import './screens/loadingscreen/loading_before_game.dart';
+import './screens/game_over/game_over.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +48,12 @@ void main() async {
       '/guildrankings': (context) => GuildRankings(),
       '/userrankings': (context) => UserRankings(),
       '/splash': (context) => LoadingScreen(),
+      '/successChest': (context) => SuccessChest(),
+      '/failureChest': (context) => FailureChest(),
+      '/successBeggar': (context) => SuccessBeggar(),
+      '/failureBeggar': (context) => FailureBeggar(),
       '/gameLoading': (context) => LoadingBeforeGame(),
+      '/gameOver': (context) => GameOver(),
     },
   ));
 }
