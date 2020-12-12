@@ -45,7 +45,7 @@ class AccountSetupState extends State<AccountSetup> {
             Text("Choose your guild"),
             SizedBox(height: 30),
             DropdownButton<String>(
-              value: dropdownGuildValue,
+              value: "Backenders",
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -101,7 +101,7 @@ class AccountSetupState extends State<AccountSetup> {
   // update username and guild for user in database
   void setUsernameGuildClass() async {
     await databaseReference.collection("users").doc(uID).update({
-      'guild': guild,
+      'guild': dropdownGuildValue,
       'username': username,
       'profileImg': '1',
       'points': 0,

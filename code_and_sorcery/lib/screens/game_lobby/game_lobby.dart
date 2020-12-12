@@ -5,7 +5,6 @@ import '../game_session/game_content_short.dart';
 import '../game_session/game_session.dart';
 import 'dart:async';
 import '../../global_variables/global_variables.dart';
-import '../join_game/join_game.dart';
 import '../homepage/colors.dart';
 
 String gameLinkValue = "";
@@ -268,7 +267,9 @@ Widget startCountdownStream(BuildContext context) {
         }
         if (fiveSecondCountdown == 1 && gameStarted == null) {
           gameSessionTimer = Timer(Duration(seconds: 1), () {
+
             Navigator.pushNamed(context, '/gameLoadingMP');
+
           });
           return Text(
             "1",
