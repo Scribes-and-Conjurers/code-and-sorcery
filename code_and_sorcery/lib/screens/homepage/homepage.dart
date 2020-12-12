@@ -287,6 +287,8 @@ class Homepage extends StatelessWidget {
       'pushedGo': false,
       'startCountdown': 5,
       'selectAnswer': 0,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -317,6 +319,8 @@ class Homepage extends StatelessWidget {
       'pushedGo': false,
       'startCountdown': 5,
       'selectAnswer': 0,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -329,6 +333,8 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
@@ -341,6 +347,8 @@ class Homepage extends StatelessWidget {
       'player1': username,
       'player1Points': 0,
       'player1Class': playerClass,
+      'gameDifficulty': 'Easy',
+      'gameLength': 'Short'
     });
   }
 
