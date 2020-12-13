@@ -81,6 +81,9 @@ class GameLobbySL extends State<GameLobby> {
                 buildUser(context),
                 SizedBox(height: 40),
                 goToGameButton(),
+                SizedBox(height: 20),
+                goToSettingsButton(),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     removePlayer();
@@ -105,6 +108,17 @@ class GameLobbySL extends State<GameLobby> {
               startTimer();
             },
             child: Text('Go to game'),
+          )
+        : Container();
+  }
+
+  Widget goToSettingsButton() {
+    return amPlayer1 == true
+        ? ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+            child: Text('Settings'),
           )
         : Container();
   }

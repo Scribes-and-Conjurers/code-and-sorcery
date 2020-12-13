@@ -31,7 +31,7 @@ class GuildView extends State<Guild> {
               guildNameGetter(context),
               Padding(padding: EdgeInsets.all(30.0)),
               totalPointsSection,
-              Padding(padding: EdgeInsets.all(16.0)),
+              Padding(padding: EdgeInsets.all(10.0)),
               guildPointsGetter(context),
               // userRanking,
               // guildRanking,
@@ -42,7 +42,7 @@ class GuildView extends State<Guild> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor4),
+                        MaterialStateProperty.resolveWith(getColor3),
                   ),
                   onPressed: () {
                     // Navigate back to the first screen by popping the current route
@@ -52,7 +52,8 @@ class GuildView extends State<Guild> {
                         MaterialPageRoute(
                             builder: (context) => UserRankings()));
                   },
-                  child: Text(' User Rankings'),
+                  child: Text(' User Rankings',
+                      style: TextStyle(color: Colors.black)),
                 ),
               ),
               SizedBox(
@@ -60,7 +61,7 @@ class GuildView extends State<Guild> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor2),
+                        MaterialStateProperty.resolveWith(getColor3),
                   ),
                   onPressed: () {
                     // Navigate back to the first screen by popping the current route
@@ -70,7 +71,8 @@ class GuildView extends State<Guild> {
                         MaterialPageRoute(
                             builder: (context) => GuildRankings()));
                   },
-                  child: Text('Guild Rankings'),
+                  child: Text('Guild Rankings',
+                      style: TextStyle(color: Colors.black)),
                 ),
               ),
 
@@ -105,15 +107,11 @@ class GuildView extends State<Guild> {
   Widget totalPointsSection = Container(
     // padding: EdgeInsets.all(10),
     child: Center(
-      child: Column(
-        children: [
-          Text('Current Guild Points:',
-              style: TextStyle(fontSize: 20, color: color1)),
-          // Text('[76,432]', style: TextStyle(fontSize: 20)),
-        ],
-      ),
-      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Text('Current Guild Points:',
+          style: TextStyle(fontSize: 20, color: Colors.white)),
+      // Text('[76,432]', style: TextStyle(fontSize: 20)),
     ),
+    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
   );
 
   // Widget guildNameSection = Container(
@@ -253,10 +251,8 @@ Widget guildPointsGetter(BuildContext context) {
           return Text("Loading");
         }
         var guildDocument = snapshot.data;
-        return Text(
-          guildDocument['totalPoints'].toString(),
-          style: TextStyle(fontSize: 20, color: color1),
-        );
+        return Text(guildDocument['totalPoints'].toString(),
+            style: TextStyle(fontSize: 20, color: Colors.white));
       });
 }
 
@@ -274,7 +270,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 20, color: color1),
+          style: TextStyle(fontSize: 34, color: Colors.white),
         );
       });
 }

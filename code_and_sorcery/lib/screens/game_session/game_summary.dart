@@ -117,6 +117,7 @@ class SummarySP extends StatelessWidget {
                           MaterialButton(
                               color: Colors.deepPurple,
                               onPressed: () {
+                                updateSinglePlayerPoints();
                                 updateSPGuildPoints();
                                 updateGame();
                                 finalScore = 0;

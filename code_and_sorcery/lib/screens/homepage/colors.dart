@@ -9,6 +9,9 @@ Color color2 = palette1_2;
 Color color3 = palette1_3;
 Color color4 = palette1_4;
 
+Color textBright = Colors.white;
+Color textDark = Colors.black;
+
 // First color scheme/ Palette 1:
 // Color 1
 
