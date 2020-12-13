@@ -16,10 +16,12 @@ class AccountSetupState extends State<AccountSetup> {
   String usernameValue = "";
   String dropdownGuildValue = "";
 
+  // set the default guild and class
   @override
   void initState() {
     super.initState();
     playerClass = 'Warrior';
+    guild = 'Backenders';
   }
 
   @override
@@ -165,7 +167,7 @@ class AccountSetupState extends State<AccountSetup> {
   // update username and guild for user in database
   void setUsernameGuildClass() async {
     await databaseReference.collection("users").doc(uID).update({
-      'guild': dropdownGuildValue,
+      'guild': guild,
       'username': username,
       'profileImg': '1',
       'points': 0,
