@@ -15,7 +15,6 @@ import './game_general_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../random_chest/chest.dart';
 import '../random_beggar/beggar.dart';
-// import './test_randomevent.dart';
 import '../loadingscreen/loading_before_game.dart';
 
 // LONG ADVENTURE !!! built for singleplayer right now
@@ -166,7 +165,7 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][1] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
@@ -193,7 +192,7 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][2] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
@@ -220,7 +219,7 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][3] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
@@ -289,14 +288,6 @@ class _QuestLongState extends State<QuestLong> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  // (counter > 0)
-                                  //     ? Text("")
-                                  //     : Text("OVER",
-                                  //         style: TextStyle(color: Colors.red)),
-                                  // Text('$counter',
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 48)),
                                   Text(
                                     "Question ${questionNumber + 1}",
                                     style: TextStyle(fontSize: 15.0),
@@ -317,39 +308,6 @@ class _QuestLongState extends State<QuestLong> {
                         // image
                         Image.asset('assets/${game.images[questionNumber]}.png',
                             height: 200),
-
-                        // FutureBuilder(
-                        //     future: getImage(
-                        //         context, "${game.images[questionNumber]}.png"),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         return Container(
-                        //           width: MediaQuery.of(context).size.width / 1,
-                        //           height:
-                        //               MediaQuery.of(context).size.width / 1.7,
-                        //           child: snapshot.data,
-                        //         );
-                        //       }
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.waiting) {
-                        //         return Container(
-                        //             width:
-                        //                 MediaQuery.of(context).size.width / 1,
-                        //             height:
-                        //                 MediaQuery.of(context).size.width / 1.7,
-                        //             child: SizedBox(
-                        //               height: 10,
-                        //               width: 10,
-                        //               child: CircularProgressIndicator(),
-                        //             ));
-                        //       }
-                        //       return SizedBox(
-                        //         height: 10,
-                        //         width: 10,
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }),
 
                         Padding(padding: EdgeInsets.all(15.0)),
 
@@ -402,7 +360,7 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
+                                  if (game.choices[questionNumber][1] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
                                     // ONLY FOR SOLO PLAY
