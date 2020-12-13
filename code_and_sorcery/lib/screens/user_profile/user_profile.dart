@@ -1,4 +1,5 @@
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:code_and_sorcery/screens/homepage/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
@@ -16,64 +17,69 @@ class UserProfile extends StatelessWidget {
       //   title: Text("Your Profile"),
       // ),
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blue[100], Colors.blue[400]],
-            ),
-          ),
+          decoration: BoxDecoration(color: color1),
           child: Center(
-              child: Padding(
-                  padding: EdgeInsets.all(50),
-                  child: Column(
-                    children: [
-                      avatarGetter(context),
-                      Padding(padding: EdgeInsets.all(5)),
-                      FloatingActionButton.extended(
-                        heroTag: "avatarbtn",
-                        onPressed: () {
-                          // Add your onPressed code here!
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AvatarPicker()),
-                          );
-                        },
-                        label: Text('Avatars'),
-                        icon: Icon(Icons.add),
-                        backgroundColor: Colors.pink,
-                      ),
-                      Padding(padding: EdgeInsets.all(15)),
-                      Text(
-                        username + '  -  ' + playerClass,
-                        style: TextStyle(fontSize: 25, color: Colors.black),
-                      ),
-                      Divider(
-                        thickness: 5,
-                      ),
-                      Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text(guild,
-                              style: TextStyle(
-                                  fontSize: 20, color: Colors.black))),
-                      MaterialButton(
+              child: SingleChildScrollView(
+            child: Padding(
+                padding: EdgeInsets.all(50),
+                child: Column(
+                  children: [
+                    Padding(padding: EdgeInsets.all(10)),
+                    avatarGetter(context),
+                    Padding(padding: EdgeInsets.all(10)),
+                    FloatingActionButton.extended(
+                      heroTag: "avatarbtn",
+                      onPressed: () {
+                        // Add your onPressed code here!
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AvatarPicker()),
+                        );
+                      },
+                      label: Text('CHANGE AVATAR',
+                          style: TextStyle(color: textDark)),
+                      // icon: Icon(Icons.add),
+                      backgroundColor: color3,
+                    ),
+                    Padding(padding: EdgeInsets.all(20)),
+                    Text(
+                      username + '  -  ' + playerClass,
+                      style: TextStyle(fontSize: 25, color: textBright),
+                    ),
+                    Padding(padding: EdgeInsets.all(2)),
+                    Divider(thickness: 3, color: color3),
+                    Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text('Guild:  $guild',
+                            style: TextStyle(fontSize: 20, color: textBright))),
+                    Padding(padding: EdgeInsets.all(6.00)),
+                    SizedBox(
+                      width: 200,
+                      child: MaterialButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/guild');
                         },
-                        color: Colors.blueGrey,
+                        color: color3,
                         child: Text(
-                          'Guild View',
-                          style: TextStyle(color: Colors.white),
+                          'GUILD VIEW',
+                          style: TextStyle(color: textDark),
                         ),
                       ),
-                      Text('Your Current Quiz Points:',
-                          style: TextStyle(fontSize: 20, color: Colors.black)),
-                      // Text(points.toString(), style: TextStyle(fontSize: 25))
-                      pointGetter(context),
-                    ],
-                  )))),
+                    ),
+                    Padding(padding: EdgeInsets.all(10.00)),
+                    Text('Your Current Quiz Points:',
+                        style: TextStyle(fontSize: 20, color: textBright)),
+                    // Text(points.toString(), style: TextStyle(fontSize: 25))
+                    Padding(padding: EdgeInsets.all(8.00)),
+                    pointGetter(context),
+                    Padding(padding: EdgeInsets.all(20.00)),
+                  ],
+                )),
+          ))),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: color2,
+        foregroundColor: color3,
         child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/homepage');
@@ -96,7 +102,7 @@ Widget pointGetter(BuildContext context) {
         var userDocument = snapshot.data;
         return Text(
           userDocument['points'].toString(),
-          style: TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: 30, color: textBright),
         );
       });
 }
