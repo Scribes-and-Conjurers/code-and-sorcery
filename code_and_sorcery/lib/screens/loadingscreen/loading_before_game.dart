@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../game_session/game_content_long.dart';
 
-// THIS IS FOR MP!
+// THIS IS FOR SP!
 // create game object
 var game = new GameContentLongNOTF();
 var gameShort = new GameContent();
