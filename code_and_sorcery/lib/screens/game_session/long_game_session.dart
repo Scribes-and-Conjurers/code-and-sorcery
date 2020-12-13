@@ -113,38 +113,6 @@ class _QuestLongState extends State<QuestLong> {
                           Image.asset(
                               'assets/${game.images[questionNumber]}.png',
                               height: 200),
-                          // FutureBuilder(
-                          //     future: getImage(
-                          //         context, "${game.images[questionNumber]}.png"),
-                          //     builder: (context, snapshot) {
-                          //       if (snapshot.connectionState ==
-                          //           ConnectionState.done) {
-                          //         return Container(
-                          //           width: MediaQuery.of(context).size.width / 1,
-                          //           height:
-                          //               MediaQuery.of(context).size.width / 1.7,
-                          //           child: snapshot.data,
-                          //         );
-                          //       }
-                          //       if (snapshot.connectionState ==
-                          //           ConnectionState.waiting) {
-                          //         return Container(
-                          //             width:
-                          //                 MediaQuery.of(context).size.width / 1,
-                          //             height:
-                          //                 MediaQuery.of(context).size.width / 1.7,
-                          //             child: SizedBox(
-                          //               height: 10,
-                          //               width: 10,
-                          //               child: CircularProgressIndicator(),
-                          //             ));
-                          //       }
-                          //       return SizedBox(
-                          //         height: 10,
-                          //         width: 10,
-                          //         child: CircularProgressIndicator(),
-                          //       );
-                          //     }),
 
                           Padding(padding: EdgeInsets.all(15.0)),
 
@@ -202,9 +170,7 @@ class _QuestLongState extends State<QuestLong> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       // ONLY FOR SOLO PLAY
-
                                       finalScore++;
-
                                       updateGamePlayer1();
                                     } else {
                                       decreasePartyHealth();
