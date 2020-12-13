@@ -67,7 +67,8 @@ class UserProfile extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      Text('Your Current Quiz Points:',
+                      SizedBox(height: 50),
+                      Text('Your Current Points:',
                           style: TextStyle(fontSize: 20, color: Colors.black)),
                       // Text(points.toString(), style: TextStyle(fontSize: 25))
                       pointGetter(context),

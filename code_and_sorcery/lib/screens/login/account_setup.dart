@@ -14,7 +14,7 @@ class AccountSetupState extends State<AccountSetup> {
   final usernameController = TextEditingController();
   final guildController = TextEditingController();
   String usernameValue = "";
-  String dropdownGuildValue = "";
+  String dropdownGuildValue = "Backenders";
 
   // set the default guild and class
   @override
@@ -39,7 +39,8 @@ class AccountSetupState extends State<AccountSetup> {
               TextField(
                 controller: usernameController,
                 decoration: new InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Type your username"),
+                    border: OutlineInputBorder(),
+                    hintText: "Type your username"),
                 onChanged: (String text) {
                   setState(() {
                     usernameValue = usernameController.text;
@@ -53,7 +54,7 @@ class AccountSetupState extends State<AccountSetup> {
               Text("Choose your guild"),
               SizedBox(height: 30),
               DropdownButton<String>(
-                value: "Backenders",
+                value: dropdownGuildValue,
                 icon: Icon(Icons.arrow_downward),
                 iconSize: 24,
                 elevation: 16,
@@ -136,7 +137,8 @@ class AccountSetupState extends State<AccountSetup> {
                     return 'Tough and mighty, Warriors add +1 to Party Health';
                   } else if (playerClass == 'Wizard') {
                     return 'Wise and perceptive, Wizards add a 10% chance of success in random events';
-                  } else return 'No class is selected!';
+                  } else
+                    return 'No class is selected!';
                 })()),
               ),
               SizedBox(height: 50),

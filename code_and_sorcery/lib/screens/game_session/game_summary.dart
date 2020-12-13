@@ -56,6 +56,7 @@ class Summary extends StatelessWidget {
                                   updateGame();
                                   questionNumber = 0;
                                   finalScore = 0;
+                                  amPlayer1 = false;
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
