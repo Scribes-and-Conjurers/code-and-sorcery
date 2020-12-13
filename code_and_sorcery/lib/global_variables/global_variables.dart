@@ -19,3 +19,4 @@ String player4db;
 double partyWisdom;
 String difficulty = 'Easy';
 String adventureLength = 'Short';
+bool amPlayer1 = false;

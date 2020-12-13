@@ -232,6 +232,7 @@ class Homepage extends StatelessWidget {
                 color: color4,
                 child: Text('MULTIPLAYER'),
                 onPressed: () {
+                  amPlayer1 = true;
                   gameID = randomAlpha(2);
                   if (playerClass == 'Warrior')
                     createMPGameWarrior();

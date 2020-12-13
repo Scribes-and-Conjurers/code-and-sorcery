@@ -64,7 +64,7 @@ class GameLobbySL extends State<GameLobby> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
+              children: [
                 Text("Game link: ",
                     style: TextStyle(
                         fontSize: 25,
@@ -80,22 +80,14 @@ class GameLobbySL extends State<GameLobby> {
                 SizedBox(height: 40),
                 buildUser(context),
                 SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    checkP1GO();
-                    startTimer();
-                  },
-                  child: Text('Go to game'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/settings');
-                  },
-                  child: Text('Settings'),
-                ),
+                goToGameButton(),
+                SizedBox(height: 20),
+                goToSettingsButton(),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     removePlayer();
+                    amPlayer1 = false;
                     Navigator.pop(context);
                   },
                   child: Text('Go back to homepage'),
@@ -108,16 +100,27 @@ class GameLobbySL extends State<GameLobby> {
     );
   }
 
-  Future<bool> goNextPage(int id, int duration) async {
-    await Future.delayed(Duration(seconds: duration));
-    Navigator.pushNamed(context, '/ingame');
-    ;
+  Widget goToGameButton() {
+    return amPlayer1 == true
+        ? ElevatedButton(
+            onPressed: () {
+              checkP1GO();
+              startTimer();
+            },
+            child: Text('Go to game'),
+          )
+        : Container();
   }
 
-  Future runTimeout() async {
-    await goNextPage(0, 5).timeout(Duration(seconds: 2), onTimeout: () {
-      print('test');
-    });
+  Widget goToSettingsButton() {
+    return amPlayer1 == true
+        ? ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+            child: Text('Settings'),
+          )
+        : Container();
   }
 }
 
