@@ -20,15 +20,11 @@ class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
   void initState() {
     super.initState();
     if(difficulty == 'Easy' && adventureLength == 'Long') {
-      print('$difficulty $adventureLength');
-      // game = new GameContentLongTF();
       updateGameContent('long-adv0');
       Timer(Duration(seconds: 5),
               () => {Navigator.pop(context),
           Navigator.pushNamed(context, '/ingameLong')});
     } else if (difficulty == 'Normal' && adventureLength == 'Long') {
-      print('$difficulty $adventureLength');
-      // game = new GameContentLongNOTF();
       updateGameContent('norm-long');
       Timer(Duration(seconds: 5),
               () => {Navigator.pop(context),
@@ -37,13 +33,6 @@ class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
       print('goes nowhere');
     }
   }
-
-  // final CollectionReference questionCollection =
-  // FirebaseFirestore.instance.collection('mc_question');
-  //
-  // Stream<QuerySnapshot> get questionSnapshot {
-  //   return questionCollection.snapshots();
-  // }
 
   @override
   Widget build(BuildContext context) {
