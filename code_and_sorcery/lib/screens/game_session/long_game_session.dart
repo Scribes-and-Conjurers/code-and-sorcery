@@ -35,6 +35,11 @@ class QuestLong extends StatefulWidget {
 class _QuestLongState extends State<QuestLong> {
   final databaseReference = FirebaseFirestore.instance;
 
+  @override
+  void initState() {
+    setPartyWisdom();
+  }
+
   Widget build(BuildContext context) {
     if (longQuestion) {
       // return long version (4 buttons)
@@ -370,6 +375,21 @@ class _QuestLongState extends State<QuestLong> {
     }
   }
 
+  void setPartyWisdom() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        partyWisdom = documentSnapshot.data()['partyWisdom'];
+        print('party wisdom is $partyWisdom');
+      } else {
+        print('document snapshot doesnt exist!');
+      }
+    });
+  }
+
   void decreasePartyHealth() async {
     await databaseReference.collection("games").doc(gameID).update({
       'partyHealth': FieldValue.increment(-1),
@@ -468,24 +488,6 @@ class _QuestLongState extends State<QuestLong> {
   void updateGamePlayer1() async {
     await databaseReference.collection("games").doc(gameID).update({
       'player1Points': FieldValue.increment(1),
-    });
-  }
-
-  void updateGamePlayer2() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player2Points': FieldValue.increment(1),
-    });
-  }
-
-  void updateGamePlayer3() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player3Points': FieldValue.increment(1),
-    });
-  }
-
-  void updateGamePlayer4() async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'player4Points': FieldValue.increment(1),
     });
   }
 }

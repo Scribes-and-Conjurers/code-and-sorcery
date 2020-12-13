@@ -1,41 +1,18 @@
 import 'dart:async';
-import 'dart:collection';
-import 'package:code_and_sorcery/screens/random_beggar/beggar.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
-// import '../game_lobby/game_lobby.dart';
-import 'package:provider/provider.dart';
-//
-import './game_image_utils.dart';
 import './game_content_long.dart';
 import './game_summary.dart';
 import './game_general_utils.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../random_chest/chest.dart';
-import '../random_beggar/beggar.dart';
-// import './test_randomevent.dart';
-import '../loadingscreen/loading_before_game.dart';
-
-var player1Score = 0;
-var player2Score = 0;
-var player3Score = 0;
-var player4Score = 0;
-bool hasPlayed = false;
-int player1Points;
-int player2Points;
-int player3Points;
-int player4Points;
+import '../loadingscreen/loading_before_gameMP.dart';
 
 // game variables
-var finalScore = 0;
+bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
 var longQuestion = true;
-
-// variable that holds game object:
-var game = new GameContentLongTF();
 
 class QuestLongMP extends StatefulWidget {
   @override
@@ -49,16 +26,15 @@ class QuestLongMPState extends State<QuestLongMP> {
 
   @override
   void initState() {
-    // update game content when Game is initiated!!
-    updateGameContent('long-adv0');
     startTimer();
     setPlayers();
+    setPartyWisdom();
   }
 
   void startTimer() {
-    if (readyTimer != null) {
-      readyTimer.cancel();
-    }
+    // if (readyTimer != null) {
+    //   readyTimer.cancel();
+    // }
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
@@ -66,7 +42,6 @@ class QuestLongMPState extends State<QuestLongMP> {
             counter--;
           } else {
             // readyTimer.cancel();
-            hasPlayed = false;
             updateQuestion();
             setPlayerFalse();
             counter = 10;
@@ -97,7 +72,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                             alignment: Alignment.centerRight,
                             child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('$counter',
                                       style: TextStyle(
@@ -116,44 +91,14 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                   partyHealthModifier(context),
-                                ])
-                        ),
+                                ])),
+                        // gameOverStream(context),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
-                        // image
-                        // FutureBuilder(
-                        //     future: getImage(
-                        //         context, "${game.images[questionNumber]}.png"),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         return Container(
-                        //           width: MediaQuery.of(context).size.width / 1,
-                        //           height:
-                        //               MediaQuery.of(context).size.width / 1.7,
-                        //           child: snapshot.data,
-                        //         );
-                        //       }
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.waiting) {
-                        //         return Container(
-                        //             width:
-                        //                 MediaQuery.of(context).size.width / 1,
-                        //             height:
-                        //                 MediaQuery.of(context).size.width / 1.7,
-                        //             child: SizedBox(
-                        //               height: 10,
-                        //               width: 10,
-                        //               child: CircularProgressIndicator(),
-                        //             ));
-                        //       }
-                        //       return SizedBox(
-                        //         height: 10,
-                        //         width: 10,
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }),
+                        Image.asset(
+                            'assets/${game.images[questionNumber]}.png',
+                            height: 200),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
@@ -185,7 +130,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       incrementPlayerPoints();
-
                                       finalScore++;
                                       setPlayerTrue();
                                     } else {
@@ -199,8 +143,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                                   // updateQuestion();
                                 },
                                 child: Text(
-                                  'Hi',
-                                  // game.choices[questionNumber][0],
+                                  game.choices[questionNumber][0],
                                   style: TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,
@@ -218,7 +161,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
                                       incrementPlayerPoints();
-
                                       finalScore++;
                                       setPlayerTrue();
                                     } else {
@@ -228,7 +170,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     }
                                     hasPlayed = true;
                                   }
-
                                   // updateQuestion();
                                 },
                                 child: Text(
@@ -259,7 +200,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     }
                                     hasPlayed = true;
                                   }
-
                                   // updateQuestion();
                                 },
                                 child: Text(
@@ -290,7 +230,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     }
                                     hasPlayed = true;
                                   }
-
                                   // updateQuestion();
                                 },
                                 child: Text(
@@ -373,39 +312,8 @@ class QuestLongMPState extends State<QuestLongMP> {
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
-                        // image
-                        // FutureBuilder(
-                        //     future: getImage(
-                        //         context, "${game.images[questionNumber]}.png"),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         return Container(
-                        //           width: MediaQuery.of(context).size.width / 1,
-                        //           height:
-                        //               MediaQuery.of(context).size.width / 1.7,
-                        //           child: snapshot.data,
-                        //         );
-                        //       }
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.waiting) {
-                        //         return Container(
-                        //             width:
-                        //                 MediaQuery.of(context).size.width / 1,
-                        //             height:
-                        //                 MediaQuery.of(context).size.width / 1.7,
-                        //             child: SizedBox(
-                        //               height: 10,
-                        //               width: 10,
-                        //               child: CircularProgressIndicator(),
-                        //             ));
-                        //       }
-                        //       return SizedBox(
-                        //         height: 10,
-                        //         width: 10,
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }),
+                        Image.asset('assets/${game.images[questionNumber]}.png',
+                            height: 200),
 
                         Padding(padding: EdgeInsets.all(5.0)),
 
@@ -446,7 +354,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     }
                                     hasPlayed = true;
                                   }
-
                                   // updateQuestion();
                                 },
                                 child: Text(
@@ -477,7 +384,6 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     }
                                     hasPlayed = true;
                                   }
-
                                   // updateQuestion();
                                 },
                                 child: Text(
@@ -533,6 +439,21 @@ class QuestLongMPState extends State<QuestLongMP> {
     });
   }
 
+  void setPartyWisdom() async {
+    await FirebaseFirestore.instance
+        .collection('games')
+        .doc(gameID)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        partyWisdom = documentSnapshot.data()['partyWisdom'];
+        print('party wisdom is $partyWisdom');
+      } else {
+        print('document snapshot doesnt exist!');
+      }
+    });
+  }
+
   void incrementPlayerPoints() async {
     await databaseReference.collection("games").doc(gameID).update({
       if (player1db == username)
@@ -540,9 +461,9 @@ class QuestLongMPState extends State<QuestLongMP> {
       else if (player2db == username)
         'player2Points': FieldValue.increment(1)
       else if (player3db == username)
-          'player3Points': FieldValue.increment(1)
-        else if (player4db == username)
-            'player4Points': FieldValue.increment(1)
+        'player3Points': FieldValue.increment(1)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(1)
     });
   }
 
@@ -553,9 +474,9 @@ class QuestLongMPState extends State<QuestLongMP> {
       else if (player2db == username)
         'player2isCorrect': true
       else if (player3db == username)
-          'player3isCorrect': true
-        else if (player4db == username)
-            'player4isCorrect': true
+        'player3isCorrect': true
+      else if (player4db == username)
+        'player4isCorrect': true
     });
   }
 
@@ -577,7 +498,7 @@ class QuestLongMPState extends State<QuestLongMP> {
   void removePlayer() async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentReference playerCheck =
-      FirebaseFirestore.instance.collection('games').doc(gameID);
+          FirebaseFirestore.instance.collection('games').doc(gameID);
       DocumentSnapshot snapshot = await transaction.get(playerCheck);
       player1db = snapshot.data()['player1'];
       player2db = snapshot.data()['player2'];
@@ -606,21 +527,19 @@ class QuestLongMPState extends State<QuestLongMP> {
       // reset variables:
       finalScore = 0;
       questionNumber = 0;
-      player1Score = 0;
-      player2Score = 0;
     });
   }
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
-    if ((questionNumber) == 1 ||
-        (questionNumber) == 3 ||
-        (questionNumber) == 7) {
-      longQuestion = false;
-      // randomevent trigger:
-
-    } else {
-      longQuestion = true;
+    if (game is GameContentLongTF) {
+      if ((questionNumber) == 1 ||
+          (questionNumber) == 3 ||
+          (questionNumber) == 7) {
+        longQuestion = false;
+      } else {
+        longQuestion = true;
+      }
     }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
@@ -629,18 +548,13 @@ class QuestLongMPState extends State<QuestLongMP> {
             context,
             MaterialPageRoute(
                 builder: (context) => new Summary(score: finalScore)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => new Chest()));
+        hasPlayed = false;
+        readyTimer.cancel();
       } else {
-        if (questionNumber == 2) {
-          questionNumber++;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => new Chest()));
-        } else if (questionNumber == 6) {
-          questionNumber++;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => new Beggar()));
-        } else {
-          questionNumber++;
-        }
+        questionNumber++;
+        hasPlayed = false;
       }
     });
   }
@@ -707,7 +621,8 @@ class QuestLongMPState extends State<QuestLongMP> {
               style: TextStyle(fontSize: 1),
             );
           } else {
-            return Text('',
+            return Text(
+              '',
               style: TextStyle(fontSize: 1),
             );
           }
