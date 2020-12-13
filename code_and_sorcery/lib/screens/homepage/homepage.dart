@@ -87,13 +87,17 @@ class Homepage extends StatelessWidget {
                 Text(
                   'WELCOME',
                   style: TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold, color: color4),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 SizedBox(height: 10),
                 Text(
                   username,
                   style: TextStyle(
-                      fontSize: 25, color: color4, fontWeight: FontWeight.bold),
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
                 SizedBox(
@@ -101,7 +105,7 @@ class Homepage extends StatelessWidget {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor2),
+                          MaterialStateProperty.resolveWith(getColor3),
                     ),
                     onPressed: () {
                       // Navigate back to the first screen by popping the current route
@@ -109,8 +113,27 @@ class Homepage extends StatelessWidget {
                       updateUserProfile();
                       Navigator.pushNamed(context, '/profile');
                     },
-                    child: Text('Profile page'),
+                    child: Text(
+                      'PROFILE PAGE',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
+                ),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      onPressed: () {
+                        chooseGameTypePopUp(context);
+
+                        // Navigator.pushNamed(context, '/lobby');
+                        // createRecord();
+                      },
+                      child: Text('CREATE GAME',
+                          style: TextStyle(color: Colors.black))),
                 ),
                 SizedBox(
                   width: 200.0,
@@ -120,32 +143,19 @@ class Homepage extends StatelessWidget {
                           MaterialStateProperty.resolveWith(getColor3),
                     ),
                     onPressed: () {
-                      chooseGameTypePopUp(context);
-
-                      // Navigator.pushNamed(context, '/lobby');
-                      // createRecord();
-                    },
-                    child: Text('Create a game'),
-                  ),
-                ),
-                SizedBox(
-                  width: 200.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor4),
-                    ),
-                    onPressed: () {
                       createJoinGamePopUp(context);
                       // Navigator.pushNamed(context, '/join');
                     },
-                    child: Text('Join a game'),
+                    child: Text('JOIN GAME',
+                        style: TextStyle(color: Colors.black)),
                   ),
                 ),
                 SizedBox(height: 20),
                 RaisedButton(
                   onPressed: () {
                     // signOutGoogle();
+
+                    //Navigator.pushNamed(context, '/setup');
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) {
                       return LoginPage();
