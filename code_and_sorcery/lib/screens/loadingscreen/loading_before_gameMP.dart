@@ -34,7 +34,6 @@ class _LoadingBeforeGameMPState extends State<LoadingBeforeGameMP> {
             Navigator.pushNamed(context, '/ingameLongMP')});
     } else if(difficulty == 'Easy' && adventureLength == 'Short') {
       updateGameContentShort('JIfrv2SOOdlxkv5RJP3i');
-      print('gameID is $gameID');
       Timer(Duration(seconds: 3),
               () => {Navigator.pop(context),
             Navigator.pushNamed(context, '/ingame')});

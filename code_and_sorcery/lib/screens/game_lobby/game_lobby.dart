@@ -89,6 +89,12 @@ class GameLobbySL extends State<GameLobby> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pushNamed(context, '/settings');
+                  },
+                  child: Text('Settings'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
                     removePlayer();
                     Navigator.pop(context);
                   },
