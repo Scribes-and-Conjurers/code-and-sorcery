@@ -1,11 +1,11 @@
 import 'package:code_and_sorcery/global_variables/global_variables.dart';
 import 'package:code_and_sorcery/screens/game_session/game_content_short.dart';
+import '../game_session/game_content_long.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../game_session/game_content_long.dart';
 
 // THIS IS FOR SP!
 // create game object

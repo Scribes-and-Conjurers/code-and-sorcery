@@ -42,7 +42,6 @@ class GameSessionState extends State<GameSession> {
 
   @override
   void initState() {
-    // update game content when Game is initiated!!
     startTimer();
     setPlayers();
     setPartyWisdom();
@@ -145,7 +144,6 @@ class GameSessionState extends State<GameSession> {
                                     gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
-
                                   finalScore++;
                                   setPlayerTrue();
                                 } else {
@@ -176,7 +174,6 @@ class GameSessionState extends State<GameSession> {
                                     gameShort.correctAnswers[questionNumber]) {
                                   debugPrint('correctamundo');
                                   incrementPlayerPoints();
-
                                   finalScore++;
                                   setPlayerTrue();
                                 } else {
@@ -185,7 +182,6 @@ class GameSessionState extends State<GameSession> {
                                 }
                                 hasPlayed = true;
                               }
-
                               // updateQuestion();
                             },
                             child: Text(
@@ -215,7 +211,6 @@ class GameSessionState extends State<GameSession> {
                                 }
                                 hasPlayed = true;
                               }
-
                               // updateQuestion();
                             },
                             child: Text(
@@ -245,7 +240,6 @@ class GameSessionState extends State<GameSession> {
                                 }
                                 hasPlayed = true;
                               }
-
                               // updateQuestion();
                             },
                             child: Text(
