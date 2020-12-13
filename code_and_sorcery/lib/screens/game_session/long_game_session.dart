@@ -15,10 +15,9 @@ import './game_general_utils.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../random_chest/chest.dart';
 import '../random_beggar/beggar.dart';
-// import './test_randomevent.dart';
 import '../loadingscreen/loading_before_game.dart';
 
-// LONG ADVENTURE !!! built for singleplayer right now
+// LONG ADVENTURE !!! built for singleplayer
 
 var player1Score = 0;
 var player2Score = 0;
@@ -28,9 +27,6 @@ var questionNumber = 0;
 var buttonNumber = 0;
 var longQuestion = true;
 
-// variable that holds game object:
-// var game = new GameContentLong();
-
 class QuestLong extends StatefulWidget {
   @override
   _QuestLongState createState() => _QuestLongState();
@@ -38,27 +34,6 @@ class QuestLong extends StatefulWidget {
 
 class _QuestLongState extends State<QuestLong> {
   final databaseReference = FirebaseFirestore.instance;
-  // void startTimer() {
-  //   counter = 10;
-  //   if (questionTimer != null) {
-  //     questionTimer.cancel();
-  //   }
-  //   questionTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-  //     setState(() {
-  //       if (counter > 0) {
-  //         counter--;
-  //       } else {
-  //         questionTimer.cancel();
-  //       }
-  //     });
-  //   });
-  // }
-
-  @override
-  void initState() {
-    // update game content when Game is initiated!!
-    // updateGameContent('long-adv0');
-  }
 
   Widget build(BuildContext context) {
     if (longQuestion) {
@@ -84,14 +59,6 @@ class _QuestLongState extends State<QuestLong> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    // (counter > 0)
-                                    //     ? Text("")
-                                    //     : Text("OVER",
-                                    //         style: TextStyle(color: Colors.red)),
-                                    // Text('$counter',
-                                    //     style: TextStyle(
-                                    //         fontWeight: FontWeight.bold,
-                                    //         fontSize: 48)),
                                     Text(
                                       "Question ${questionNumber + 1}",
                                       style: TextStyle(fontSize: 15.0),
@@ -113,38 +80,6 @@ class _QuestLongState extends State<QuestLong> {
                           Image.asset(
                               'assets/${game.images[questionNumber]}.png',
                               height: 200),
-                          // FutureBuilder(
-                          //     future: getImage(
-                          //         context, "${game.images[questionNumber]}.png"),
-                          //     builder: (context, snapshot) {
-                          //       if (snapshot.connectionState ==
-                          //           ConnectionState.done) {
-                          //         return Container(
-                          //           width: MediaQuery.of(context).size.width / 1,
-                          //           height:
-                          //               MediaQuery.of(context).size.width / 1.7,
-                          //           child: snapshot.data,
-                          //         );
-                          //       }
-                          //       if (snapshot.connectionState ==
-                          //           ConnectionState.waiting) {
-                          //         return Container(
-                          //             width:
-                          //                 MediaQuery.of(context).size.width / 1,
-                          //             height:
-                          //                 MediaQuery.of(context).size.width / 1.7,
-                          //             child: SizedBox(
-                          //               height: 10,
-                          //               width: 10,
-                          //               child: CircularProgressIndicator(),
-                          //             ));
-                          //       }
-                          //       return SizedBox(
-                          //         height: 10,
-                          //         width: 10,
-                          //         child: CircularProgressIndicator(),
-                          //       );
-                          //     }),
 
                           Padding(padding: EdgeInsets.all(15.0)),
 
@@ -174,7 +109,6 @@ class _QuestLongState extends State<QuestLong> {
                                     if (game.choices[questionNumber][0] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      // ONLY FOR SOLO PLAY
                                       finalScore++;
                                       updateGamePlayer1();
                                     } else {
@@ -198,13 +132,10 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][1] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      // ONLY FOR SOLO PLAY
-
                                       finalScore++;
-
                                       updateGamePlayer1();
                                     } else {
                                       decreasePartyHealth();
@@ -227,10 +158,9 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][2] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      // ONLY FOR SOLO PLAY
                                       finalScore++;
                                       updateGamePlayer1();
                                     } else {
@@ -254,10 +184,9 @@ class _QuestLongState extends State<QuestLong> {
                                   minWidth: 250.0,
                                   color: Colors.blue,
                                   onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
+                                    if (game.choices[questionNumber][3] ==
                                         game.correctAnswers[questionNumber]) {
                                       debugPrint('correctamundo');
-                                      // ONLY FOR SOLO PLAY
                                       finalScore++;
                                       updateGamePlayer1();
                                     } else {
@@ -323,14 +252,6 @@ class _QuestLongState extends State<QuestLong> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  // (counter > 0)
-                                  //     ? Text("")
-                                  //     : Text("OVER",
-                                  //         style: TextStyle(color: Colors.red)),
-                                  // Text('$counter',
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 48)),
                                   Text(
                                     "Question ${questionNumber + 1}",
                                     style: TextStyle(fontSize: 15.0),
@@ -351,39 +272,6 @@ class _QuestLongState extends State<QuestLong> {
                         // image
                         Image.asset('assets/${game.images[questionNumber]}.png',
                             height: 200),
-
-                        // FutureBuilder(
-                        //     future: getImage(
-                        //         context, "${game.images[questionNumber]}.png"),
-                        //     builder: (context, snapshot) {
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.done) {
-                        //         return Container(
-                        //           width: MediaQuery.of(context).size.width / 1,
-                        //           height:
-                        //               MediaQuery.of(context).size.width / 1.7,
-                        //           child: snapshot.data,
-                        //         );
-                        //       }
-                        //       if (snapshot.connectionState ==
-                        //           ConnectionState.waiting) {
-                        //         return Container(
-                        //             width:
-                        //                 MediaQuery.of(context).size.width / 1,
-                        //             height:
-                        //                 MediaQuery.of(context).size.width / 1.7,
-                        //             child: SizedBox(
-                        //               height: 10,
-                        //               width: 10,
-                        //               child: CircularProgressIndicator(),
-                        //             ));
-                        //       }
-                        //       return SizedBox(
-                        //         height: 10,
-                        //         width: 10,
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }),
 
                         Padding(padding: EdgeInsets.all(15.0)),
 
@@ -413,7 +301,6 @@ class _QuestLongState extends State<QuestLong> {
                                   if (game.choices[questionNumber][0] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
                                     finalScore++;
                                     updateGamePlayer1();
                                   } else {
@@ -436,10 +323,9 @@ class _QuestLongState extends State<QuestLong> {
                                 minWidth: 250.0,
                                 color: Colors.blue,
                                 onPressed: () {
-                                  if (game.choices[questionNumber][0] ==
+                                  if (game.choices[questionNumber][1] ==
                                       game.correctAnswers[questionNumber]) {
                                     debugPrint('correctamundo');
-                                    // ONLY FOR SOLO PLAY
                                     finalScore++;
                                     updateGamePlayer1();
                                   } else {
@@ -504,14 +390,14 @@ class _QuestLongState extends State<QuestLong> {
 
 // changing to new question OR go to leaderboard if last question
   void updateQuestion() {
-    if ((questionNumber) == 1 ||
-        (questionNumber) == 3 ||
-        (questionNumber) == 7) {
-      longQuestion = false;
-      // randomevent trigger:
-
-    } else {
-      longQuestion = true;
+    if (game is GameContentLongTF) {
+      if ((questionNumber) == 1 ||
+          (questionNumber) == 3 ||
+          (questionNumber) == 7) {
+        longQuestion = false;
+      } else {
+        longQuestion = true;
+      }
     }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
