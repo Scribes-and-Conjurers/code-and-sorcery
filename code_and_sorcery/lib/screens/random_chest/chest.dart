@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../../global_variables/global_variables.dart';
 
 class Chest extends StatefulWidget {
   @override
@@ -59,7 +60,8 @@ class _ChestState extends State<Chest> {
     if (isOpened) {
       Navigator.pop(context);
     }
-    if (diceRoll <= 0.4) {
+    if (diceRoll <= partyWisdom) {
+      finalScore += 2;
       Navigator.pushNamed(context, '/successChest');
       // Scaffold(
       //   body: Center(
