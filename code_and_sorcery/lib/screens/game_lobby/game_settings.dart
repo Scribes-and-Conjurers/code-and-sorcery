@@ -64,6 +64,7 @@ class GameSettingState extends State<GameSettings> {
                             print('normal');
                           });
                         }
+                        break;
                     }
                   },
                   child: Text(difficulty,
@@ -110,6 +111,7 @@ class GameSettingState extends State<GameSettings> {
                             print('Short');
                           });
                         }
+                        break;
                     }
                   },
                   child: Text(adventureLength,
