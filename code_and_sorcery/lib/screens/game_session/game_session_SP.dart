@@ -6,6 +6,7 @@ import './game_general_utils.dart';
 import '../game_over/game_over.dart';
 import '../random_beggar/beggar.dart';
 import '../loadingscreen/loading_before_game.dart';
+import '../homepage/colors.dart';
 
 // Short adventure for SP
 // game variables
@@ -37,184 +38,228 @@ class GameSessionSPState extends State<GameSessionSP> {
           child: Scaffold(
             // body
             body: new Container(
+                decoration: BoxDecoration(
+                  color: color2,
+                ),
                 margin: const EdgeInsets.all(10.0),
                 alignment: Alignment.topCenter,
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.all(10.0)),
-                    // top row that displays question number and current score
-                    Container(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "Question ${questionNumber + 1}",
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                              Text(
-                                "Your score: $finalScore",
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                              Text(
-                                "Party Health:",
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                              partyHealthModifier(context),
-                            ])),
-                    gameOverStream(context),
+                child: SingleChildScrollView(
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.all(20.0)),
+                      // top row that displays question number and current score
+                      Container(
+                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Question ${questionNumber + 1}",
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: textBright),
+                                ),
+                                Text(
+                                  "Your score: $finalScore",
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: textBright),
+                                ),
+                                Text(
+                                  "Party Health:",
+                                  style: TextStyle(
+                                      fontSize: 15.0, color: textBright),
+                                ),
+                                partyHealthModifier(context),
+                              ])),
+                      gameOverStream(context),
 
-                    Padding(padding: EdgeInsets.all(5.0)),
+                      Padding(padding: EdgeInsets.all(5.0)),
 
-                    // image
-                    Image.asset('assets/${gameShort.images[questionNumber]}.png',
-                        height: 200),
+                      // image
+                      Image.asset(
+                          'assets/${gameShort.images[questionNumber]}.png',
+                          height: 200),
 
-                    Padding(padding: EdgeInsets.all(5.0)),
+                      Padding(padding: EdgeInsets.all(5.0)),
 
-                    // question
-                    Text(
-                      gameShort.questions[questionNumber],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15.0,
+                      // question
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: Text(
+                          gameShort.questions[questionNumber],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: textBright,
+                          ),
+                        ),
                       ),
-                    ),
 
-                    Padding(
-                      padding: EdgeInsets.all(5.0),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                      ),
 
-                    // answers
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          // button 1
-                          MaterialButton(
-                            minWidth: 250.0,
-                            padding: EdgeInsets.all(0),
-                            color: Colors.blue,
-                            onPressed: () {
-                                if (gameShort.choices[questionNumber][0] ==
-                                    gameShort.correctAnswers[questionNumber]) {
-                                  debugPrint('correctamundo');
-                                  updateGamePlayer1();
-                                  finalScore++;
-                                } else {
-                                  decreasePartyHealth();
-                                  debugPrint('oh noes... that is incorrect');
-                              }
-                              updateQuestion();
-                            },
-                            child: Text(
-                              gameShort.choices[questionNumber][0],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.white,
+                      // answers
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            // button 1
+                            SizedBox(
+                              width: 270,
+                              child: MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                color: color3,
+                                onPressed: () {
+                                  if (gameShort.choices[questionNumber][0] ==
+                                      gameShort
+                                          .correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    updateGamePlayer1();
+                                    finalScore++;
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  gameShort.choices[questionNumber][0],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
 
-                          // button 2
-                          MaterialButton(
-                            minWidth: 250.0,
-                            color: Colors.blue,
-                            onPressed: () {
-                                if (gameShort.choices[questionNumber][1] ==
-                                    gameShort.correctAnswers[questionNumber]) {
-                                  debugPrint('correctamundo');
-                                  updateGamePlayer1();
-                                  finalScore++;
-                                } else {
-                                  decreasePartyHealth();
-                                  debugPrint('oh noes... that is incorrect');
-                                }
-                              updateQuestion();
-                            },
-                            child: Text(
-                              gameShort.choices[questionNumber][1],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.white,
+                            Padding(
+                              padding: EdgeInsets.all(7.0),
+                            ),
+
+                            // button 2
+                            SizedBox(
+                              width: 270,
+                              child: MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                color: color3,
+                                onPressed: () {
+                                  if (gameShort.choices[questionNumber][1] ==
+                                      gameShort
+                                          .correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    updateGamePlayer1();
+                                    finalScore++;
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  gameShort.choices[questionNumber][1],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
 
-                          // button 3
-                          MaterialButton(
-                            minWidth: 250.0,
-                            color: Colors.blue,
-                            onPressed: () {
-                                if (gameShort.choices[questionNumber][2] ==
-                                    gameShort.correctAnswers[questionNumber]) {
-                                  debugPrint('correctamundo');
-                                  updateGamePlayer1();
-                                  finalScore++;
-                                } else {
-                                  decreasePartyHealth();
-                                  debugPrint('oh noes... that is incorrect');
-                                }
-                              updateQuestion();
-                            },
-                            child: Text(
-                              gameShort.choices[questionNumber][2],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.white,
+                            Padding(
+                              padding: EdgeInsets.all(7.0),
+                            ),
+
+                            // button 3
+                            SizedBox(
+                              width: 270,
+                              child: MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                color: color3,
+                                onPressed: () {
+                                  if (gameShort.choices[questionNumber][2] ==
+                                      gameShort
+                                          .correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    updateGamePlayer1();
+                                    finalScore++;
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  gameShort.choices[questionNumber][2],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
 
-                          // button 4
-                          MaterialButton(
-                            minWidth: 250.0,
-                            color: Colors.blue,
-                            onPressed: () {
-                                if (gameShort.choices[questionNumber][3] ==
-                                    gameShort.correctAnswers[questionNumber]) {
-                                  debugPrint('correctamundo');
-                                  updateGamePlayer1();
-                                  finalScore++;
-                                } else {
-                                  decreasePartyHealth();
-                                  debugPrint('oh noes... that is incorrect');
-                                }
-                              updateQuestion();
-                            },
-                            child: Text(
-                              gameShort.choices[questionNumber][3],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.white,
+                            Padding(
+                              padding: EdgeInsets.all(7.0),
+                            ),
+
+                            // button 4
+                            SizedBox(
+                              width: 270,
+                              child: MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                color: color3,
+                                onPressed: () {
+                                  if (gameShort.choices[questionNumber][3] ==
+                                      gameShort
+                                          .correctAnswers[questionNumber]) {
+                                    debugPrint('correctamundo');
+                                    updateGamePlayer1();
+                                    finalScore++;
+                                  } else {
+                                    decreasePartyHealth();
+                                    debugPrint('oh noes... that is incorrect');
+                                  }
+                                  updateQuestion();
+                                },
+                                child: Text(
+                                  gameShort.choices[questionNumber][3],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ]),
+                          ]),
 
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
 
-                    // reset button
-                    Container(
-                        alignment: Alignment.bottomCenter,
-                        child: MaterialButton(
-                          color: Colors.deepPurple,
-                          minWidth: 240.0,
-                          height: 30.0,
-                          onPressed: () {
-                            resetGame();
-                          },
-                          child: Text(
-                            "Quit",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
+                      // reset button
+                      Container(
+                          alignment: Alignment.bottomCenter,
+                          child: MaterialButton(
+                            color: color4,
+                            minWidth: 240.0,
+                            height: 30.0,
+                            onPressed: () {
+                              resetGame();
+                            },
+                            child: Text(
+                              "Quit",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: textBright,
+                              ),
                             ),
-                          ),
-                        )),
-                  ],
+                          )),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ],
+                  ),
                 )),
           ));
     }
