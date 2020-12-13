@@ -1,3 +1,4 @@
+import 'package:code_and_sorcery/global_variables/global_variables.dart';
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -6,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../game_session/game_content_long.dart';
 
 // create game object
-var game = new GameContentLong();
+var game = new GameContentLongNOTF();
 
 class LoadingBeforeGame extends StatefulWidget {
   @override
@@ -14,13 +15,35 @@ class LoadingBeforeGame extends StatefulWidget {
 }
 
 class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
+  // set navigation based on difficulty and adventure length
   @override
   void initState() {
     super.initState();
-    updateGameContent('long-adv0');
-    Timer(Duration(seconds: 5),
-        () => Navigator.pushNamed(context, '/ingameLong'));
+    if(difficulty == 'Easy' && adventureLength == 'Long') {
+      print('$difficulty $adventureLength');
+      // game = new GameContentLongTF();
+      updateGameContent('long-adv0');
+      Timer(Duration(seconds: 5),
+              () => {Navigator.pop(context),
+          Navigator.pushNamed(context, '/ingameLong')});
+    } else if (difficulty == 'Normal' && adventureLength == 'Long') {
+      print('$difficulty $adventureLength');
+      // game = new GameContentLongNOTF();
+      updateGameContent('norm-long');
+      Timer(Duration(seconds: 5),
+              () => {Navigator.pop(context),
+            Navigator.pushNamed(context, '/ingameLong')});
+    } else {
+      print('goes nowhere');
+    }
   }
+
+  // final CollectionReference questionCollection =
+  // FirebaseFirestore.instance.collection('mc_question');
+  //
+  // Stream<QuerySnapshot> get questionSnapshot {
+  //   return questionCollection.snapshots();
+  // }
 
   @override
   Widget build(BuildContext context) {

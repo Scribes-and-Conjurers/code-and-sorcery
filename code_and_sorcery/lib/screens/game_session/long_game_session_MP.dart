@@ -35,7 +35,7 @@ var buttonNumber = 0;
 var longQuestion = true;
 
 // variable that holds game object:
-var game = new GameContentLong();
+var game = new GameContentLongTF();
 
 class QuestLongMP extends StatefulWidget {
   @override
