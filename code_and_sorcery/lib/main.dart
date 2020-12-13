@@ -9,6 +9,7 @@ import './screens/user_profile/user_profile.dart';
 import './screens/game_lobby/game_lobby.dart';
 import './screens/game_lobby/game_lobby_SP.dart';
 import './screens/game_session/game_session.dart';
+import './screens/game_session/game_session_SP.dart';
 import './screens/game_session/long_game_session.dart';
 import './screens/game_session/long_game_session_MP.dart';
 import './screens/join_game/join_game.dart';
@@ -44,6 +45,7 @@ void main() async {
       '/join': (context) => JoinGame(),
       '/profile': (context) => UserProfile(),
       '/ingame': (context) => GameSession(),
+      '/ingameSP': (context) => GameSessionSP(),
       '/ingameLong': (context) => QuestLong(),
       '/ingameLongMP': (context) => QuestLongMP(),
       '/guild': (context) => Guild(),
