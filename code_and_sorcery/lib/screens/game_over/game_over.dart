@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../game_session/game_general_utils.dart';
 import '../game_session/game_session.dart';
 import '../homepage/homepage.dart';
+import '../homepage/colors.dart';
 
 class GameOver extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -20,19 +21,23 @@ class GameOver extends StatelessWidget {
             onWillPop: () async => false,
             child: Scaffold(
                 body: Container(
+                    padding: EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(color: color4),
                     alignment: Alignment.topCenter,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            Padding(padding: EdgeInsets.all(40.0)),
                             Text(
-                              'Game Over!',
+                              'GAME OVER!',
                               style: TextStyle(
                                 fontSize: 36,
                                 color: Colors.black,
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(10.0)),
                             Text(
                               'Your party ran out of health!',
                               style: TextStyle(
@@ -40,35 +45,43 @@ class GameOver extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(10.0)),
                             Builder(builder: (context) {
                               return player1PointsStream(context);
                             }),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Builder(builder: (context) {
                               return player2PointsStream(context);
                             }),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Builder(builder: (context) {
                               return player3PointsStream(context);
                             }),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Builder(builder: (context) {
                               return player4PointsStream(context);
                             }),
-                            Padding(padding: EdgeInsets.all(10.0)),
-                            MaterialButton(
-                                color: Colors.deepPurple,
-                                onPressed: () {
-                                  updateGame();
-                                  questionNumber = 0;
-                                  finalScore = 0;
-                                  // Navigator.pushNamed(context, '/homepage');
-                                  Navigator.pop(context);
-                                  // Navigator.push(
-                                  //     context, MaterialPageRoute(builder: (context) => Homepage()));
-                                },
-                                child: Text("Leave the game",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      color: Colors.white,
-                                    )))
+                            Padding(padding: EdgeInsets.all(20.0)),
+                            SizedBox(
+                              width: 200,
+                              child: MaterialButton(
+                                  color: color2,
+                                  onPressed: () {
+                                    updateGame();
+
+                                    questionNumber = 0;
+                                    finalScore = 0;
+                                    // Navigator.pushNamed(context, '/homepage');
+                                    Navigator.pop(context);
+                                    // Navigator.push(
+                                    //     context, MaterialPageRoute(builder: (context) => Homepage()));
+                                  },
+                                  child: Text("Leave the game",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.white,
+                                      ))),
+                            )
                           ]),
                     )))));
   }
