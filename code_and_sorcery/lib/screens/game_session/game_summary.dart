@@ -29,6 +29,7 @@ class Summary extends StatelessWidget {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            SizedBox(height: 200),
                             Builder(builder: (context) {
                               return player1PointsStream(context);
                             }),
@@ -41,6 +42,11 @@ class Summary extends StatelessWidget {
                             Builder(builder: (context) {
                               return player4PointsStream(context);
                             }),
+                            Text('Multiplayer Bonus! +2 points!',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.black,
+                                )),
                             Padding(padding: EdgeInsets.all(10.0)),
                             MaterialButton(
                                 color: Colors.deepPurple,
@@ -68,14 +74,14 @@ class Summary extends StatelessWidget {
   // for single player game
   void updateSinglePlayerPoints() async {
     await databaseReference.collection("users").doc(uID).update({
-      'points': FieldValue.increment(score),
+      'points': FieldValue.increment(finalScore),
     });
   }
 
   // for multplayer game, add 2 bonus points
   void updateMultiplayerPoints() async {
     await databaseReference.collection("users").doc(uID).update({
-      'points': FieldValue.increment(score + 2),
+      'points': FieldValue.increment(finalScore + 2),
     });
   }
 
@@ -88,14 +94,14 @@ class Summary extends StatelessWidget {
   // for single player
   void updateSPGuildPoints() async {
     await databaseReference.collection("guilds").doc(guild).update({
-      'totalPoints': FieldValue.increment(score),
+      'totalPoints': FieldValue.increment(finalScore),
     });
   }
 
   // for multiplayer
   void updateMPGuildPoints() async {
     await databaseReference.collection("guilds").doc(guild).update({
-      'totalPoints': FieldValue.increment(score + 2),
+      'totalPoints': FieldValue.increment(finalScore + 2),
     });
   }
 }
