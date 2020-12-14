@@ -27,20 +27,27 @@ class UserProfile extends StatelessWidget {
                     Padding(padding: EdgeInsets.all(10)),
                     avatarGetter(context),
                     Padding(padding: EdgeInsets.all(10)),
-                    FloatingActionButton.extended(
-                      heroTag: "avatarbtn",
-                      onPressed: () {
-                        // Add your onPressed code here!
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AvatarPicker()),
-                        );
-                      },
-                      label: Text('CHANGE AVATAR',
-                          style: TextStyle(color: textDark)),
-                      // icon: Icon(Icons.add),
-                      backgroundColor: color3,
+                    SizedBox(
+                      height: 40,
+                      width: 200,
+                      child: FloatingActionButton.extended(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(0.0))),
+                        heroTag: "avatarbtn",
+                        onPressed: () {
+                          // Add your onPressed code here!
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AvatarPicker()),
+                          );
+                        },
+                        label: Text('CHANGE AVATAR',
+                            style: TextStyle(color: textDark)),
+                        // icon: Icon(Icons.add),
+                        backgroundColor: color3,
+                      ),
                     ),
                     Padding(padding: EdgeInsets.all(20)),
                     Text(
@@ -54,10 +61,19 @@ class UserProfile extends StatelessWidget {
                       style: TextStyle(fontSize: 20, color: textBright),
                     ),
                     Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text('$guild',
-                            style: TextStyle(fontSize: 20, color: textBright))),
-                    Padding(padding: EdgeInsets.all(6.00)),
+                        padding: EdgeInsets.all(5),
+                        child: Center(
+                          child: Text('$guild',
+                              style:
+                                  TextStyle(fontSize: 20, color: textBright)),
+                        )),
+                    Padding(padding: EdgeInsets.all(20.00)),
+                    Text('Your Current Points:',
+                        style: TextStyle(fontSize: 20, color: textBright)),
+                    // Text(points.toString(), style: TextStyle(fontSize: 25))
+                    Padding(padding: EdgeInsets.all(8.00)),
+                    pointGetter(context),
+                    Padding(padding: EdgeInsets.all(20.00)),
                     SizedBox(
                       width: 200,
                       child: MaterialButton(
@@ -72,23 +88,24 @@ class UserProfile extends StatelessWidget {
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(10.00)),
-                    Text('Your Current Points:',
-                        style: TextStyle(fontSize: 20, color: textBright)),
-                    // Text(points.toString(), style: TextStyle(fontSize: 25))
-                    Padding(padding: EdgeInsets.all(8.00)),
-                    pointGetter(context),
-                    Padding(padding: EdgeInsets.all(20.00)),
+                    SizedBox(
+                      width: 200,
+                      height: 40,
+                      child: FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(0.0))),
+                        backgroundColor: color2,
+                        foregroundColor: color3,
+                        child: Text('HOMEPAGE'),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/homepage');
+                        },
+                      ),
+                    ),
                   ],
                 )),
           ))),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: color2,
-        foregroundColor: color3,
-        child: Text('Back'),
-        onPressed: () {
-          Navigator.pushNamed(context, '/homepage');
-        },
-      ),
     );
   }
 }
