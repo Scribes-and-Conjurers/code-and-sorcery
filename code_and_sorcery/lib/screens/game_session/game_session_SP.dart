@@ -72,7 +72,6 @@ class GameSessionSPState extends State<GameSessionSP> {
                                 ),
                                 partyHealthModifier(context),
                               ])),
-                      // gameOverStream(context),
 
                       Padding(padding: EdgeInsets.all(5.0)),
 

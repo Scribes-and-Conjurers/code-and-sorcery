@@ -49,17 +49,12 @@ class GameSessionState extends State<GameSession> {
   }
 
   void startTimer() {
-    // if (readyTimer != null) {
-    //   readyTimer.cancel();
-    //   readyTimer.cancel();
-    // }
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
           if (counter > 0) {
             counter--;
           } else {
-            // readyTimer.cancel();
             updateQuestion();
             setPlayerFalse();
             counter = 10;
@@ -170,7 +165,6 @@ class GameSessionState extends State<GameSession> {
                                     hasPlayed = true;
                                   }
                                   hasPlayed = true;
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][0],
@@ -208,7 +202,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][1],
@@ -246,7 +239,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][2],
@@ -284,7 +276,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][3],
@@ -309,9 +300,7 @@ class GameSessionState extends State<GameSession> {
                             minWidth: 240.0,
                             height: 30.0,
                             onPressed: () {
-                              // removePlayer();
                               resetGame();
-                              // Navigator.pushNamed(context, '/homepage');
                             },
                             child: Text(
                               "Quit",
