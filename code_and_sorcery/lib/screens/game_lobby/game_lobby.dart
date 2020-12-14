@@ -88,8 +88,8 @@ class GameLobbySL extends State<GameLobby> {
                       amPlayer1 = false;
                       if (amPlayer1 == false) {
                         removePlayer();
+                        Navigator.pop(context);
                       }
-                      // removePlayer();
                     }
                   },
                   child: Text('Go back to homepage'),
