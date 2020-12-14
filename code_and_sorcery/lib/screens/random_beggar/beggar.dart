@@ -18,66 +18,64 @@ class _BeggarState extends State<Beggar> {
     Random random = new Random();
     diceRoll = random.nextDouble();
     return new WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          body: Container(
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 200,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(30),
-                      child: Text(
-                        "An old man approaches you...",
-                        style: TextStyle(fontSize: 20),
-                      )),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(
-                        "He asks for coins to get him through the night...",
-                        style: TextStyle(fontSize: 20),
-                      )),
-                  SizedBox(height: 50),
-                  Text((() {
-                    if(finalScore < 2) {
-                      return "You don't have enough points either!";
-                    } else {
-                      return '';
-                    }
-                  })()),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: ElevatedButton(
-                      child: Text(
-                        "Give 2 points",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {
-                        if (finalScore > 2) {
-                          finalScore -= 2;
-                          decreasePlayerPoints();
-                          openChest();
-                        }
-                      },
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: Container(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                ),
+                Padding(
+                    padding: EdgeInsets.all(30),
+                    child: Text(
+                      "An old man approaches you...",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      "He asks for coins to get him through the night...",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                SizedBox(height: 50),
+                Text((() {
+                  if (finalScore < 2) {
+                    return "You don't have enough points either!";
+                  } else {
+                    return '';
+                  }
+                })()),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: ElevatedButton(
+                    child: Text(
+                      "Give 2 points",
+                      style: TextStyle(fontSize: 20),
                     ),
+                    onPressed: () {
+                      if (finalScore > 2) {
+                        finalScore -= 2;
+                        decreasePlayerPoints();
+                        openChest();
+                      }
+                    },
                   ),
-                  ElevatedButton(
-                      child: Text(
-                        "Leave the beggar alone",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      })
-                ],
-              ),
+                ),
+                ElevatedButton(
+                    child: Text(
+                      "Leave the beggar alone",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
             ),
-          ))
-    );
+          ),
+        )));
   }
-
 
   void openChest() {
     debugPrint('$partyWisdom');
@@ -100,9 +98,11 @@ class _BeggarState extends State<Beggar> {
       else if (player2db == username)
         'player2Points': FieldValue.increment(-2)
       else if (player3db == username)
-          'player3Points': FieldValue.increment(-2)
-        else if (player4db == username)
-            'player4Points': FieldValue.increment(-2)
+        'player3Points': FieldValue.increment(-2)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(-2)
+      else
+        'player1Points': FieldValue.increment(-2)
     });
   }
 
@@ -113,12 +113,13 @@ class _BeggarState extends State<Beggar> {
       else if (player2db == username)
         'player2Points': FieldValue.increment(4)
       else if (player3db == username)
-          'player3Points': FieldValue.increment(4)
-        else if (player4db == username)
-            'player4Points': FieldValue.increment(4)
+        'player3Points': FieldValue.increment(4)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(4)
+      else
+        'player1Points': FieldValue.increment(4)
     });
   }
-
 }
 
 /*
