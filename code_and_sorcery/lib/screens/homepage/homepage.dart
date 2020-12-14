@@ -121,6 +121,7 @@ class Homepage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
                   SizedBox(
                     width: 200.0,
                     child: ElevatedButton(
@@ -134,6 +135,7 @@ class Homepage extends StatelessWidget {
                         child: Text('CREATE GAME',
                             style: TextStyle(color: textDark))),
                   ),
+                  SizedBox(height: 10),
                   SizedBox(
                     width: 200.0,
                     child: ElevatedButton(
@@ -148,7 +150,7 @@ class Homepage extends StatelessWidget {
                           Text('JOIN GAME', style: TextStyle(color: textDark)),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 40),
                   RaisedButton(
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(

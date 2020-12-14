@@ -29,6 +29,12 @@ class GuildView extends State<Guild> {
               // guildNameSection,
               Padding(padding: EdgeInsets.all(40.0)),
               guildNameGetter(context),
+              Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Divider(
+                    thickness: 5,
+                    color: color3,
+                  )),
               Padding(padding: EdgeInsets.all(30.0)),
               totalPointsSection,
               Padding(padding: EdgeInsets.all(10.0)),
@@ -113,79 +119,9 @@ class GuildView extends State<Guild> {
     child: Center(
       child: Text('Current Guild Points:',
           style: TextStyle(fontSize: 20, color: Colors.white)),
-      // Text('[76,432]', style: TextStyle(fontSize: 20)),
     ),
     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
   );
-
-  // Widget guildNameSection = Container(
-  //   padding: EdgeInsets.all(40),
-  //   child: Center(
-  //     child: Column(
-  //       children: [
-  //         Text(
-  //           'The Microtask Ascendancy',
-  //           style: TextStyle(fontSize: 20, color: color1),
-  //         ),
-  //         Divider(
-  //           thickness: 5,
-  //         ),
-  //       ],
-  //     ),
-  //   ),
-  // );
-
-  // Widget userRanking = Container(
-  //     padding: EdgeInsets.all(40),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(
-  //           'Your Current Rank:',
-  //           style: TextStyle(fontSize: 20),
-  //         ),
-  //         Text(
-  //           '1',
-  //           style: TextStyle(fontSize: 20),
-  //         ),
-  //       ],
-  //     ));
-
-  // Widget guildRanking = Container(
-  //     padding: EdgeInsets.all(40),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(
-  //           'Current Guild Global Rank:',
-  //           style: TextStyle(fontSize: 20, color: color1),
-  //         ),
-  //         // Text('1', style: TextStyle(fontSize: 20),),
-  //       ],
-  //     ));
-
-  // Widget changeGuildButton = Container(
-  //   padding: EdgeInsets.all(30),
-  //   child: Center(
-  //     child: Column(
-  //       children: [
-  //         MaterialButton(
-  //           onPressed: () {
-  //             // changeGuildPopUp(context);
-  //           },
-  //           color: Colors.blueGrey,
-  //           textColor: Colors.white,
-  //           child: Text(
-  //             'Change Guild',
-  //             style: TextStyle(fontSize: 20),
-  //           ),
-  //         ),
-  //         Text('Warning: changing your guild will reset your personal score',
-  //             style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
-  //       ],
-  //     ),
-  //   ),
-  // );
 
   void changeGuild() async {
     await FirebaseFirestore.instance.collection("users").doc(uID).update({
@@ -216,11 +152,13 @@ class GuildView extends State<Guild> {
                 onChanged: (String newValue) {
                   setState(() {
                     dropdownValue = newValue;
-                    guild = dropdownValue;
                   });
                 },
-                items: <String>['Backenders', 'Frontenders', 'Fullstackers']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'The Scarlet Authenticators',
+                  'The Callback Crusade',
+                  'The Microtask Ascendancy'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -233,7 +171,17 @@ class GuildView extends State<Guild> {
                   elevation: 5.0,
                   child: Text('Send', style: TextStyle(fontSize: 23)),
                   onPressed: () {
+                    setState(() {
+                      guild = dropdownValue;
+                    });
                     changeGuild();
+                    Navigator.of(context)
+                        .pop(gameLinkController.text.toString());
+                  }),
+              MaterialButton(
+                  elevation: 5.0,
+                  child: Text('Cancel', style: TextStyle(fontSize: 23)),
+                  onPressed: () {
                     Navigator.of(context)
                         .pop(gameLinkController.text.toString());
                   })
@@ -274,26 +222,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 34, color: Colors.white),
+          style: TextStyle(fontSize: 30, color: Colors.white),
         );
       });
 }
-
-// // this function fetches guild ranking live
-// Widget guildRankGetter(BuildContext context) {
-//   return StreamBuilder(
-//       stream: FirebaseFirestore.instance
-//           .collection('guilds')
-//           .doc(guild)
-//           .snapshots(),
-//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (!snapshot.hasData) {
-//           return Text("Loading");
-//         }
-//         var guildDocument = snapshot.data;
-//         return Text(
-//           guildDocument['guildRanking'].toString(),
-//           style: TextStyle(fontSize: 20),
-//         );
-//       });
-// }
