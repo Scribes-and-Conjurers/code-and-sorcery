@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 class Beggar extends StatefulWidget {
   @override
@@ -21,6 +23,9 @@ class _BeggarState extends State<Beggar> {
         onWillPop: () async => false,
         child: Scaffold(
             body: Container(
+          decoration: BoxDecoration(
+            color: color1,
+          ),
           child: Center(
             child: Column(
               children: [
@@ -31,13 +36,13 @@ class _BeggarState extends State<Beggar> {
                     padding: EdgeInsets.all(30),
                     child: Text(
                       "An old man approaches you...",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: textBright),
                     )),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
                       "He asks for coins to get him through the night...",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: textBright),
                     )),
                 SizedBox(height: 50),
                 Text((() {
@@ -49,27 +54,43 @@ class _BeggarState extends State<Beggar> {
                 })()),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  child: ElevatedButton(
-                    child: Text(
-                      "Give 2 points",
-                      style: TextStyle(fontSize: 20),
+                  child: SizedBox(
+                    height: 40,
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      child: Text(
+                        "Give 2 points",
+                        style: TextStyle(fontSize: 20, color: textDark),
+                      ),
+                      onPressed: () {
+                        if (finalScore > 2) {
+                          decreasePlayerPoints();
+                          openChest();
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if (finalScore > 2) {
-                        decreasePlayerPoints();
-                        openChest();
-                      }
-                    },
                   ),
                 ),
-                ElevatedButton(
-                    child: Text(
-                      "Leave the beggar alone",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
+                SizedBox(
+                  height: 40,
+                  width: 300,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      child: Text(
+                        "Leave the beggar alone",
+                        style: TextStyle(fontSize: 20, color: textDark),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                )
               ],
             ),
           ),
