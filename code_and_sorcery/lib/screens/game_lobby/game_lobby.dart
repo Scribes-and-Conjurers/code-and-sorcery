@@ -86,7 +86,10 @@ class GameLobbySL extends State<GameLobby> {
                     await checkP1Leave();
                     if (player1Leaves == true) {
                       amPlayer1 = false;
-                      removePlayer();
+                      if (amPlayer1 == false) {
+                        removePlayer();
+                      }
+                      // removePlayer();
                     }
                   },
                   child: Text('Go back to homepage'),
