@@ -56,6 +56,7 @@ class GuildView extends State<Guild> {
                         style: TextStyle(color: Colors.black)),
                   ),
                 ),
+                Padding(padding: EdgeInsets.all(5.0)),
                 SizedBox(
                   width: 200.0,
                   child: ElevatedButton(
@@ -100,7 +101,7 @@ class GuildView extends State<Guild> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 SizedBox(
                   height: 40,
                   width: 200,
