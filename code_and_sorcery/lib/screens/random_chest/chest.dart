@@ -22,59 +22,62 @@ class _ChestState extends State<Chest> {
         decoration: BoxDecoration(
           color: color1,
         ),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
-              ),
-              Text(
-                "A mysterious chest...",
-                style: TextStyle(fontSize: 30, color: color3),
-              ),
-              Padding(padding: EdgeInsets.all(10)),
-              Text(
-                "It whispers to you, promising riches...",
-                style: TextStyle(fontSize: 20, color: textBright),
-              ),
-              Padding(padding: EdgeInsets.all(20)),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                ),
+                Text(
+                  "A mysterious chest...",
+                  style: TextStyle(fontSize: 30, color: color3),
+                ),
+                Padding(padding: EdgeInsets.all(15)),
+                Text(
+                  "It whispers to you, promising riches...",
+                  style: TextStyle(fontSize: 20, color: textBright),
+                ),
+                Padding(padding: EdgeInsets.all(30)),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: SizedBox(
+                    height: 40,
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      child: Text(
+                        "OPEN THE CHEST",
+                        style: TextStyle(fontSize: 20, color: textDark),
+                      ),
+                      onPressed: () {
+                        openChest();
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
                   height: 40,
                   width: 300,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor3),
-                    ),
-                    child: Text(
-                      "OPEN THE CHEST",
-                      style: TextStyle(fontSize: 20, color: textDark),
-                    ),
-                    onPressed: () {
-                      openChest();
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-                width: 300,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor3),
-                    ),
-                    child: Text(
-                      "LEAVE THE CHEST ALONE",
-                      style: TextStyle(fontSize: 20, color: textDark),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-              )
-            ],
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      child: Text(
+                        "LEAVE THE CHEST ALONE",
+                        style: TextStyle(fontSize: 20, color: textDark),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                )
+              ],
+            ),
           ),
         ),
       ),
