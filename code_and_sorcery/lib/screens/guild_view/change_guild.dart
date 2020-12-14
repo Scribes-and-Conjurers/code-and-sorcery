@@ -50,8 +50,11 @@ class ChangeGuildState extends State<ChangeGuild> {
                       guild = dropdownValue;
                     });
                   },
-                  items: <String>['Backenders', 'Frontenders', 'Fullstackers']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>[
+                    'The Scarlet Authenticators',
+                    'The Callback Crusade',
+                    'The Microtask Ascendancy'
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
