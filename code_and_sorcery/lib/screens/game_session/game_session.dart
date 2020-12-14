@@ -24,8 +24,6 @@ bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
 Timer readyTimer;
-// variable that holds game object:
-// var game = new GameContent();
 
 // Game widget class
 class GameSession extends StatefulWidget {
@@ -57,6 +55,9 @@ class GameSessionState extends State<GameSession> {
           if (counter > 0) {
             counter--;
           } else {
+            if (hasPlayed == false) {
+              decreasePartyHealth();
+            }
             updateQuestion();
             setPlayerFalse();
             counter = 5;
