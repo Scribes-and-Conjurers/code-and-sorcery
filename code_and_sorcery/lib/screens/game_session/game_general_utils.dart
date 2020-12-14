@@ -119,6 +119,33 @@ Widget player4PointsStream(BuildContext context) {
 
 Widget partyHealthModifier(BuildContext context) {
   // String userId = "skdjfkasjdkfja";
+  Future<String> gameOverPopUp(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("GAME OVER"),
+            content: Text("Your party healthed reached 0. Try again!"),
+            actions: <Widget>[
+              MaterialButton(
+                  elevation: 5.0,
+                  child: Text('QUIT', style: TextStyle(fontSize: 23)),
+                  onPressed: () async {
+                    await databaseReference
+                        .collection("games")
+                        .doc(gameID)
+                        .update({
+                      'finished': true,
+                    });
+
+                    Navigator.pushNamed(context, '/homepage');
+                  })
+            ],
+          );
+        });
+  }
+
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('games')
@@ -130,16 +157,15 @@ Widget partyHealthModifier(BuildContext context) {
           return Text("Loading");
         }
         if (userDocument['partyHealth'] == 0) {
-          Navigator.pushNamed(context, '/gameOver');
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => gameOverPopUp(context));
+          return Text("");
+        } else {
           return Text(
             userDocument['partyHealth'].toString(),
             style: TextStyle(fontSize: 25, color: textBright),
           );
         }
-        return Text(
-          userDocument['partyHealth'].toString(),
-          style: TextStyle(fontSize: 25, color: textBright),
-        );
       });
 }
 
