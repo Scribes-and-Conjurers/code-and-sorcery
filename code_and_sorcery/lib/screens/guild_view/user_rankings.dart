@@ -16,7 +16,9 @@ class UserRankings extends StatelessWidget {
           ),
           child: _buildBody(context)),
       floatingActionButton: FloatingActionButton(
-        child: Text('Guild'),
+        backgroundColor: color3,
+        foregroundColor: color2,
+        child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/guild');
         },
@@ -41,10 +43,21 @@ Widget _buildBody(BuildContext context) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
+  return Column(children: [
+    Padding(
+        padding: EdgeInsets.only(bottom: 20),
+        child: Text("Top Guild Members",
+            style: TextStyle(fontSize: 30, color: textBright))),
+    Divider(
+      thickness: 5,
+      color: color3,
+    ),
+    Expanded(
+        child: ListView(
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    ))
+  ]);
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
