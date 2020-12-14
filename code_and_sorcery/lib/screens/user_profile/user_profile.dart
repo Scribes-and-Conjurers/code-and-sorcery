@@ -68,7 +68,7 @@ class UserProfile extends StatelessWidget {
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(10.00)),
-                    Text('Your Current Quiz Points:',
+                    Text('Your Current Points:',
                         style: TextStyle(fontSize: 20, color: textBright)),
                     // Text(points.toString(), style: TextStyle(fontSize: 25))
                     Padding(padding: EdgeInsets.all(8.00)),

@@ -52,6 +52,7 @@ class Summary extends StatelessWidget {
                                   color: textBright,
                                 )),
                             Padding(padding: EdgeInsets.all(10.0)),
+
                             SizedBox(
                               width: 200,
                               child: MaterialButton(
@@ -63,6 +64,7 @@ class Summary extends StatelessWidget {
                                     updateGame();
                                     questionNumber = 0;
                                     finalScore = 0;
+                                    amPlayer1 = false;
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                     Navigator.pop(context);
@@ -75,6 +77,7 @@ class Summary extends StatelessWidget {
                                         color: textDark,
                                       ))),
                             )
+
                           ]),
                     )))));
   }

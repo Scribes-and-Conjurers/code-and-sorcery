@@ -16,7 +16,7 @@ class AccountSetupState extends State<AccountSetup> {
   final usernameController = TextEditingController();
   final guildController = TextEditingController();
   String usernameValue = "";
-  String dropdownGuildValue = "";
+  String dropdownGuildValue = "Backenders";
 
   // set the default guild and class
   @override
