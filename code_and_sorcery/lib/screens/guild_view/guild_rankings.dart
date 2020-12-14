@@ -17,10 +17,12 @@ class GuildRankings extends StatelessWidget {
             color: color1,
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 120.0),
+            padding: const EdgeInsets.only(top: 100.0),
             child: guildRanker(context),
           )),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: color3,
+        foregroundColor: color2,
         child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/guild');
@@ -44,10 +46,21 @@ Widget guildRanker(BuildContext context) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
+  return Column(children: [
+    Padding(
+        padding: EdgeInsets.only(bottom: 20),
+        child: Text("Top Guilds",
+            style: TextStyle(fontSize: 30, color: textBright))),
+    Divider(
+      thickness: 5,
+      color: color3,
+    ),
+    Expanded(
+        child: ListView(
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    ))
+  ]);
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
