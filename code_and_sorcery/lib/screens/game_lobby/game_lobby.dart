@@ -74,7 +74,6 @@ class GameLobbySL extends State<GameLobby> {
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 50),
                 startCountdownStream(context),
-                // leaveCountdownStream(context),
                 SizedBox(height: 40),
                 buildUser(context),
                 SizedBox(height: 40),
@@ -87,13 +86,13 @@ class GameLobbySL extends State<GameLobby> {
                     await checkP1Leave();
                     if (player1Leaves == true) {
                       amPlayer1 = false;
-                      Navigator.pop(context);
                     } else {
                       removePlayer();
                     }
                   },
                   child: Text('Go back to homepage'),
                 ),
+                leaveCountdownStream(context),
               ],
             ),
           ),
@@ -284,12 +283,14 @@ Widget startCountdownStream(BuildContext context) {
           });
           return Text(
             "1",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
           );
         } else {
           return Text(
             fiveSecondCountdown.toString(),
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
           );
         }
       });
@@ -303,19 +304,21 @@ Widget leaveCountdownStream(BuildContext context) {
           .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        var pushedLeave = snapshot.data['pushedLeave'];
-        if (!snapshot.hasData) {
-          return Text("Loading");
-        } else if (pushedLeave == true) {
+        var pushedLeaveCheck = snapshot.data['pushedLeave'];
+        if (pushedLeaveCheck == true) {
           lobbyClosingTimer = Timer(Duration(seconds: 1), () {
             Navigator.pop(context);
+            Navigator.pushNamed(context, '/homepage');
           });
           return Text(
-            "Closing lobby...",
-            style: TextStyle(fontSize: 25),
+            "",
+            style: TextStyle(fontSize: 1),
           );
         } else {
-          return Text("");
+          return Text(
+            "",
+            style: TextStyle(fontSize: 1),
+          );
         }
       });
 }
