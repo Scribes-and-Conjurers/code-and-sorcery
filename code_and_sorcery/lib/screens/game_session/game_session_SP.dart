@@ -288,9 +288,6 @@ class GameSessionSPState extends State<GameSessionSP> {
 // resetting question/answer screen
   void resetGame() {
     setState(() {
-      // close current screen:
-      // Navigator.pop(context);
-      // reset variables:
       finalScore = 0;
       questionNumber = 0;
       Navigator.pushNamed(context, '/homepage');
@@ -318,30 +315,4 @@ class GameSessionSPState extends State<GameSessionSP> {
       'player1Points': FieldValue.increment(1),
     });
   }
-
-  // This stream checks party health and goes to game over screen
-  // Widget gameOverStream(BuildContext context) {
-  //   return StreamBuilder(
-  //       stream: FirebaseFirestore.instance
-  //           .collection('games')
-  //           .doc(gameID)
-  //           .snapshots(),
-  //       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-  //         if (!snapshot.hasData) {
-  //           return Text("Loading");
-  //         }
-  //         if (snapshot.data['partyHealth'] == 0) {
-  //           Navigator.pushNamed(context, '/gameOver');
-  //           return Text(
-  //             "",
-  //             style: TextStyle(fontSize: 1),
-  //           );
-  //         } else {
-  //           return Text(
-  //             '',
-  //             style: TextStyle(fontSize: 1),
-  //           );
-  //         }
-  //       });
-  // }
 }

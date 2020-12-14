@@ -128,9 +128,6 @@ class Homepage extends StatelessWidget {
                       ),
                       onPressed: () {
                         chooseGameTypePopUp(context);
-
-                        // Navigator.pushNamed(context, '/lobby');
-                        // createRecord();
                       },
                       child: Text('CREATE GAME',
                           style: TextStyle(color: textDark))),
@@ -144,7 +141,6 @@ class Homepage extends StatelessWidget {
                     ),
                     onPressed: () {
                       createJoinGamePopUp(context);
-                      // Navigator.pushNamed(context, '/join');
                     },
                     child: Text('JOIN GAME', style: TextStyle(color: textDark)),
                   ),
@@ -152,9 +148,6 @@ class Homepage extends StatelessWidget {
                 SizedBox(height: 20),
                 RaisedButton(
                   onPressed: () {
-                    // signOutGoogle();
-
-                    //Navigator.pushNamed(context, '/setup');
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) {
                       return LoginPage();
@@ -437,7 +430,7 @@ class Homepage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("You didn't enter a room code"),
+            title: Text("Please enter a valid room code"),
           );
         });
   }

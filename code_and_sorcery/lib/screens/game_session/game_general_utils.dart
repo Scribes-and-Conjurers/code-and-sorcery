@@ -118,8 +118,8 @@ Widget player4PointsStream(BuildContext context) {
 }
 
 Widget partyHealthModifier(BuildContext context) {
-  // String userId = "skdjfkasjdkfja";
   Future<String> gameOverPopUp(BuildContext context) {
+    readyTimer.cancel();
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -138,7 +138,7 @@ Widget partyHealthModifier(BuildContext context) {
                         .update({
                       'finished': true,
                     });
-
+                    Navigator.pop(context);
                     Navigator.pushNamed(context, '/homepage');
                   })
             ],

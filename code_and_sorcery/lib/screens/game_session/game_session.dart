@@ -23,7 +23,7 @@ import '../homepage/colors.dart';
 bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
-
+Timer readyTimer;
 // variable that holds game object:
 // var game = new GameContent();
 
@@ -37,8 +37,8 @@ class GameSession extends StatefulWidget {
 
 // Game widget state
 class GameSessionState extends State<GameSession> {
-  int counter = 10;
-  Timer readyTimer;
+  int counter = 5;
+
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -57,7 +57,7 @@ class GameSessionState extends State<GameSession> {
           } else {
             updateQuestion();
             setPlayerFalse();
-            counter = 10;
+            counter = 5;
           }
         });
       }
