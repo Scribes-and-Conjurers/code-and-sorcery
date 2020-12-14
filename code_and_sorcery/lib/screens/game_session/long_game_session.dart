@@ -477,7 +477,6 @@ class _QuestLongState extends State<QuestLong> {
             context, MaterialPageRoute(builder: (context) => new Beggar()));
       } else if (questionNumber == game.questions.length - 1) {
         Navigator.pop(context);
-        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
