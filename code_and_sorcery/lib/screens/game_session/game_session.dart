@@ -23,7 +23,7 @@ import '../homepage/colors.dart';
 bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
-
+Timer readyTimer;
 // variable that holds game object:
 // var game = new GameContent();
 
@@ -37,8 +37,8 @@ class GameSession extends StatefulWidget {
 
 // Game widget state
 class GameSessionState extends State<GameSession> {
-  int counter = 10;
-  Timer readyTimer;
+  int counter = 5;
+
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -49,20 +49,15 @@ class GameSessionState extends State<GameSession> {
   }
 
   void startTimer() {
-    // if (readyTimer != null) {
-    //   readyTimer.cancel();
-    //   readyTimer.cancel();
-    // }
     readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
           if (counter > 0) {
             counter--;
           } else {
-            // readyTimer.cancel();
             updateQuestion();
             setPlayerFalse();
-            counter = 10;
+            counter = 5;
           }
         });
       }
@@ -116,7 +111,6 @@ class GameSessionState extends State<GameSession> {
                                 ),
                                 partyHealthModifier(context),
                               ])),
-                      gameOverStream(context),
 
                       Padding(padding: EdgeInsets.all(5.0)),
 
@@ -171,7 +165,6 @@ class GameSessionState extends State<GameSession> {
                                     hasPlayed = true;
                                   }
                                   hasPlayed = true;
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][0],
@@ -209,7 +202,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][1],
@@ -247,7 +239,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][2],
@@ -285,7 +276,6 @@ class GameSessionState extends State<GameSession> {
                                     }
                                     hasPlayed = true;
                                   }
-                                  // updateQuestion();
                                 },
                                 child: Text(
                                   gameShort.choices[questionNumber][3],
@@ -310,9 +300,7 @@ class GameSessionState extends State<GameSession> {
                             minWidth: 240.0,
                             height: 30.0,
                             onPressed: () {
-                              // removePlayer();
                               resetGame();
-                              // Navigator.pushNamed(context, '/homepage');
                             },
                             child: Text(
                               "Quit",
@@ -455,32 +443,5 @@ class GameSessionState extends State<GameSession> {
         hasPlayed = false;
       }
     });
-  }
-
-  // This stream checks party health and goes to game over screen
-  Widget gameOverStream(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('games')
-            .doc(gameID)
-            .snapshots(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Text("Loading");
-          }
-          if (snapshot.data['partyHealth'] == 0) {
-            readyTimer.cancel();
-            Navigator.pushNamed(context, '/gameOver');
-            return Text(
-              "",
-              style: TextStyle(fontSize: 1),
-            );
-          } else {
-            return Text(
-              '',
-              style: TextStyle(fontSize: 1),
-            );
-          }
-        });
   }
 }

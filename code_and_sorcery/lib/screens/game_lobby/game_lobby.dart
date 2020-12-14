@@ -11,6 +11,7 @@ import '../homepage/homepage.dart';
 String gameLinkValue = "";
 bool pushedGo;
 bool player1Start = false;
+bool player1Leaves = false;
 int startCountdown;
 
 class GameLobby extends StatefulWidget {
@@ -60,92 +61,6 @@ class GameLobbySL extends State<GameLobby> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-
-//               children: <Widget>[
-//                 Padding(
-//                   padding: EdgeInsets.all(25),
-//                 ),
-//                 Container(
-//                   padding:
-//                       EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 20),
-//                   decoration: BoxDecoration(
-//                     color: color2,
-//                   ),
-//                   child: Column(children: [
-//                     Text("Game link: ",
-//                         style: TextStyle(
-//                             fontSize: 25,
-//                             color: Colors.white,
-//                             fontWeight: FontWeight.bold)),
-//                     Padding(
-//                       padding: EdgeInsets.all(10),
-//                     ),
-//                     Text(gameID,
-//                         style: TextStyle(
-//                             fontSize: 50,
-//                             color: Colors.white,
-//                             fontWeight: FontWeight.bold)),
-//                     Padding(
-//                       padding: EdgeInsets.all(20),
-//                     ),
-//                     startCountdownStream(context),
-//                     Padding(
-//                       padding: EdgeInsets.all(20),
-//                     ),
-//                     buildUser(context),
-//                     Padding(
-//                       padding: EdgeInsets.all(20),
-//                     ),
-//                   ]),
-//                 ),
-//                 Padding(
-//                   padding: EdgeInsets.all(10),
-//                 ),
-//                 SizedBox(
-//                   width: 200,
-//                   child: ElevatedButton(
-//                     style: ButtonStyle(
-//                       backgroundColor:
-//                           MaterialStateProperty.resolveWith(getColor3),
-//                     ),
-//                     onPressed: () {
-//                       checkP1GO();
-//                       startTimer();
-//                     },
-//                     child:
-//                         Text('GO TO GAME', style: TextStyle(color: textDark)),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   width: 200,
-//                   child: ElevatedButton(
-//                     style: ButtonStyle(
-//                       backgroundColor:
-//                           MaterialStateProperty.resolveWith(getColor3),
-//                     ),
-//                     onPressed: () {
-//                       Navigator.pushNamed(context, '/settings');
-//                     },
-//                     child: Text('SETTINGS', style: TextStyle(color: textDark)),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   width: 200,
-//                   child: ElevatedButton(
-//                     style: ButtonStyle(
-//                       backgroundColor:
-//                           MaterialStateProperty.resolveWith(getColor3),
-//                     ),
-//                     onPressed: () {
-//                       removePlayer();
-//                       Navigator.pop(context);
-//                     },
-//                     child: Text('HOMEPAGE', style: TextStyle(color: textDark)),
-//                   ),
-//                 ),
-//                 Padding(
-//                   padding: EdgeInsets.all(10),
-
               children: [
                 Text("Game link: ",
                     style: TextStyle(
@@ -159,6 +74,7 @@ class GameLobbySL extends State<GameLobby> {
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 50),
                 startCountdownStream(context),
+                // leaveCountdownStream(context),
                 SizedBox(height: 40),
                 buildUser(context),
                 SizedBox(height: 40),
@@ -167,13 +83,16 @@ class GameLobbySL extends State<GameLobby> {
                 goToSettingsButton(),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    removePlayer();
-                    amPlayer1 = false;
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    await checkP1Leave();
+                    if (player1Leaves == true) {
+                      amPlayer1 = false;
+                      Navigator.pop(context);
+                    } else {
+                      removePlayer();
+                    }
                   },
                   child: Text('Go back to homepage'),
-
                 ),
               ],
             ),
@@ -220,14 +139,15 @@ void checkP1GO() async {
   });
 }
 
-void player1Leave() async {
+Future checkP1Leave() async {
   await FirebaseFirestore.instance.runTransaction((transaction) async {
     DocumentReference playerCheck =
         FirebaseFirestore.instance.collection('games').doc(gameID);
     DocumentSnapshot snapshot = await transaction.get(playerCheck);
     player1db = snapshot.data()['player1'];
     if (player1db == username) {
-      await transaction.update(playerCheck, {'pushedGo': true});
+      await transaction.update(playerCheck, {'pushedLeave': true});
+      player1Leaves = true;
     }
   });
 }
@@ -371,6 +291,31 @@ Widget startCountdownStream(BuildContext context) {
             fiveSecondCountdown.toString(),
             style: TextStyle(fontSize: 25),
           );
+        }
+      });
+}
+
+Widget leaveCountdownStream(BuildContext context) {
+  Timer lobbyClosingTimer;
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        var pushedLeave = snapshot.data['pushedLeave'];
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        } else if (pushedLeave == true) {
+          lobbyClosingTimer = Timer(Duration(seconds: 1), () {
+            Navigator.pop(context);
+          });
+          return Text(
+            "Closing lobby...",
+            style: TextStyle(fontSize: 25),
+          );
+        } else {
+          return Text("");
         }
       });
 }
