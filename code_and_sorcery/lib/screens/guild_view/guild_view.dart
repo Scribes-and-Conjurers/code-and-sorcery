@@ -24,92 +24,101 @@ class GuildView extends State<Guild> {
           color: color1,
         ),
         child: Center(
-          child: Column(
-            children: [
-              // guildNameSection,
-              Padding(padding: EdgeInsets.all(40.0)),
-              guildNameGetter(context),
-              Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Divider(
-                    thickness: 5,
-                    color: color3,
-                  )),
-              Padding(padding: EdgeInsets.all(30.0)),
-              totalPointsSection,
-              Padding(padding: EdgeInsets.all(10.0)),
-              guildPointsGetter(context),
-              // userRanking,
-              // guildRanking,
-              // guildRankGetter(context),
-              SizedBox(height: 35),
-              SizedBox(
-                width: 200.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // guildNameSection,
+                Padding(padding: EdgeInsets.all(40.0)),
+                guildNameGetter(context),
+                Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Divider(
+                      thickness: 5,
+                      color: color3,
+                    )),
+                Padding(padding: EdgeInsets.all(20.0)),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    onPressed: () {
+                      // Navigate back to the first screen by popping the current route
+                      // off the stack.
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserRankings()));
+                    },
+                    child: Text('USER RANKINGS',
+                        style: TextStyle(color: Colors.black)),
                   ),
-                  onPressed: () {
-                    // Navigate back to the first screen by popping the current route
-                    // off the stack.
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UserRankings()));
-                  },
-                  child: Text('USER RANKINGS',
-                      style: TextStyle(color: Colors.black)),
                 ),
-              ),
-              SizedBox(
-                width: 200.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                SizedBox(
+                  width: 200.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    onPressed: () {
+                      // Navigate back to the first screen by popping the current route
+                      // off the stack.
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GuildRankings()));
+                    },
+                    child: Text('GUILD RANKINGS',
+                        style: TextStyle(color: Colors.black)),
                   ),
-                  onPressed: () {
-                    // Navigate back to the first screen by popping the current route
-                    // off the stack.
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GuildRankings()));
-                  },
-                  child: Text('GUILD RANKINGS',
-                      style: TextStyle(color: Colors.black)),
                 ),
-              ),
+                Padding(padding: EdgeInsets.all(20.0)),
+                totalPointsSection,
+                Padding(padding: EdgeInsets.all(10.0)),
+                guildPointsGetter(context),
+                // userRanking,
+                // guildRanking,
+                // guildRankGetter(context),
+                SizedBox(height: 35),
 
-              SizedBox(height: 50),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor2),
-                  ),
-                  onPressed: () {
-                    changeGuildPopUp(context);
-                  },
-                  child: Text(
-                    'CHANGE GUILD',
-                    style: TextStyle(color: color3),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor2),
+                    ),
+                    onPressed: () {
+                      changeGuildPopUp(context);
+                    },
+                    child: Text(
+                      'CHANGE GUILD',
+                      style: TextStyle(color: color3),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 40,
+                  width: 200,
+                  child: FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(3.0))),
+                    backgroundColor: color3,
+                    foregroundColor: color1,
+                    child: Text('BACK'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: color3,
-        foregroundColor: color1,
-        child: Text('Back'),
-        onPressed: () {
-          Navigator.pushNamed(context, '/profile');
-        },
       ),
     );
   }
@@ -283,7 +292,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 30, color: Colors.white),
+          style: TextStyle(fontSize: 25, color: Colors.white),
         );
       });
 }
