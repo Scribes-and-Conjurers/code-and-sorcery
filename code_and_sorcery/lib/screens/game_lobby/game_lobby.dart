@@ -86,7 +86,6 @@ class GameLobbySL extends State<GameLobby> {
                     await checkP1Leave();
                     if (player1Leaves == true) {
                       amPlayer1 = false;
-                    } else {
                       removePlayer();
                     }
                   },
