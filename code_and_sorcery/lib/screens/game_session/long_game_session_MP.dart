@@ -104,7 +104,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                                         style: TextStyle(
                                             fontSize: 15.0, color: textBright),
                                       ),
-                                      partyHealthModifier(context),
+                                      partyHealthModifierLong(context),
                                     ])),
                             // gameOverStream(context),
 
@@ -363,7 +363,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     "Party Health:",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
-                                  partyHealthModifier(context),
+                                  partyHealthModifierLong(context),
                                 ])),
 
                         Padding(padding: EdgeInsets.all(5.0)),

@@ -318,7 +318,7 @@ class _QuestLongState extends State<QuestLong> {
                                     "Party Health:",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
-                                  partyHealthModifier(context),
+                                  partyHealthModifierSolo(context),
                                 ])),
 
                         Padding(padding: EdgeInsets.all(5.0)),

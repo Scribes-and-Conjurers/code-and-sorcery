@@ -114,7 +114,7 @@ class GameSessionState extends State<GameSession> {
                                     style: TextStyle(
                                         fontSize: 15.0, color: textBright),
                                   ),
-                                  partyHealthModifier(context),
+                                  partyHealthModifierShort(context),
                                 ])),
 
                         Padding(padding: EdgeInsets.all(5.0)),
