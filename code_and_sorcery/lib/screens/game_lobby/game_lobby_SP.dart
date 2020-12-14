@@ -27,7 +27,13 @@ class GameLobbySP extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              SizedBox(height: 0),
+              //SizedBox(height: 0),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    "Game Lobby",
+                    style: TextStyle(fontSize: 30, color: textBright),
+                  )),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
@@ -61,6 +67,7 @@ class GameLobbySP extends StatelessWidget {
                   child: Text('SETTINGS', style: TextStyle(color: textDark)),
                 ),
               ),
+              Padding(padding: EdgeInsets.only(bottom: 60)),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
