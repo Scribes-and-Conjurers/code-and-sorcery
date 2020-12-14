@@ -38,7 +38,6 @@ class GameSession extends StatefulWidget {
 // Game widget state
 class GameSessionState extends State<GameSession> {
   int counter = 5;
-
   final databaseReference = FirebaseFirestore.instance;
 
   @override

@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../game_lobby/game_lobby.dart';
 import './game_image_utils.dart';
 import './game_summary.dart';
-import './long_game_session.dart';
+import './long_game_session_MP.dart';
 import './game_session.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../homepage/colors.dart';
@@ -120,6 +120,7 @@ Widget player4PointsStream(BuildContext context) {
 Widget partyHealthModifier(BuildContext context) {
   Future<String> gameOverPopUp(BuildContext context) {
     readyTimer.cancel();
+    readyTimerLong.cancel();
     return showDialog(
         context: context,
         barrierDismissible: false,
