@@ -3,6 +3,7 @@ import 'dart:math';
 import '../../global_variables/global_variables.dart';
 import '../homepage/colors.dart';
 import '../homepage/homepage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Chest extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class Chest extends StatefulWidget {
 }
 
 class _ChestState extends State<Chest> {
+  final databaseReference = FirebaseFirestore.instance;
   bool isOpened = false;
   double diceRoll;
 
@@ -17,66 +19,69 @@ class _ChestState extends State<Chest> {
   Widget build(BuildContext context) {
     Random random = new Random();
     diceRoll = random.nextDouble();
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: color1,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                ),
-                Text(
-                  "A mysterious chest...",
-                  style: TextStyle(fontSize: 30, color: color3),
-                ),
-                Padding(padding: EdgeInsets.all(15)),
-                Text(
-                  "It whispers to you, promising riches...",
-                  style: TextStyle(fontSize: 20, color: textBright),
-                ),
-                Padding(padding: EdgeInsets.all(30)),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: SizedBox(
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            color: color1,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                  ),
+                  Text(
+                    "A mysterious chest...",
+                    style: TextStyle(fontSize: 30, color: color3),
+                  ),
+                  Padding(padding: EdgeInsets.all(15)),
+                  Text(
+                    "It whispers to you, promising riches...",
+                    style: TextStyle(fontSize: 20, color: textBright),
+                  ),
+                  Padding(padding: EdgeInsets.all(30)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: SizedBox(
+                      height: 40,
+                      width: 300,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                        ),
+                        child: Text(
+                          "OPEN THE CHEST",
+                          style: TextStyle(fontSize: 20, color: textDark),
+                        ),
+                        onPressed: () {
+                          openChest();
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
                     height: 40,
                     width: 300,
                     child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith(getColor3),
-                      ),
-                      child: Text(
-                        "OPEN THE CHEST",
-                        style: TextStyle(fontSize: 20, color: textDark),
-                      ),
-                      onPressed: () {
-                        openChest();
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                  width: 300,
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith(getColor3),
-                      ),
-                      child: Text(
-                        "LEAVE THE CHEST ALONE",
-                        style: TextStyle(fontSize: 20, color: textDark),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                )
-              ],
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                        ),
+                        child: Text(
+                          "LEAVE THE CHEST ALONE",
+                          style: TextStyle(fontSize: 20, color: textDark),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -89,43 +94,29 @@ class _ChestState extends State<Chest> {
       Navigator.pop(context);
     }
     if (diceRoll <= partyWisdom) {
-      finalScore += 2;
+      setState(() {
+        finalScore += 2;
+      });
+      increasePlayerPoints();
       Navigator.pushNamed(context, '/successChest');
-      // Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("Amazing! The chest was filled with treasure!"),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     } else {
       Navigator.pushNamed(context, '/failureChest');
-      // return Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("The chest is filled with poison gas! You barely escape."),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     }
+  }
+
+  void increasePlayerPoints() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      if (player1db == username)
+        'player1Points': FieldValue.increment(2)
+      else if (player2db == username)
+        'player2Points': FieldValue.increment(2)
+      else if (player3db == username)
+        'player3Points': FieldValue.increment(2)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(2)
+      else
+        'player1Points': FieldValue.increment(2)
+    });
   }
 }
 

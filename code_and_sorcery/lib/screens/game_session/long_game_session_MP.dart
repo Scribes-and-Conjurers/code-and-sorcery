@@ -14,6 +14,7 @@ bool hasPlayed = false;
 var questionNumber = 0;
 var buttonNumber = 0;
 var longQuestion = true;
+Timer readyTimerLong;
 
 class QuestLongMP extends StatefulWidget {
   @override
@@ -22,7 +23,6 @@ class QuestLongMP extends StatefulWidget {
 
 class QuestLongMPState extends State<QuestLongMP> {
   int counter = 10;
-  Timer readyTimer;
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -36,16 +36,15 @@ class QuestLongMPState extends State<QuestLongMP> {
   }
 
   void startTimer() {
-    // if (readyTimer != null) {
-    //   readyTimer.cancel();
-    // }
-    readyTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    readyTimerLong = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
           if (counter > 0) {
             counter--;
           } else {
-            // readyTimer.cancel();
+            if (hasPlayed == false) {
+              decreasePartyHealth();
+            }
             updateQuestion();
             setPlayerFalse();
             counter = 10;
@@ -600,7 +599,7 @@ class QuestLongMPState extends State<QuestLongMP> {
     }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
-        questionNumber = 0;
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -608,7 +607,7 @@ class QuestLongMPState extends State<QuestLongMP> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => new Chest()));
         hasPlayed = false;
-        readyTimer.cancel();
+        readyTimerLong.cancel();
       } else {
         questionNumber++;
         hasPlayed = false;
@@ -657,32 +656,5 @@ class QuestLongMPState extends State<QuestLongMP> {
         print('answers: ${game.correctAnswers}');
       }
     });
-  }
-
-  // This stream checks party health and goes to game over screen
-  Widget gameOverStream(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('games')
-            .doc(gameID)
-            .snapshots(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Text("Loading");
-          }
-          if (snapshot.data['partyHealth'] == 0) {
-            readyTimer.cancel();
-            Navigator.pushNamed(context, '/gameOver');
-            return Text(
-              "",
-              style: TextStyle(fontSize: 1),
-            );
-          } else {
-            return Text(
-              '',
-              style: TextStyle(fontSize: 1),
-            );
-          }
-        });
   }
 }
