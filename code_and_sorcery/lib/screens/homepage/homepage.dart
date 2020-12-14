@@ -415,7 +415,7 @@ class Homepage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("The game you tried to join doesn't exist"),
+            title: Text("Please enter a valid game code"),
           );
         });
   }
