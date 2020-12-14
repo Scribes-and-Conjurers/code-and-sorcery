@@ -30,14 +30,15 @@ class _BeggarState extends State<Beggar> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 200,
+                  height: 150,
                 ),
                 Padding(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.only(left: 30, right: 30),
                     child: Text(
                       "An old man approaches you...",
-                      style: TextStyle(fontSize: 20, color: textBright),
+                      style: TextStyle(fontSize: 30, color: color3),
                     )),
+                Padding(padding: EdgeInsets.all(10)),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
@@ -63,7 +64,7 @@ class _BeggarState extends State<Beggar> {
                             MaterialStateProperty.resolveWith(getColor3),
                       ),
                       child: Text(
-                        "Give 2 points",
+                        "GIVE 2 POINTS",
                         style: TextStyle(fontSize: 20, color: textDark),
                       ),
                       onPressed: () {
@@ -84,7 +85,7 @@ class _BeggarState extends State<Beggar> {
                             MaterialStateProperty.resolveWith(getColor3),
                       ),
                       child: Text(
-                        "Leave the beggar alone",
+                        "LEAVE THE BEGGAR ALONE",
                         style: TextStyle(fontSize: 20, color: textDark),
                       ),
                       onPressed: () {
