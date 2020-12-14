@@ -33,7 +33,7 @@ class AccountSetupState extends State<AccountSetup> {
       child: new Scaffold(
         body: Container(
           decoration: BoxDecoration(
-            color: color3,
+            color: color1,
           ),
           child: Center(
             child: SingleChildScrollView(
@@ -44,15 +44,22 @@ class AccountSetupState extends State<AccountSetup> {
                   children: <Widget>[
                     Padding(padding: EdgeInsets.all(40)),
                     Text('SET UP YOUR ACCOUNT, ADVENTURER!',
-                        style: TextStyle(fontSize: 26)),
+                        style: TextStyle(fontSize: 26, color: textBright)),
                     Padding(padding: EdgeInsets.all(40)),
-                    Text("CHOOSE YOUR USERNAME"),
-                    SizedBox(height: 10),
+                    Text("CHOOSE YOUR USERNAME",
+                        style: TextStyle(fontSize: 18, color: textBright)),
+                    SizedBox(height: 5),
+                    Divider(thickness: 5.0, color: color3),
                     TextField(
+                      style: TextStyle(color: textBright),
                       controller: usernameController,
                       decoration: new InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Type your username"),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: color3),
+                          ),
+                          hintText: "Type your username",
+                          hintStyle:
+                              TextStyle(fontSize: 18.0, color: textBright)),
                       onChanged: (String text) {
                         setState(() {
                           usernameValue = usernameController.text;
@@ -62,46 +69,57 @@ class AccountSetupState extends State<AccountSetup> {
                         });
                       },
                     ),
-                    SizedBox(height: 50),
-                    Text("CHOOSE YOUR GUILD"),
-                    SizedBox(height: 10),
+                    SizedBox(height: 60),
+                    Text("CHOOSE YOUR GUILD",
+                        style: TextStyle(fontSize: 18, color: textBright)),
+                    SizedBox(height: 5),
+                    Divider(thickness: 5.0, color: color3),
                     InputDecorator(
                       decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.orange)),
                         filled: true,
                       ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: "Backenders",
-                          icon: Icon(Icons.arrow_downward),
-                          iconSize: 20,
-                          elevation: 8,
-                          style: TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 1,
-                            color: Colors.deepPurpleAccent,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(canvasColor: color2),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: "Backenders",
+                            // icon: Icon(Icons.arrow_downward),
+                            //iconSize: 20,
+                            elevation: 8,
+                            style: TextStyle(color: textBright, fontSize: 16),
+                            underline: Container(
+                              height: 1,
+                              color: textBright,
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownGuildValue = newValue;
+                                guild = dropdownGuildValue;
+                              });
+                            },
+                            items: <String>[
+                              'Backenders',
+                              'Frontenders',
+                              'Fullstackers'
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: TextStyle(
+                                        fontSize: 16, color: textBright)),
+                              );
+                            }).toList(),
                           ),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              dropdownGuildValue = newValue;
-                              guild = dropdownGuildValue;
-                            });
-                          },
-                          items: <String>[
-                            'Backenders',
-                            'Frontenders',
-                            'Fullstackers'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child:
-                                  Text(value, style: TextStyle(fontSize: 16)),
-                            );
-                          }).toList(),
                         ),
                       ),
                     ),
                     SizedBox(height: 50),
-                    Text("CLASS:"),
+                    Text(
+                      "CLASS:",
+                      style: TextStyle(color: textBright),
+                    ),
                     SizedBox(height: 10),
                     Container(
                       height: 64,
@@ -163,15 +181,15 @@ class AccountSetupState extends State<AccountSetup> {
                           return 'Wise and perceptive, Wizards add a 10% chance of success in random events';
                         } else
                           return 'No class is selected!';
-                      })()),
+                      })(), style: TextStyle(color: textBright)),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 50),
                     SizedBox(
                       width: 200,
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.resolveWith(getColor2),
+                              MaterialStateProperty.resolveWith(getColor3),
                         ),
                         onPressed: () {
                           if (usernameValue == '') {
@@ -187,7 +205,8 @@ class AccountSetupState extends State<AccountSetup> {
                             Navigator.pushNamed(context, '/homepage');
                           }
                         },
-                        child: Text('Submit'),
+                        child:
+                            Text('Submit', style: TextStyle(color: textDark)),
                       ),
                     )
                   ],
