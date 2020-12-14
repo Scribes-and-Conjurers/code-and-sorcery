@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
 import 'game_settings.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 String player1 = username;
 String player1Class = playerClass;
@@ -18,11 +20,7 @@ class GameLobbySP extends StatelessWidget {
       // ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
+          color: color1,
         ),
         child: Center(
           child: Column(
@@ -30,31 +28,52 @@ class GameLobbySP extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(height: 0),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the first screen by popping the current route
-                  // off the stack.
-                  createGame();
-                  getSetPlayers();
-                  if (player1Class == "Warrior") {
-                    updateGameHealth();
-                  }
-                  Navigator.pushNamed(context, '/gameLoading');
-                },
-                child: Text('Go to game'),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                  ),
+                  onPressed: () {
+                    // Navigate back to the first screen by popping the current route
+                    // off the stack.
+                    createGame();
+                    getSetPlayers();
+                    if (player1Class == "Warrior") {
+                      updateGameHealth();
+                    }
+                    Navigator.pushNamed(context, '/gameLoading');
+                  },
+                  child: Text('GO TO GAME', style: TextStyle(color: textDark)),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
-                child: Text('Settings'),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings');
+                  },
+                  child: Text('SETTINGS', style: TextStyle(color: textDark)),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  removePlayer();
-                  Navigator.pop(context);
-                },
-                child: Text('Go back to homepage'),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                  ),
+                  onPressed: () {
+                    removePlayer();
+                    Navigator.pop(context);
+                  },
+                  child: Text('HOMEPAGE', style: TextStyle(color: textDark)),
+                ),
               ),
             ],
           ),

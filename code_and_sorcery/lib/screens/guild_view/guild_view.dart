@@ -52,7 +52,7 @@ class GuildView extends State<Guild> {
                         MaterialPageRoute(
                             builder: (context) => UserRankings()));
                   },
-                  child: Text(' User Rankings',
+                  child: Text('USER RANKINGS',
                       style: TextStyle(color: Colors.black)),
                 ),
               ),
@@ -71,22 +71,26 @@ class GuildView extends State<Guild> {
                         MaterialPageRoute(
                             builder: (context) => GuildRankings()));
                   },
-                  child: Text('Guild Rankings',
+                  child: Text('GUILD RANKINGS',
                       style: TextStyle(color: Colors.black)),
                 ),
               ),
 
               SizedBox(height: 70),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(getColor1),
-                ),
-                onPressed: () {
-                  changeGuildPopUp(context);
-                },
-                child: Text(
-                  'Change Guild',
-                  style: TextStyle(color: color3),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor1),
+                  ),
+                  onPressed: () {
+                    changeGuildPopUp(context);
+                  },
+                  child: Text(
+                    'CHANGE GUILD',
+                    style: TextStyle(color: color3),
+                  ),
                 ),
               ),
             ],

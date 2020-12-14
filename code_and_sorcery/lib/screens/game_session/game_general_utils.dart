@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:code_and_sorcery/screens/homepage/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +14,7 @@ import './game_summary.dart';
 import './long_game_session.dart';
 import './game_session.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../homepage/colors.dart';
 
 // live updating of player1 points
 Widget player1PointsStream(BuildContext context) {
@@ -32,7 +34,7 @@ Widget player1PointsStream(BuildContext context) {
               userDocument['player1Points'].toString() +
               '\n\n',
           style: TextStyle(
-              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+              fontSize: 25, color: textBright, fontWeight: FontWeight.bold),
         );
       });
 }
@@ -57,7 +59,7 @@ Widget player2PointsStream(BuildContext context) {
                 userDocument['player2Points'].toString() +
                 '\n\n',
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: textBright, fontWeight: FontWeight.bold),
           );
         }
       });
@@ -83,7 +85,7 @@ Widget player3PointsStream(BuildContext context) {
                 userDocument['player3Points'].toString() +
                 '\n\n',
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: textBright, fontWeight: FontWeight.bold),
           );
         }
       });
@@ -109,7 +111,7 @@ Widget player4PointsStream(BuildContext context) {
                 userDocument['player4Points'].toString() +
                 '\n\n',
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: textBright, fontWeight: FontWeight.bold),
           );
         }
       });
@@ -129,7 +131,7 @@ Widget partyHealthModifier(BuildContext context) {
         var userDocument = snapshot.data;
         return Text(
           userDocument['partyHealth'].toString(),
-          style: TextStyle(fontSize: 25, color: Colors.black),
+          style: TextStyle(fontSize: 25, color: textBright),
         );
       });
 }

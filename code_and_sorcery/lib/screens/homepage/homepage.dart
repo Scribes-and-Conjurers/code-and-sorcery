@@ -89,14 +89,14 @@ class Homepage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: textBright),
                 ),
                 SizedBox(height: 10),
                 Text(
                   username,
                   style: TextStyle(
                       fontSize: 25,
-                      color: Colors.white,
+                      color: textBright,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
@@ -115,7 +115,7 @@ class Homepage extends StatelessWidget {
                     },
                     child: Text(
                       'PROFILE PAGE',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: textDark),
                     ),
                   ),
                 ),
@@ -133,7 +133,7 @@ class Homepage extends StatelessWidget {
                         // createRecord();
                       },
                       child: Text('CREATE GAME',
-                          style: TextStyle(color: Colors.black))),
+                          style: TextStyle(color: textDark))),
                 ),
                 SizedBox(
                   width: 200.0,
@@ -146,8 +146,7 @@ class Homepage extends StatelessWidget {
                       createJoinGamePopUp(context);
                       // Navigator.pushNamed(context, '/join');
                     },
-                    child: Text('JOIN GAME',
-                        style: TextStyle(color: Colors.black)),
+                    child: Text('JOIN GAME', style: TextStyle(color: textDark)),
                   ),
                 ),
                 SizedBox(height: 20),

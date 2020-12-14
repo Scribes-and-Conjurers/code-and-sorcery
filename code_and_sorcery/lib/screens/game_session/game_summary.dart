@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import './game_image_utils.dart';
 import './game_general_utils.dart';
 import './game_session.dart';
+import '../homepage/colors.dart';
 
 class Summary extends StatelessWidget {
   final databaseReference = FirebaseFirestore.instance;
@@ -23,6 +24,9 @@ class Summary extends StatelessWidget {
             onWillPop: () async => false,
             child: Scaffold(
                 body: Container(
+                    decoration: BoxDecoration(
+                      color: color1,
+                    ),
                     alignment: Alignment.topCenter,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
@@ -45,29 +49,35 @@ class Summary extends StatelessWidget {
                             Text('Multiplayer Bonus! +2 points!',
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  color: Colors.black,
+                                  color: textBright,
                                 )),
                             Padding(padding: EdgeInsets.all(10.0)),
-                            MaterialButton(
-                                color: Colors.deepPurple,
-                                onPressed: () {
-                                  updateMultiplayerPoints();
-                                  updateMPGuildPoints();
-                                  updateGame();
-                                  questionNumber = 0;
-                                  finalScore = 0;
-                                  amPlayer1 = false;
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, '/homepage');
-                                  // removePlayer();
-                                },
-                                child: Text("Leave the game",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      color: Colors.white,
-                                    )))
+
+                            SizedBox(
+                              width: 200,
+                              child: MaterialButton(
+                                  padding: EdgeInsets.all(10),
+                                  color: color3,
+                                  onPressed: () {
+                                    updateMultiplayerPoints();
+                                    updateMPGuildPoints();
+                                    updateGame();
+                                    questionNumber = 0;
+                                    finalScore = 0;
+                                    amPlayer1 = false;
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(context, '/homepage');
+                                    // removePlayer();
+                                  },
+                                  child: Text("LEAVE THE GAME",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: textDark,
+                                      ))),
+                            )
+
                           ]),
                     )))));
   }
@@ -106,6 +116,9 @@ class SummarySP extends StatelessWidget {
             onWillPop: () async => false,
             child: Scaffold(
                 body: Container(
+                    decoration: BoxDecoration(
+                      color: color1,
+                    ),
                     alignment: Alignment.topCenter,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -114,23 +127,27 @@ class SummarySP extends StatelessWidget {
                             return player1PointsStream(context);
                           }),
                           Padding(padding: EdgeInsets.all(10.0)),
-                          MaterialButton(
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                updateSinglePlayerPoints();
-                                updateSPGuildPoints();
-                                updateGame();
-                                finalScore = 0;
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, '/homepage');
-                              },
-                              child: Text("Leave the game",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: Colors.white,
-                                  )))
+                          SizedBox(
+                            width: 200,
+                            child: MaterialButton(
+                                padding: EdgeInsets.all(10),
+                                color: color3,
+                                onPressed: () {
+                                  updateSinglePlayerPoints();
+                                  updateSPGuildPoints();
+                                  updateGame();
+                                  finalScore = 0;
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, '/homepage');
+                                },
+                                child: Text("LEAVE THE GAME",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: textDark,
+                                    ))),
+                          )
                         ])))));
   }
 

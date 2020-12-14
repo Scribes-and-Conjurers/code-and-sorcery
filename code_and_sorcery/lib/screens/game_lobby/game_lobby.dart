@@ -6,6 +6,7 @@ import '../game_session/game_session.dart';
 import 'dart:async';
 import '../../global_variables/global_variables.dart';
 import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 String gameLinkValue = "";
 bool pushedGo;
@@ -52,11 +53,6 @@ class GameLobbySL extends State<GameLobby> {
       body: Container(
         decoration: BoxDecoration(
           color: color1,
-          // gradient: LinearGradient(
-          //   begin: Alignment.topRight,
-          //   end: Alignment.bottomLeft,
-          //   colors: [Colors.blue[100], Colors.blue[400]],
-          // ),
         ),
         child: Center(
           child: SingleChildScrollView(
@@ -64,6 +60,92 @@ class GameLobbySL extends State<GameLobby> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
+
+//               children: <Widget>[
+//                 Padding(
+//                   padding: EdgeInsets.all(25),
+//                 ),
+//                 Container(
+//                   padding:
+//                       EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 20),
+//                   decoration: BoxDecoration(
+//                     color: color2,
+//                   ),
+//                   child: Column(children: [
+//                     Text("Game link: ",
+//                         style: TextStyle(
+//                             fontSize: 25,
+//                             color: Colors.white,
+//                             fontWeight: FontWeight.bold)),
+//                     Padding(
+//                       padding: EdgeInsets.all(10),
+//                     ),
+//                     Text(gameID,
+//                         style: TextStyle(
+//                             fontSize: 50,
+//                             color: Colors.white,
+//                             fontWeight: FontWeight.bold)),
+//                     Padding(
+//                       padding: EdgeInsets.all(20),
+//                     ),
+//                     startCountdownStream(context),
+//                     Padding(
+//                       padding: EdgeInsets.all(20),
+//                     ),
+//                     buildUser(context),
+//                     Padding(
+//                       padding: EdgeInsets.all(20),
+//                     ),
+//                   ]),
+//                 ),
+//                 Padding(
+//                   padding: EdgeInsets.all(10),
+//                 ),
+//                 SizedBox(
+//                   width: 200,
+//                   child: ElevatedButton(
+//                     style: ButtonStyle(
+//                       backgroundColor:
+//                           MaterialStateProperty.resolveWith(getColor3),
+//                     ),
+//                     onPressed: () {
+//                       checkP1GO();
+//                       startTimer();
+//                     },
+//                     child:
+//                         Text('GO TO GAME', style: TextStyle(color: textDark)),
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   width: 200,
+//                   child: ElevatedButton(
+//                     style: ButtonStyle(
+//                       backgroundColor:
+//                           MaterialStateProperty.resolveWith(getColor3),
+//                     ),
+//                     onPressed: () {
+//                       Navigator.pushNamed(context, '/settings');
+//                     },
+//                     child: Text('SETTINGS', style: TextStyle(color: textDark)),
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   width: 200,
+//                   child: ElevatedButton(
+//                     style: ButtonStyle(
+//                       backgroundColor:
+//                           MaterialStateProperty.resolveWith(getColor3),
+//                     ),
+//                     onPressed: () {
+//                       removePlayer();
+//                       Navigator.pop(context);
+//                     },
+//                     child: Text('HOMEPAGE', style: TextStyle(color: textDark)),
+//                   ),
+//                 ),
+//                 Padding(
+//                   padding: EdgeInsets.all(10),
+
               children: [
                 Text("Game link: ",
                     style: TextStyle(
@@ -91,6 +173,7 @@ class GameLobbySL extends State<GameLobby> {
                     Navigator.pop(context);
                   },
                   child: Text('Go back to homepage'),
+
                 ),
               ],
             ),
