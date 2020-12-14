@@ -596,7 +596,7 @@ class QuestLongMPState extends State<QuestLongMP> {
     }
     setState(() {
       if (questionNumber == game.questions.length - 1) {
-        questionNumber = 0;
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
