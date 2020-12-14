@@ -123,10 +123,11 @@ Widget partyHealthModifier(BuildContext context) {
           .doc(gameID)
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        var userDocument = snapshot.data;
         if (!snapshot.hasData) {
           return Text("Loading");
         }
-        var userDocument = snapshot.data;
+        if (userDocument['partyHealth'] == 0) {}
         return Text(
           userDocument['partyHealth'].toString(),
           style: TextStyle(fontSize: 25, color: Colors.black),
