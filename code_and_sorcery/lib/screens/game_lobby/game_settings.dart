@@ -1,6 +1,9 @@
+import 'package:code_and_sorcery/screens/homepage/colors.dart';
 import 'package:flutter/material.dart';
 import '../../global_variables/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 class GameSettings extends StatefulWidget {
   @override
@@ -15,13 +18,7 @@ class GameSettingState extends State<GameSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
-          ),
-        ),
+        decoration: BoxDecoration(color: color1),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +29,7 @@ class GameSettingState extends State<GameSettings> {
                 'Difficulty',
                 style: TextStyle(
                   fontSize: 24,
-                  color: Colors.black,
+                  color: textBright,
                 ),
               ),
               SizedBox(height: 12),
@@ -67,11 +64,13 @@ class GameSettingState extends State<GameSettings> {
                         break;
                     }
                   },
-                  child: Text(difficulty,
+                  child: Text(
+                    difficulty,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
-                    ),),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 48),
@@ -79,7 +78,7 @@ class GameSettingState extends State<GameSettings> {
                 'Adventure Length',
                 style: TextStyle(
                   fontSize: 24,
-                  color: Colors.black,
+                  color: textBright,
                 ),
               ),
               SizedBox(height: 12),
@@ -114,19 +113,33 @@ class GameSettingState extends State<GameSettings> {
                         break;
                     }
                   },
-                  child: Text(adventureLength,
+                  child: Text(
+                    adventureLength,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
-                    ),),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Back'),
+              Padding(padding: EdgeInsets.all(40.0)),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Back',
+                    style: TextStyle(
+                      color: textDark,
+                    ),
+                  ),
+                ),
               )
             ],
           ),
@@ -136,14 +149,16 @@ class GameSettingState extends State<GameSettings> {
   }
 
   void setDifficulty(String difficulty) async {
-    await databaseReference.collection("games").doc(gameID).update({
-        'gameDifficulty': difficulty
-    });
+    await databaseReference
+        .collection("games")
+        .doc(gameID)
+        .update({'gameDifficulty': difficulty});
   }
 
   void setGameLength(String difficulty) async {
-    await databaseReference.collection("games").doc(gameID).update({
-      'gameLength': adventureLength
-    });
+    await databaseReference
+        .collection("games")
+        .doc(gameID)
+        .update({'gameLength': adventureLength});
   }
 }

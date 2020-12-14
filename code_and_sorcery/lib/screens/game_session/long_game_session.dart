@@ -16,6 +16,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../random_chest/chest.dart';
 import '../random_beggar/beggar.dart';
 import '../loadingscreen/loading_before_game.dart';
+import '../homepage/colors.dart';
 
 // LONG ADVENTURE !!! built for singleplayer
 
@@ -49,6 +50,9 @@ class _QuestLongState extends State<QuestLong> {
 
               // body
               body: new Container(
+                  decoration: BoxDecoration(
+                    color: color2,
+                  ),
                   margin: const EdgeInsets.all(10.0),
                   alignment: Alignment.topCenter,
                   child: Center(
@@ -59,6 +63,7 @@ class _QuestLongState extends State<QuestLong> {
 
                           // top row that displays question number and current score
                           Container(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
                               alignment: Alignment.centerRight,
                               child: Row(
                                   mainAxisAlignment:
@@ -66,15 +71,18 @@ class _QuestLongState extends State<QuestLong> {
                                   children: <Widget>[
                                     Text(
                                       "Question ${questionNumber + 1}",
-                                      style: TextStyle(fontSize: 15.0),
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: textBright),
                                     ),
                                     Text(
                                       "Score: $finalScore",
-                                      style: TextStyle(fontSize: 15.0),
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: textBright),
                                     ),
                                     Text(
                                       "Party Health:",
-                                      style: TextStyle(fontSize: 15.0),
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: textBright),
                                     ),
                                     partyHealthModifier(context),
                                   ])),
@@ -89,16 +97,21 @@ class _QuestLongState extends State<QuestLong> {
                           Padding(padding: EdgeInsets.all(15.0)),
 
                           // question
-                          Text(
-                            game.questions[questionNumber],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15.0,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
+                            child: Text(
+                              game.questions[questionNumber],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: textBright,
+                              ),
                             ),
                           ),
 
                           Padding(
-                            padding: EdgeInsets.all(5.0),
+                            padding: EdgeInsets.all(15.0),
                           ),
 
                           // answers: conditional depending on question
@@ -106,120 +119,147 @@ class _QuestLongState extends State<QuestLong> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 // button 1
-                                MaterialButton(
-                                  minWidth: 250.0,
-                                  padding: EdgeInsets.all(0),
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    if (game.choices[questionNumber][0] ==
-                                        game.correctAnswers[questionNumber]) {
-                                      debugPrint('correctamundo');
-                                      finalScore++;
-                                      updateGamePlayer1();
-                                    } else {
-                                      decreasePartyHealth();
-                                      debugPrint(
-                                          'oh noes... that is incorrect');
-                                    }
-                                    updateQuestion();
-                                  },
-                                  child: Text(
-                                    game.choices[questionNumber][0],
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
+                                SizedBox(
+                                  width: 270,
+                                  child: MaterialButton(
+                                    // minWidth: 250.0,
+                                    padding: EdgeInsets.all(10.0),
+                                    color: color3,
+                                    onPressed: () {
+                                      if (game.choices[questionNumber][0] ==
+                                          game.correctAnswers[questionNumber]) {
+                                        debugPrint('correctamundo');
+                                        finalScore++;
+                                        updateGamePlayer1();
+                                      } else {
+                                        decreasePartyHealth();
+                                        debugPrint(
+                                            'oh noes... that is incorrect');
+                                      }
+                                      updateQuestion();
+                                    },
+                                    child: Text(
+                                      game.choices[questionNumber][0],
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.all(7.0),
                                 ),
 
                                 // button 2
-                                MaterialButton(
-                                  minWidth: 250.0,
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    if (game.choices[questionNumber][1] ==
-                                        game.correctAnswers[questionNumber]) {
-                                      debugPrint('correctamundo');
-                                      finalScore++;
-                                      updateGamePlayer1();
-                                    } else {
-                                      decreasePartyHealth();
-                                      debugPrint(
-                                          'oh noes... that is incorrect');
-                                    }
-                                    updateQuestion();
-                                  },
-                                  child: Text(
-                                    game.choices[questionNumber][1],
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
+                                SizedBox(
+                                  width: 270,
+                                  child: MaterialButton(
+                                    // minWidth: 250.0,
+                                    padding: EdgeInsets.all(10.0),
+                                    color: color3,
+                                    onPressed: () {
+                                      if (game.choices[questionNumber][1] ==
+                                          game.correctAnswers[questionNumber]) {
+                                        debugPrint('correctamundo');
+                                        finalScore++;
+                                        updateGamePlayer1();
+                                      } else {
+                                        decreasePartyHealth();
+                                        debugPrint(
+                                            'oh noes... that is incorrect');
+                                      }
+                                      updateQuestion();
+                                    },
+                                    child: Text(
+                                      game.choices[questionNumber][1],
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.all(7.0),
                                 ),
 
                                 // button 3
-                                MaterialButton(
-                                  minWidth: 250.0,
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    if (game.choices[questionNumber][2] ==
-                                        game.correctAnswers[questionNumber]) {
-                                      debugPrint('correctamundo');
-                                      finalScore++;
-                                      updateGamePlayer1();
-                                    } else {
-                                      decreasePartyHealth();
-                                      debugPrint(
-                                          'oh noes... that is incorrect');
-                                    }
-                                    updateQuestion();
-                                  },
-                                  child: Text(
-                                    game.choices[questionNumber][2],
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
+                                SizedBox(
+                                  width: 270,
+                                  child: MaterialButton(
+                                    padding: EdgeInsets.all(10.0),
+                                    // minWidth: 250.0,
+                                    color: color3,
+                                    onPressed: () {
+                                      if (game.choices[questionNumber][2] ==
+                                          game.correctAnswers[questionNumber]) {
+                                        debugPrint('correctamundo');
+                                        finalScore++;
+                                        updateGamePlayer1();
+                                      } else {
+                                        decreasePartyHealth();
+                                        debugPrint(
+                                            'oh noes... that is incorrect');
+                                      }
+                                      updateQuestion();
+                                    },
+                                    child: Text(
+                                      game.choices[questionNumber][2],
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
 
+                                Padding(
+                                  padding: EdgeInsets.all(7.0),
+                                ),
+
                                 // button 4
-                                MaterialButton(
-                                  minWidth: 250.0,
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    if (game.choices[questionNumber][3] ==
-                                        game.correctAnswers[questionNumber]) {
-                                      debugPrint('correctamundo');
-                                      finalScore++;
-                                      updateGamePlayer1();
-                                    } else {
-                                      decreasePartyHealth();
-                                      debugPrint(
-                                          'oh noes... that is incorrect');
-                                    }
-                                    updateQuestion();
-                                  },
-                                  child: Text(
-                                    game.choices[questionNumber][3],
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.white,
+                                SizedBox(
+                                  width: 270,
+                                  child: MaterialButton(
+                                    padding: EdgeInsets.all(10.0),
+                                    // minWidth: 250.0,
+                                    color: color3,
+                                    onPressed: () {
+                                      if (game.choices[questionNumber][3] ==
+                                          game.correctAnswers[questionNumber]) {
+                                        debugPrint('correctamundo');
+                                        finalScore++;
+                                        updateGamePlayer1();
+                                      } else {
+                                        decreasePartyHealth();
+                                        debugPrint(
+                                            'oh noes... that is incorrect');
+                                      }
+                                      updateQuestion();
+                                    },
+                                    child: Text(
+                                      game.choices[questionNumber][3],
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ]),
 
                           Padding(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(10),
                           ),
 
                           // reset button
                           Container(
                               alignment: Alignment.bottomCenter,
                               child: MaterialButton(
-                                color: Colors.deepPurple,
+                                color: color4,
                                 minWidth: 240.0,
                                 height: 30.0,
                                 onPressed: () {
@@ -229,10 +269,13 @@ class _QuestLongState extends State<QuestLong> {
                                   "Quit",
                                   style: TextStyle(
                                     fontSize: 18.0,
-                                    color: Colors.white,
+                                    color: textBright,
                                   ),
                                 ),
                               )),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                          ),
                         ]),
                   ))));
     } else {
@@ -284,13 +327,11 @@ class _QuestLongState extends State<QuestLong> {
                         Text(
                           game.questions[questionNumber],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
+                          style: TextStyle(fontSize: 15.0, color: textBright),
                         ),
 
                         Padding(
-                          padding: EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(15.0),
                         ),
 
                         // answers: conditional depending on question

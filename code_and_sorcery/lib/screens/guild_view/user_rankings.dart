@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../global_variables/global_variables.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 class UserRankings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: Text('User Rankings')),
-      body: _buildBody(context),
+      body: Container(
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 100),
+          decoration: BoxDecoration(
+            color: color1,
+          ),
+          child: _buildBody(context)),
       floatingActionButton: FloatingActionButton(
         child: Text('Guild'),
         onPressed: () {
@@ -47,12 +54,20 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
     child: Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: color3),
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: ListTile(
-        title: Text(record.usernameRanked),
-        trailing: Text(record.points.toString()),
+        title: Text(record.usernameRanked,
+            style: TextStyle(
+              fontSize: 18.0,
+              color: textBright,
+            )),
+        trailing: Text(record.points.toString(),
+            style: TextStyle(
+              fontSize: 18.0,
+              color: textBright,
+            )),
       ),
     ),
   );
