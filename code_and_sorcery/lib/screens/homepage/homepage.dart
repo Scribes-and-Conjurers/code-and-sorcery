@@ -107,7 +107,7 @@ class Homepage extends StatelessWidget {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                            MaterialStateProperty.resolveWith(getColor3),
                       ),
                       onPressed: () {
                         // Navigate back to the first screen by popping the current route
@@ -126,7 +126,7 @@ class Homepage extends StatelessWidget {
                     child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor3),
+                              MaterialStateProperty.resolveWith(getColor3),
                         ),
                         onPressed: () {
                           chooseGameTypePopUp(context);
@@ -139,12 +139,13 @@ class Homepage extends StatelessWidget {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                            MaterialStateProperty.resolveWith(getColor3),
                       ),
                       onPressed: () {
                         createJoinGamePopUp(context);
                       },
-                      child: Text('JOIN GAME', style: TextStyle(color: textDark)),
+                      child:
+                          Text('JOIN GAME', style: TextStyle(color: textDark)),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -152,8 +153,8 @@ class Homepage extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) {
-                            return LoginPage();
-                          }), ModalRoute.withName('/'));
+                        return LoginPage();
+                      }), ModalRoute.withName('/'));
                     },
                     color: color2,
                     child: Padding(
@@ -392,7 +393,14 @@ class Homepage extends StatelessWidget {
                     }
                   }
                 },
-              )
+              ),
+              MaterialButton(
+                  elevation: 5.0,
+                  child: Text('Cancel', style: TextStyle(fontSize: 23)),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pop(gameLinkController.text.toString());
+                  })
             ],
           );
         });
