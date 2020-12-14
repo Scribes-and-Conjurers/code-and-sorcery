@@ -70,102 +70,105 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: color1,
-        ),
-        child: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                avatarGetter(context),
-                SizedBox(height: 40),
-                Text(
-                  'WELCOME',
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: textBright),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  username,
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: textBright,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: 200.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor3),
-                    ),
-                    onPressed: () {
-                      // Navigate back to the first screen by popping the current route
-                      // off the stack.
-                      updateUserProfile();
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                    child: Text(
-                      'PROFILE PAGE',
-                      style: TextStyle(color: textDark),
-                    ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            color: color1,
+          ),
+          child: Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  avatarGetter(context),
+                  SizedBox(height: 40),
+                  Text(
+                    'WELCOME',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: textBright),
                   ),
-                ),
-                SizedBox(
-                  width: 200.0,
-                  child: ElevatedButton(
+                  SizedBox(height: 10),
+                  Text(
+                    username,
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: textBright,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    width: 200.0,
+                    child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.resolveWith(getColor3),
+                        MaterialStateProperty.resolveWith(getColor3),
                       ),
                       onPressed: () {
-                        chooseGameTypePopUp(context);
+                        // Navigate back to the first screen by popping the current route
+                        // off the stack.
+                        updateUserProfile();
+                        Navigator.pushNamed(context, '/profile');
                       },
-                      child: Text('CREATE GAME',
-                          style: TextStyle(color: textDark))),
-                ),
-                SizedBox(
-                  width: 200.0,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
+                      child: Text(
+                        'PROFILE PAGE',
+                        style: TextStyle(color: textDark),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200.0,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
                           MaterialStateProperty.resolveWith(getColor3),
+                        ),
+                        onPressed: () {
+                          chooseGameTypePopUp(context);
+                        },
+                        child: Text('CREATE GAME',
+                            style: TextStyle(color: textDark))),
+                  ),
+                  SizedBox(
+                    width: 200.0,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor3),
+                      ),
+                      onPressed: () {
+                        createJoinGamePopUp(context);
+                      },
+                      child: Text('JOIN GAME', style: TextStyle(color: textDark)),
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  RaisedButton(
                     onPressed: () {
-                      createJoinGamePopUp(context);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) {
+                            return LoginPage();
+                          }), ModalRoute.withName('/'));
                     },
-                    child: Text('JOIN GAME', style: TextStyle(color: textDark)),
-                  ),
-                ),
-                SizedBox(height: 20),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) {
-                      return LoginPage();
-                    }), ModalRoute.withName('/'));
-                  },
-                  color: color2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Sign Out',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    color: color2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Sign Out',
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
                     ),
-                  ),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                )
-              ],
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                  )
+                ],
+              ),
             ),
           ),
         ),

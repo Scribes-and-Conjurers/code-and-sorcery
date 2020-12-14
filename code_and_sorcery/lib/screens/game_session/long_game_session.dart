@@ -38,6 +38,8 @@ class _QuestLongState extends State<QuestLong> {
 
   @override
   void initState() {
+    questionNumber = 0;
+    buttonNumber = 0;
     setPartyWisdom();
   }
 
@@ -74,17 +76,13 @@ class _QuestLongState extends State<QuestLong> {
                                       style: TextStyle(
                                           fontSize: 15.0, color: textBright),
                                     ),
-                                    Text(
-                                      "Score: $finalScore",
-                                      style: TextStyle(
-                                          fontSize: 15.0, color: textBright),
-                                    ),
+                                    soloPointsStream(context),
                                     Text(
                                       "Party Health:",
                                       style: TextStyle(
                                           fontSize: 15.0, color: textBright),
                                     ),
-                                    partyHealthModifier(context),
+                                    partyHealthModifierSolo(context),
                                   ])),
 
                           Padding(padding: EdgeInsets.all(5.0)),
@@ -461,24 +459,23 @@ class _QuestLongState extends State<QuestLong> {
       }
     }
     setState(() {
-      if (questionNumber == game.questions.length - 1) {
-        questionNumber = 0;
+      if (questionNumber == 2) {
+        questionNumber++;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => new Chest()));
+      } else if (questionNumber == 6) {
+        questionNumber++;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => new Beggar()));
+      } else if (questionNumber == game.questions.length - 1) {
+        Navigator.pop(context);
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => new SummarySP(score: finalScore)));
       } else {
-        if (questionNumber == 2) {
-          questionNumber++;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => new Chest()));
-        } else if (questionNumber == 6) {
-          questionNumber++;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => new Beggar()));
-        } else {
-          questionNumber++;
-        }
+        questionNumber++;
       }
     });
   }
@@ -530,5 +527,23 @@ class _QuestLongState extends State<QuestLong> {
     await databaseReference.collection("games").doc(gameID).update({
       'player1Points': FieldValue.increment(1),
     });
+  }
+
+  Widget soloPointsStream(BuildContext context) {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('games')
+            .doc(gameID)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading");
+          }
+          var userDocument = snapshot.data;
+          return Text(
+            'Your score: ' + userDocument['player1Points'].toString(),
+            style: TextStyle(fontSize: 15.0, color: textBright),
+          );
+        });
   }
 }

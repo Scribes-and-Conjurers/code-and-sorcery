@@ -23,7 +23,7 @@ class AvatarPicker extends StatelessWidget {
     return Scaffold(
       body: Container(
           decoration: BoxDecoration(
-            color: color3,
+            color: color2,
           ),
           // padding: EdgeInsets.all(20.0),
           // margin: EdgeInsets.symmetric(vertical: 15.0),
