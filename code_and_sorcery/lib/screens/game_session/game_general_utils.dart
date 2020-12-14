@@ -126,7 +126,7 @@ Widget partyHealthModifier(BuildContext context) {
         builder: (context) {
           return AlertDialog(
             title: Text("GAME OVER"),
-            content: Text("Your party healthed reached 0. Try again!"),
+            content: Text("Your party health reached 0. Try again!"),
             actions: <Widget>[
               MaterialButton(
                   elevation: 5.0,
@@ -145,6 +145,59 @@ Widget partyHealthModifier(BuildContext context) {
           );
         });
   }
+
+  return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('games')
+          .doc(gameID)
+          .snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        var userDocument = snapshot.data;
+        if (!snapshot.hasData) {
+          return Text("Loading");
+        }
+        if (userDocument['partyHealth'] == 0) {
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => gameOverPopUp(context));
+          return Text("");
+        } else {
+          return Text(
+            userDocument['partyHealth'].toString(),
+            style: TextStyle(fontSize: 25, color: textBright),
+          );
+        }
+      });
+}
+
+// this is for SP and has no readyTimer.cancel();
+Widget partyHealthModifierSolo(BuildContext context) {
+  Future<String> gameOverPopUp(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("GAME OVER"),
+            content: Text("Your party health reached 0. Try again!"),
+            actions: <Widget>[
+              MaterialButton(
+                  elevation: 5.0,
+                  child: Text('QUIT', style: TextStyle(fontSize: 23)),
+                  onPressed: () async {
+                    await databaseReference
+                        .collection("games")
+                        .doc(gameID)
+                        .update({
+                      'finished': true,
+                    });
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/homepage');
+                  })
+            ],
+          );
+        });
+  }
+
 
   return StreamBuilder(
       stream: FirebaseFirestore.instance

@@ -38,6 +38,8 @@ class _QuestLongState extends State<QuestLong> {
 
   @override
   void initState() {
+    questionNumber = 0;
+    buttonNumber = 0;
     setPartyWisdom();
   }
 
@@ -84,7 +86,7 @@ class _QuestLongState extends State<QuestLong> {
                                       style: TextStyle(
                                           fontSize: 15.0, color: textBright),
                                     ),
-                                    partyHealthModifier(context),
+                                    partyHealthModifierSolo(context),
                                   ])),
 
                           Padding(padding: EdgeInsets.all(5.0)),

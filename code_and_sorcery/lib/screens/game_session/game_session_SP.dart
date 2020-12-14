@@ -27,6 +27,8 @@ class GameSessionSPState extends State<GameSessionSP> {
 
   @override
   void initState() {
+    questionNumber = 0;
+    buttonNumber = 0;
     setPartyWisdom();
   }
 
@@ -70,7 +72,7 @@ class GameSessionSPState extends State<GameSessionSP> {
                                   style: TextStyle(
                                       fontSize: 15.0, color: textBright),
                                 ),
-                                partyHealthModifier(context),
+                                partyHealthModifierSolo(context),
                               ])),
 
                       Padding(padding: EdgeInsets.all(5.0)),

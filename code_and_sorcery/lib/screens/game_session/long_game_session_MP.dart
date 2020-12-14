@@ -27,6 +27,9 @@ class QuestLongMPState extends State<QuestLongMP> {
 
   @override
   void initState() {
+    hasPlayed = false;
+    questionNumber = 0;
+    buttonNumber = 0;
     startTimer();
     setPlayers();
     setPartyWisdom();
