@@ -43,6 +43,9 @@ class GameSessionState extends State<GameSession> {
 
   @override
   void initState() {
+    hasPlayed = false;
+    questionNumber = 0;
+    buttonNumber = 0;
     startTimer();
     setPlayers();
     setPartyWisdom();
