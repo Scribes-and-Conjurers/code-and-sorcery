@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../global_variables/global_variables.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Chest extends StatefulWidget {
   @override
@@ -8,6 +9,7 @@ class Chest extends StatefulWidget {
 }
 
 class _ChestState extends State<Chest> {
+  final databaseReference = FirebaseFirestore.instance;
   bool isOpened = false;
   double diceRoll;
 
@@ -15,42 +17,45 @@ class _ChestState extends State<Chest> {
   Widget build(BuildContext context) {
     Random random = new Random();
     diceRoll = random.nextDouble();
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200,
-            ),
-            Text(
-              "A mysterious chest...",
-              style: TextStyle(fontSize: 30),
-            ),
-            Text(
-              "It whispers to you, promising riches...",
-              style: TextStyle(fontSize: 20),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(
-                child: Text(
-                  "Open the chest",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  openChest();
-                },
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200,
               ),
-            ),
-            ElevatedButton(
-                child: Text(
-                  "Leave the chest alone",
-                  style: TextStyle(fontSize: 20),
+              Text(
+                "A mysterious chest...",
+                style: TextStyle(fontSize: 30),
+              ),
+              Text(
+                "It whispers to you, promising riches...",
+                style: TextStyle(fontSize: 20),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: ElevatedButton(
+                  child: Text(
+                    "Open the chest",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    openChest();
+                  },
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
+              ),
+              ElevatedButton(
+                  child: Text(
+                    "Leave the chest alone",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })
+            ],
+          ),
         ),
       ),
     );
@@ -61,43 +66,29 @@ class _ChestState extends State<Chest> {
       Navigator.pop(context);
     }
     if (diceRoll <= partyWisdom) {
-      finalScore += 2;
+      setState(() {
+        finalScore += 2;
+      });
+      increasePlayerPoints();
       Navigator.pushNamed(context, '/successChest');
-      // Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("Amazing! The chest was filled with treasure!"),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     } else {
       Navigator.pushNamed(context, '/failureChest');
-      // return Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       children: [
-      //         Text("The chest is filled with poison gas! You barely escape."),
-      //         ElevatedButton(
-      //           child: Text("Continue Adventure"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
     }
+  }
+
+  void increasePlayerPoints() async {
+    await databaseReference.collection("games").doc(gameID).update({
+      if (player1db == username)
+        'player1Points': FieldValue.increment(2)
+      else if (player2db == username)
+        'player2Points': FieldValue.increment(2)
+      else if (player3db == username)
+        'player3Points': FieldValue.increment(2)
+      else if (player4db == username)
+        'player4Points': FieldValue.increment(2)
+      else
+        'player1Points': FieldValue.increment(2)
+    });
   }
 }
 

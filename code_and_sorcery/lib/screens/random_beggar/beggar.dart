@@ -36,7 +36,7 @@ class _BeggarState extends State<Beggar> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      "He asks for coins to get him through the night...",
+                      "He asks for some points to get him through the night...",
                       style: TextStyle(fontSize: 20),
                     )),
                 SizedBox(height: 50),
@@ -77,7 +77,6 @@ class _BeggarState extends State<Beggar> {
   }
 
   void openChest() {
-    debugPrint('$partyWisdom');
     if (isOpened) {
       Navigator.pop(context);
     }
