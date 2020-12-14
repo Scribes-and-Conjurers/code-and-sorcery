@@ -116,7 +116,6 @@ class GameSessionState extends State<GameSession> {
                                 ),
                                 partyHealthModifier(context),
                               ])),
-                      gameOverStream(context),
 
                       Padding(padding: EdgeInsets.all(5.0)),
 
@@ -455,32 +454,5 @@ class GameSessionState extends State<GameSession> {
         hasPlayed = false;
       }
     });
-  }
-
-  // This stream checks party health and goes to game over screen
-  Widget gameOverStream(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('games')
-            .doc(gameID)
-            .snapshots(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Text("Loading");
-          }
-          if (snapshot.data['partyHealth'] == 0) {
-            readyTimer.cancel();
-            Navigator.pushNamed(context, '/gameOver');
-            return Text(
-              "",
-              style: TextStyle(fontSize: 1),
-            );
-          } else {
-            return Text(
-              '',
-              style: TextStyle(fontSize: 1),
-            );
-          }
-        });
   }
 }
