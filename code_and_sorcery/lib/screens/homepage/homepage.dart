@@ -89,7 +89,7 @@ class Homepage extends StatelessWidget {
                   Text(
                     'WELCOME',
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: textBright),
                   ),
@@ -97,7 +97,7 @@ class Homepage extends StatelessWidget {
                   Text(
                     username,
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 30,
                         color: textBright,
                         fontWeight: FontWeight.bold),
                   ),
