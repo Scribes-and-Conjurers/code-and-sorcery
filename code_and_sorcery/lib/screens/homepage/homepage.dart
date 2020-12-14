@@ -107,7 +107,7 @@ class Homepage extends StatelessWidget {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                            MaterialStateProperty.resolveWith(getColor3),
                       ),
                       onPressed: () {
                         // Navigate back to the first screen by popping the current route
@@ -121,12 +121,13 @@ class Homepage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
                   SizedBox(
                     width: 200.0,
                     child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                          MaterialStateProperty.resolveWith(getColor3),
+                              MaterialStateProperty.resolveWith(getColor3),
                         ),
                         onPressed: () {
                           chooseGameTypePopUp(context);
@@ -134,26 +135,28 @@ class Homepage extends StatelessWidget {
                         child: Text('CREATE GAME',
                             style: TextStyle(color: textDark))),
                   ),
+                  SizedBox(height: 10),
                   SizedBox(
                     width: 200.0,
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor3),
+                            MaterialStateProperty.resolveWith(getColor3),
                       ),
                       onPressed: () {
                         createJoinGamePopUp(context);
                       },
-                      child: Text('JOIN GAME', style: TextStyle(color: textDark)),
+                      child:
+                          Text('JOIN GAME', style: TextStyle(color: textDark)),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 40),
                   RaisedButton(
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) {
-                            return LoginPage();
-                          }), ModalRoute.withName('/'));
+                        return LoginPage();
+                      }), ModalRoute.withName('/'));
                     },
                     color: color2,
                     child: Padding(
