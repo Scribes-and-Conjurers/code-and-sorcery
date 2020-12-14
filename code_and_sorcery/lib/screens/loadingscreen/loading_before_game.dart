@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../homepage/colors.dart';
 
 // THIS IS FOR SP!
 // create game object
@@ -22,26 +23,38 @@ class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
   @override
   void initState() {
     super.initState();
-    if(difficulty == 'Easy' && adventureLength == 'Long') {
+    if (difficulty == 'Easy' && adventureLength == 'Long') {
       updateGameContentLong('long-adv0');
-      Timer(Duration(seconds: 2),
-              () => {Navigator.pop(context),
-          Navigator.pushNamed(context, '/ingameLong')});
+      Timer(
+          Duration(seconds: 2),
+          () => {
+                Navigator.pop(context),
+                Navigator.pushNamed(context, '/ingameLong')
+              });
     } else if (difficulty == 'Normal' && adventureLength == 'Long') {
       updateGameContentLong('norm-long');
-      Timer(Duration(seconds: 2),
-              () => {Navigator.pop(context),
-            Navigator.pushNamed(context, '/ingameLong')});
-    } else if(difficulty == 'Easy' && adventureLength == 'Short') {
+      Timer(
+          Duration(seconds: 2),
+          () => {
+                Navigator.pop(context),
+                Navigator.pushNamed(context, '/ingameLong')
+              });
+    } else if (difficulty == 'Easy' && adventureLength == 'Short') {
       updateGameContentShort('JIfrv2SOOdlxkv5RJP3i');
-      Timer(Duration(seconds: 2),
-              () => {Navigator.pop(context),
-            Navigator.pushNamed(context, '/ingameSP')});
-    } else if(difficulty == 'Normal' && adventureLength == 'Short') {
+      Timer(
+          Duration(seconds: 2),
+          () => {
+                Navigator.pop(context),
+                Navigator.pushNamed(context, '/ingameSP')
+              });
+    } else if (difficulty == 'Normal' && adventureLength == 'Short') {
       updateGameContentShort('norm-short');
-      Timer(Duration(seconds: 2),
-              () => {Navigator.pop(context),
-            Navigator.pushNamed(context, '/ingameSP')});
+      Timer(
+          Duration(seconds: 2),
+          () => {
+                Navigator.pop(context),
+                Navigator.pushNamed(context, '/ingameSP')
+              });
     } else {
       print('goes nowhere');
     }
@@ -49,16 +62,20 @@ class _LoadingBeforeGameState extends State<LoadingBeforeGame> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        child: Column(children: [
-          Image.asset('assets/logo.png'),
-          Text(
-            "Conjuring game...",
-            style:
-                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.6),
-          )
-        ]));
+    return Scaffold(
+        body: Container(
+            color: color1,
+            child: Center(
+                child: Column(children: [
+              SizedBox(
+                height: 100,
+              ),
+              Image.asset('assets/new-logo.png'),
+              Text(
+                "Conjuring game...",
+                style: TextStyle(fontSize: 30, color: textBright),
+              )
+            ]))));
   }
 
   void updateGameContentLong(String questName) async {

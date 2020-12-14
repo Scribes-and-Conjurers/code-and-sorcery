@@ -1,3 +1,4 @@
+import 'package:code_and_sorcery/screens/homepage/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: color1,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -31,16 +32,10 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                    color: textBright),
               ),
               SizedBox(height: 10),
-              Text(
-                '<🧙‍♀️🧙‍♂️>',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
+              Image.asset('assets/new-logo.png'),
               SizedBox(height: 50),
               googleLoginButton(),
             ],
@@ -54,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
     return OutlineButton(
         onPressed: this.click,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
-        splashColor: Colors.grey,
-        borderSide: BorderSide(color: Colors.grey),
+        splashColor: color3,
+        borderSide: BorderSide(color: color3),
         child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: Row(
@@ -66,25 +61,25 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text('Sign in with Google',
-                        style: TextStyle(color: Colors.grey, fontSize: 25)))
+                        style: TextStyle(color: textBright, fontSize: 25)))
               ],
             )));
   }
 
   void click() {
     signInWithGoogle().then((user) => {
-      this.user = user,
-      if (username != '')
-        {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Homepage()))
-        }
-      else
-        {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AccountSetup()))
-        }
-    });
+          this.user = user,
+          if (username != '')
+            {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Homepage()))
+            }
+          else
+            {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AccountSetup()))
+            }
+        });
   }
 }
 
