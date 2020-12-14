@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../global_variables/global_variables.dart';
+import '../homepage/colors.dart';
+import '../homepage/homepage.dart';
 
 class Chest extends StatefulWidget {
   @override
@@ -16,41 +18,64 @@ class _ChestState extends State<Chest> {
     Random random = new Random();
     diceRoll = random.nextDouble();
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200,
-            ),
-            Text(
-              "A mysterious chest...",
-              style: TextStyle(fontSize: 30),
-            ),
-            Text(
-              "It whispers to you, promising riches...",
-              style: TextStyle(fontSize: 20),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(
-                child: Text(
-                  "Open the chest",
-                  style: TextStyle(fontSize: 20),
-                ),
-                onPressed: () {
-                  openChest();
-                },
+      body: Container(
+        decoration: BoxDecoration(
+          color: color1,
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200,
               ),
-            ),
-            ElevatedButton(
-                child: Text(
-                  "Leave the chest alone",
-                  style: TextStyle(fontSize: 20),
+              Text(
+                "A mysterious chest...",
+                style: TextStyle(fontSize: 30, color: color3),
+              ),
+              Padding(padding: EdgeInsets.all(10)),
+              Text(
+                "It whispers to you, promising riches...",
+                style: TextStyle(fontSize: 20, color: textBright),
+              ),
+              Padding(padding: EdgeInsets.all(20)),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: SizedBox(
+                  height: 40,
+                  width: 300,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    child: Text(
+                      "OPEN THE CHEST",
+                      style: TextStyle(fontSize: 20, color: textDark),
+                    ),
+                    onPressed: () {
+                      openChest();
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                })
-          ],
+              ),
+              SizedBox(
+                height: 40,
+                width: 300,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    child: Text(
+                      "LEAVE THE CHEST ALONE",
+                      style: TextStyle(fontSize: 20, color: textDark),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
