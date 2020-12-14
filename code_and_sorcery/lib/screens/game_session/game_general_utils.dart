@@ -126,7 +126,7 @@ Widget partyHealthModifier(BuildContext context) {
         builder: (context) {
           return AlertDialog(
             title: Text("GAME OVER"),
-            content: Text("Your party healthed reached 0. Try again!"),
+            content: Text("Your party health reached 0. Try again!"),
             actions: <Widget>[
               MaterialButton(
                   elevation: 5.0,
