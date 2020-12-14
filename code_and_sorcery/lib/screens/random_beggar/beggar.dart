@@ -56,7 +56,6 @@ class _BeggarState extends State<Beggar> {
                     ),
                     onPressed: () {
                       if (finalScore > 2) {
-                        finalScore -= 2;
                         decreasePlayerPoints();
                         openChest();
                       }
@@ -83,7 +82,9 @@ class _BeggarState extends State<Beggar> {
       Navigator.pop(context);
     }
     if (diceRoll <= partyWisdom) {
-      finalScore += 4;
+      setState(() {
+        finalScore += 4;
+      });
       increasePlayerPoints();
       Navigator.pushNamed(context, '/successBeggar');
     } else {
@@ -103,6 +104,9 @@ class _BeggarState extends State<Beggar> {
         'player4Points': FieldValue.increment(-2)
       else
         'player1Points': FieldValue.increment(-2)
+    });
+    setState(() {
+      finalScore -= 2;
     });
   }
 

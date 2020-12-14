@@ -300,6 +300,7 @@ class GameSessionSPState extends State<GameSessionSP> {
   void updateQuestion() {
     setState(() {
       if (questionNumber == gameShort.questions.length - 1) {
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
