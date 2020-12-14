@@ -109,6 +109,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   difficulty = 'Easy';
+                  setDifficulty('Easy');
                 });
               },
               child: Text(
@@ -132,6 +133,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   difficulty = 'Easy';
+                  setDifficulty('Easy');
                 });
               },
               child: Text(
@@ -159,6 +161,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   difficulty = 'Normal';
+                  setDifficulty('Normal');
                 });
               },
               child: Text(
@@ -182,6 +185,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   difficulty = 'Normal';
+                  setDifficulty('Normal');
                 });
               },
               child: Text(
@@ -209,6 +213,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   adventureLength = 'Short';
+                  setGameLength('Short');
                 });
               },
               child: Text(
@@ -232,6 +237,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   adventureLength = 'Short';
+                  setGameLength('Short');
                 });
               },
               child: Text(
@@ -259,6 +265,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   adventureLength = 'Long';
+                  setGameLength('Long');
                 });
               },
               child: Text(
@@ -282,6 +289,7 @@ class GameSettingState extends State<GameSettings> {
               onPressed: () {
                 setState(() {
                   adventureLength = 'Long';
+                  setGameLength('Long');
                 });
               },
               child: Text(
