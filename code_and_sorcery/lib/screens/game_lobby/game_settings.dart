@@ -33,47 +33,13 @@ class GameSettingState extends State<GameSettings> {
                 ),
               ),
               SizedBox(height: 12),
-              Container(
-                height: 64,
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  color: Colors.orange,
-                ),
-                child: TextButton(
-                  style: TextButton.styleFrom(primary: Colors.transparent),
-                  onPressed: () {
-                    switch (difficulty) {
-                      case 'Normal':
-                        {
-                          setState(() {
-                            difficulty = 'Easy';
-                            setDifficulty(difficulty);
-                            print('easy');
-                          });
-                        }
-                        break;
-                      case 'Easy':
-                        {
-                          setState(() {
-                            difficulty = 'Normal';
-                            setDifficulty(difficulty);
-                            print('normal');
-                          });
-                        }
-                        break;
-                    }
-                  },
-                  child: Text(
-                    difficulty,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 48),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    easyButton(),
+                    normalButton(),
+                  ]),
+              SizedBox(height: 64),
               Text(
                 'Adventure Length',
                 style: TextStyle(
@@ -82,47 +48,14 @@ class GameSettingState extends State<GameSettings> {
                 ),
               ),
               SizedBox(height: 12),
-              Container(
-                height: 64,
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  color: Colors.orange,
-                ),
-                child: TextButton(
-                  style: TextButton.styleFrom(primary: Colors.transparent),
-                  onPressed: () {
-                    switch (adventureLength) {
-                      case 'Short':
-                        {
-                          setState(() {
-                            adventureLength = 'Long';
-                            setGameLength(adventureLength);
-                            print('Long');
-                          });
-                        }
-                        break;
-                      case 'Long':
-                        {
-                          setState(() {
-                            adventureLength = 'Short';
-                            setGameLength(adventureLength);
-                            print('Short');
-                          });
-                        }
-                        break;
-                    }
-                  },
-                  child: Text(
-                    adventureLength,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    shortButton(),
+                    longButton(),
+                  ]),
               Padding(padding: EdgeInsets.all(40.0)),
+              SizedBox(height: 60),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
@@ -160,5 +93,205 @@ class GameSettingState extends State<GameSettings> {
         .collection("games")
         .doc(gameID)
         .update({'gameLength': adventureLength});
+  }
+
+  Widget easyButton() {
+    return difficulty == 'Easy'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  difficulty = 'Easy';
+                });
+              },
+              child: Text(
+                'Easy',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  difficulty = 'Easy';
+                });
+              },
+              child: Text(
+                'Easy',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+  }
+
+  Widget normalButton() {
+    return difficulty == 'Normal'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  difficulty = 'Normal';
+                });
+              },
+              child: Text(
+                'Normal',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  difficulty = 'Normal';
+                });
+              },
+              child: Text(
+                'Normal',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+  }
+
+  Widget shortButton() {
+    return adventureLength == 'Short'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  adventureLength = 'Short';
+                });
+              },
+              child: Text(
+                'Short',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  adventureLength = 'Short';
+                });
+              },
+              child: Text(
+                'Short',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+  }
+
+  Widget longButton() {
+    return adventureLength == 'Long'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  adventureLength = 'Long';
+                });
+              },
+              child: Text(
+                'Long',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  adventureLength = 'Long';
+                });
+              },
+              child: Text(
+                'Long',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
   }
 }
