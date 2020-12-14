@@ -29,6 +29,12 @@ class GuildView extends State<Guild> {
               // guildNameSection,
               Padding(padding: EdgeInsets.all(40.0)),
               guildNameGetter(context),
+              Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Divider(
+                    thickness: 5,
+                    color: color3,
+                  )),
               Padding(padding: EdgeInsets.all(30.0)),
               totalPointsSection,
               Padding(padding: EdgeInsets.all(10.0)),
@@ -219,8 +225,11 @@ class GuildView extends State<Guild> {
                     guild = dropdownValue;
                   });
                 },
-                items: <String>['Backenders', 'Frontenders', 'Fullstackers']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'The Scarlet Authenticators',
+                  'The Callback Crusade',
+                  'The Microtask Ascendancy'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -274,7 +283,7 @@ Widget guildNameGetter(BuildContext context) {
         var guildDocument = snapshot.data;
         return Text(
           guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 34, color: Colors.white),
+          style: TextStyle(fontSize: 30, color: Colors.white),
         );
       });
 }

@@ -49,9 +49,13 @@ class UserProfile extends StatelessWidget {
                     ),
                     Padding(padding: EdgeInsets.all(2)),
                     Divider(thickness: 3, color: color3),
+                    Text(
+                      "Guild:",
+                      style: TextStyle(fontSize: 20, color: textBright),
+                    ),
                     Padding(
                         padding: EdgeInsets.all(15),
-                        child: Text('Guild:  $guild',
+                        child: Text('$guild',
                             style: TextStyle(fontSize: 20, color: textBright))),
                     Padding(padding: EdgeInsets.all(6.00)),
                     SizedBox(

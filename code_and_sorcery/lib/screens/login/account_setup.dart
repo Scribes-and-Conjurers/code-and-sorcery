@@ -16,14 +16,14 @@ class AccountSetupState extends State<AccountSetup> {
   final usernameController = TextEditingController();
   final guildController = TextEditingController();
   String usernameValue = "";
-  String dropdownGuildValue = "Backenders";
+  String dropdownGuildValue = "The Scarlet Authenticators";
 
   // set the default guild and class
   @override
   void initState() {
     super.initState();
     playerClass = 'Warrior';
-    guild = 'Backenders';
+    guild = 'The Scarlet Authenticators';
   }
 
   @override
@@ -84,7 +84,7 @@ class AccountSetupState extends State<AccountSetup> {
                         data: Theme.of(context).copyWith(canvasColor: color2),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            value: "Backenders",
+                            value: "The Scarlet Authenticators",
                             // icon: Icon(Icons.arrow_downward),
                             //iconSize: 20,
                             elevation: 8,
@@ -100,9 +100,9 @@ class AccountSetupState extends State<AccountSetup> {
                               });
                             },
                             items: <String>[
-                              'Backenders',
-                              'Frontenders',
-                              'Fullstackers'
+                              'The Scarlet Authenticators',
+                              'The Callback Crusade',
+                              'The Microtask Ascendancy'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
