@@ -276,7 +276,8 @@ class Homepage extends StatelessWidget {
       'startCountdown': 5,
       'selectAnswer': 0,
       'gameDifficulty': difficulty,
-      'gameLength': adventureLength
+      'gameLength': adventureLength,
+      'pushedLeave': false
     });
   }
 
@@ -308,7 +309,8 @@ class Homepage extends StatelessWidget {
       'startCountdown': 5,
       'selectAnswer': 0,
       'gameDifficulty': difficulty,
-      'gameLength': adventureLength
+      'gameLength': adventureLength,
+      'pushedLeave': false
     });
   }
 
