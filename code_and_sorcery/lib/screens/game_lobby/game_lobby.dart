@@ -74,7 +74,6 @@ class GameLobbySL extends State<GameLobby> {
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 50),
                 startCountdownStream(context),
-                // leaveCountdownStream(context),
                 SizedBox(height: 40),
                 buildUser(context),
                 SizedBox(height: 40),
@@ -93,6 +92,7 @@ class GameLobbySL extends State<GameLobby> {
                   },
                   child: Text('Go back to homepage'),
                 ),
+                leaveCountdownStream(context),
               ],
             ),
           ),
@@ -310,12 +310,6 @@ Widget leaveCountdownStream(BuildContext context) {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/homepage');
           });
-          return Text(
-            "",
-            style: TextStyle(fontSize: 25),
-          );
-        } else {
-          return Text("");
         }
       });
 }
