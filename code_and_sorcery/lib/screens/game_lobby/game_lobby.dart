@@ -310,6 +310,15 @@ Widget leaveCountdownStream(BuildContext context) {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/homepage');
           });
+          return Text(
+            "",
+            style: TextStyle(fontSize: 1),
+          );
+        } else {
+          return Text(
+            "",
+            style: TextStyle(fontSize: 1),
+          );
         }
       });
 }
