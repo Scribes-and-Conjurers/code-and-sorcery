@@ -21,7 +21,7 @@ class GuildView extends State<Guild> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: color2,
+          color: color1,
         ),
         child: Center(
           child: Column(
@@ -36,7 +36,7 @@ class GuildView extends State<Guild> {
               // userRanking,
               // guildRanking,
               // guildRankGetter(context),
-              SizedBox(height: 60),
+              SizedBox(height: 35),
               SizedBox(
                 width: 200.0,
                 child: ElevatedButton(
@@ -76,13 +76,13 @@ class GuildView extends State<Guild> {
                 ),
               ),
 
-              SizedBox(height: 70),
+              SizedBox(height: 50),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor1),
+                        MaterialStateProperty.resolveWith(getColor2),
                   ),
                   onPressed: () {
                     changeGuildPopUp(context);
@@ -98,8 +98,8 @@ class GuildView extends State<Guild> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: color1,
-        foregroundColor: color3,
+        backgroundColor: color3,
+        foregroundColor: color1,
         child: Text('Back'),
         onPressed: () {
           Navigator.pushNamed(context, '/profile');
@@ -256,7 +256,7 @@ Widget guildPointsGetter(BuildContext context) {
         }
         var guildDocument = snapshot.data;
         return Text(guildDocument['totalPoints'].toString(),
-            style: TextStyle(fontSize: 20, color: Colors.white));
+            style: TextStyle(fontSize: 50, color: Colors.white));
       });
 }
 
