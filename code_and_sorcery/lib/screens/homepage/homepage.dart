@@ -22,7 +22,7 @@ Color getColor1(Set<MaterialState> states) {
     MaterialState.focused,
   };
   if (states.any(interactiveStates.contains)) {
-    return Colors.blue;
+    return color3;
   }
   return color1;
 }
@@ -34,7 +34,7 @@ Color getColor2(Set<MaterialState> states) {
     MaterialState.focused,
   };
   if (states.any(interactiveStates.contains)) {
-    return Colors.blue;
+    return color4;
   }
   return color2;
 }
@@ -46,7 +46,7 @@ Color getColor3(Set<MaterialState> states) {
     MaterialState.focused,
   };
   if (states.any(interactiveStates.contains)) {
-    return Colors.blue;
+    return color2;
   }
   return color3;
 }
@@ -58,7 +58,7 @@ Color getColor4(Set<MaterialState> states) {
     MaterialState.focused,
   };
   if (states.any(interactiveStates.contains)) {
-    return Colors.blue;
+    return color1;
   }
   return color4;
 }
