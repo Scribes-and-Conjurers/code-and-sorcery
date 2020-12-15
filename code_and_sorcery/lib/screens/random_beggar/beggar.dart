@@ -46,13 +46,7 @@ class _BeggarState extends State<Beggar> {
                       style: TextStyle(fontSize: 20, color: textBright),
                     )),
                 SizedBox(height: 50),
-                Text((() {
-                  if (finalScore < 2) {
-                    return "You don't have enough points either!";
-                  } else {
-                    return '';
-                  }
-                })()),
+                notEnoughText(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: SizedBox(
@@ -96,6 +90,22 @@ class _BeggarState extends State<Beggar> {
             ),
           ),
         )));
+  }
+
+  Widget notEnoughText() {
+    return finalScore < 2
+        ? Text(
+      "You don't have enough points either!",
+          style: TextStyle(
+            fontSize: 16,
+            color: textBright,
+          ),)
+        : Text(
+          '',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),);
   }
 
   void openChest() {

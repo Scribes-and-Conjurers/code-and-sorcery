@@ -318,7 +318,7 @@ class _QuestLongState extends State<QuestLong> {
                                     "Party Health:",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
-                                  partyHealthModifier(context),
+                                  partyHealthModifierSolo(context),
                                 ])),
 
                         Padding(padding: EdgeInsets.all(5.0)),
@@ -476,7 +476,6 @@ class _QuestLongState extends State<QuestLong> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => new Beggar()));
       } else if (questionNumber == game.questions.length - 1) {
-        Navigator.pop(context);
         Navigator.pop(context);
         Navigator.push(
             context,

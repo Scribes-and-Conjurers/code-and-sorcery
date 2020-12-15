@@ -22,7 +22,7 @@ class QuestLongMP extends StatefulWidget {
 }
 
 class QuestLongMPState extends State<QuestLongMP> {
-  int counter = 10;
+  int counter = 5;
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -47,7 +47,7 @@ class QuestLongMPState extends State<QuestLongMP> {
             }
             updateQuestion();
             setPlayerFalse();
-            counter = 10;
+            counter = 5;
           }
         });
       }
@@ -104,7 +104,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                                         style: TextStyle(
                                             fontSize: 15.0, color: textBright),
                                       ),
-                                      partyHealthModifier(context),
+                                      partyHealthModifierLong(context),
                                     ])),
                             // gameOverStream(context),
 
@@ -363,7 +363,7 @@ class QuestLongMPState extends State<QuestLongMP> {
                                     "Party Health:",
                                     style: TextStyle(fontSize: 15.0),
                                   ),
-                                  partyHealthModifier(context),
+                                  partyHealthModifierLong(context),
                                 ])),
 
                         Padding(padding: EdgeInsets.all(5.0)),
