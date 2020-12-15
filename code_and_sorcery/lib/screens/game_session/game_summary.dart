@@ -138,6 +138,7 @@ class SummarySP extends StatelessWidget {
                                   updateGame();
                                   finalScore = 0;
                                   Navigator.pop(context);
+                                  Navigator.pop(context);
                                   // Navigator.pushNamed(context, '/homepage');
                                 },
                                 child: Text("LEAVE THE GAME",

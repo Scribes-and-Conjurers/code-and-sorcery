@@ -118,55 +118,16 @@ class AccountSetupState extends State<AccountSetup> {
                     SizedBox(height: 50),
                     Text(
                       "CLASS:",
-                      style: TextStyle(color: textBright),
+                        style: TextStyle(fontSize: 18, color: textBright)
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 64,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        color: Colors.orange,
-                      ),
-                      child: TextButton(
-                        style:
-                            TextButton.styleFrom(primary: Colors.transparent),
-                        onPressed: () {
-                          switch (playerClass) {
-                            case 'Warrior':
-                              {
-                                setState(() {
-                                  playerClass = 'Wizard';
-                                  print('Wizard');
-                                });
-                              }
-                              break;
-                            case 'Wizard':
-                              {
-                                setState(() {
-                                  playerClass = 'Warrior';
-                                  print('Warrior');
-                                });
-                              }
-                              break;
-                            default:
-                              {
-                                setState(() {
-                                  playerClass = 'Warrior';
-                                });
-                              }
-                              break;
-                          }
-                        },
-                        child: Text(
-                          playerClass,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: 5),
+                    Divider(thickness: 5.0, color: color3),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          warriorButton(),
+                          wizardButton(),
+                        ]),
                     SizedBox(height: 30),
                     Container(
                       height: 50,
@@ -228,5 +189,105 @@ class AccountSetupState extends State<AccountSetup> {
       'points': 0,
       'playerClass': playerClass
     });
+  }
+
+  Widget warriorButton() {
+    return playerClass == 'Warrior'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  playerClass = 'Warrior';
+                });
+              },
+              child: Text(
+                'Warrior',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  playerClass = 'Warrior';
+                });
+              },
+              child: Text(
+                'Warrior',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+  }
+
+  Widget wizardButton() {
+    return playerClass == 'Wizard'
+        ? Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 3),
+              color: Colors.orange[600],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  playerClass = 'Wizard';
+                });
+              },
+              child: Text(
+                'Wizard',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: 64,
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              color: Colors.orange[200],
+            ),
+            child: TextButton(
+              style: TextButton.styleFrom(primary: Colors.transparent),
+              onPressed: () {
+                setState(() {
+                  playerClass = 'Wizard';
+                });
+              },
+              child: Text(
+                'Wizard',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
   }
 }
