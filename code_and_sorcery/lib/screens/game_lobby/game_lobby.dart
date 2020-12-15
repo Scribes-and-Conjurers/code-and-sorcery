@@ -62,37 +62,52 @@ class GameLobbySL extends State<GameLobby> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text("Game link: ",
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold)),
-                Text(gameID,
-                    style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(height: 50),
-                startCountdownStream(context),
-                SizedBox(height: 40),
-                buildUser(context),
-                SizedBox(height: 40),
+                Padding(padding: EdgeInsets.all(25)),
+                Container(
+                    padding: EdgeInsets.only(
+                        left: 30, right: 30, bottom: 20, top: 20),
+                    decoration: BoxDecoration(color: color2),
+                    child: Column(children: [
+                      Text("Game link: ",
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      Text(gameID,
+                          style: TextStyle(
+                              fontSize: 50,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(height: 20),
+                      startCountdownStream(context),
+                      SizedBox(height: 20),
+                      buildUser(context),
+                      SizedBox(height: 10),
+                    ])),
+                SizedBox(height: 20),
                 goToGameButton(),
                 SizedBox(height: 20),
                 goToSettingsButton(),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    await checkP1Leave();
-                    if (player1Leaves == true) {
-                      amPlayer1 = false;
-                      if (amPlayer1 == false) {
-                        removePlayer();
-                        Navigator.pop(context);
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith(getColor3),
+                    ),
+                    onPressed: () async {
+                      await checkP1Leave();
+                      if (player1Leaves == true) {
+                        amPlayer1 = false;
+                        if (amPlayer1 == false) {
+                          removePlayer();
+                          Navigator.pop(context);
+                        }
                       }
-                    }
-                  },
-                  child: Text('Go back to homepage'),
+                    },
+                    child: Text('GO TO HOMEPAGE'),
+                  ),
                 ),
                 leaveCountdownStream(context),
               ],
@@ -105,23 +120,35 @@ class GameLobbySL extends State<GameLobby> {
 
   Widget goToGameButton() {
     return amPlayer1 == true
-        ? ElevatedButton(
-            onPressed: () {
-              checkP1GO();
-              startTimer();
-            },
-            child: Text('Go to game'),
+        ? SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith(getColor3),
+              ),
+              onPressed: () {
+                checkP1GO();
+                startTimer();
+              },
+              child: Text('GO TO GAME'),
+            ),
           )
         : Container();
   }
 
   Widget goToSettingsButton() {
     return amPlayer1 == true
-        ? ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-            child: Text('Settings'),
+        ? SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith(getColor3),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+              child: Text('SETTINGS'),
+            ),
           )
         : Container();
   }
@@ -286,13 +313,13 @@ Widget startCountdownStream(BuildContext context) {
           return Text(
             "1",
             style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 45, color: color3, fontWeight: FontWeight.bold),
           );
         } else {
           return Text(
             fiveSecondCountdown.toString(),
             style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 45, color: color3, fontWeight: FontWeight.bold),
           );
         }
       });
