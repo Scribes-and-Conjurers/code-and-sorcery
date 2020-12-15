@@ -201,47 +201,61 @@ class Homepage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Choose your game mode'),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                color: color4,
-                child: Text('SINGLEPLAYER'),
-                onPressed: () {
-                  gameID = randomNumeric(2);
-                  switch (playerClass) {
-                    case 'Warrior':
-                      {
-                        createSPGameWarrior();
-                      }
-                      break;
-                    case 'Wizard':
-                      {
-                        createSPGameWizard();
-                      }
-                      break;
-                  }
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/lobbySP');
-                },
+            title: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Choose your game mode'),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MaterialButton(
+                        elevation: 5.0,
+                        color: color4,
+                        child: Text('SINGLEPLAYER'),
+                        onPressed: () {
+                          gameID = randomNumeric(2);
+                          switch (playerClass) {
+                            case 'Warrior':
+                              {
+                                createSPGameWarrior();
+                              }
+                              break;
+                            case 'Wizard':
+                              {
+                                createSPGameWizard();
+                              }
+                              break;
+                          }
+                          Navigator.of(context).pop();
+                          Navigator.pushNamed(context, '/lobbySP');
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                      ),
+                      MaterialButton(
+                        elevation: 5.0,
+                        color: color4,
+                        child: Text('MULTIPLAYER'),
+                        onPressed: () {
+                          amPlayer1 = true;
+                          gameID = randomAlpha(2);
+                          if (playerClass == 'Warrior')
+                            createMPGameWarrior();
+                          else {
+                            createMPGameWizard();
+                          }
+                          Navigator.of(context).pop();
+                          Navigator.pushNamed(context, '/lobby');
+                        },
+                      )
+                    ],
+                  )
+                ],
               ),
-              MaterialButton(
-                elevation: 5.0,
-                color: color4,
-                child: Text('MULTIPLAYER'),
-                onPressed: () {
-                  amPlayer1 = true;
-                  gameID = randomAlpha(2);
-                  if (playerClass == 'Warrior')
-                    createMPGameWarrior();
-                  else {
-                    createMPGameWizard();
-                  }
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/lobby');
-                },
-              )
-            ],
+            ),
           );
         });
   }

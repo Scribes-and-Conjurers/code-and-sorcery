@@ -35,7 +35,7 @@ class GameSession extends StatefulWidget {
 
 // Game widget state
 class GameSessionState extends State<GameSession> {
-  int counter = 5;
+  int counter = 12;
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -60,7 +60,7 @@ class GameSessionState extends State<GameSession> {
             }
             updateQuestion();
             setPlayerFalse();
-            counter = 5;
+            counter = 12;
           }
         });
       }
