@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
@@ -62,10 +64,10 @@ class GameLobbySL extends State<GameLobby> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(padding: EdgeInsets.all(25)),
+                Padding(padding: EdgeInsets.all(20)),
                 Container(
                     padding: EdgeInsets.only(
-                        left: 30, right: 30, bottom: 20, top: 20),
+                        left: 64, right: 64, bottom: 20, top: 20),
                     decoration: BoxDecoration(color: color2),
                     child: Column(children: [
                       Text("Game link: ",
@@ -78,17 +80,17 @@ class GameLobbySL extends State<GameLobby> {
                               fontSize: 50,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)),
-                      SizedBox(height: 20),
+                      SizedBox(height: 16),
                       startCountdownStream(context),
-                      SizedBox(height: 20),
+                      SizedBox(height: 16),
                       buildUser(context),
                       SizedBox(height: 10),
                     ])),
-                SizedBox(height: 20),
+                SizedBox(height: 14),
                 goToGameButton(),
-                SizedBox(height: 20),
+                SizedBox(height: 14),
                 goToSettingsButton(),
-                SizedBox(height: 20),
+                SizedBox(height: 14),
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
@@ -288,6 +290,7 @@ Widget buildUser(BuildContext context) {
               userDocument['player4Class'],
           style: TextStyle(
               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         );
       });
 }
@@ -311,15 +314,18 @@ Widget startCountdownStream(BuildContext context) {
             Navigator.pushNamed(context, '/gameLoadingMP');
           });
           return Text(
-            "1",
-            style: TextStyle(
-                fontSize: 45, color: color3, fontWeight: FontWeight.bold),
-          );
+            "Game starting in 1...",
+              style: TextStyle(
+                  fontSize: 20, color: color3, fontWeight: FontWeight.bold));
+        } else if (snapshot.data['startCountdown'] == 5) {
+          return Text('Waiting to start...',
+              style: TextStyle(
+                  fontSize: 20, color: color3, fontWeight: FontWeight.bold));
         } else {
           return Text(
-            fiveSecondCountdown.toString(),
+            'Game starting in $fiveSecondCountdown...',
             style: TextStyle(
-                fontSize: 45, color: color3, fontWeight: FontWeight.bold),
+                fontSize: 20, color: color3, fontWeight: FontWeight.bold),
           );
         }
       });
