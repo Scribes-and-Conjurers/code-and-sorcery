@@ -20,7 +20,6 @@ class _LoadingBeforeGameMPState extends State<LoadingBeforeGameMP> {
   @override
   void initState() {
     super.initState();
-    setDifficultyAndLength();
     if (difficulty == 'Easy' && adventureLength == 'Long') {
       updateGameContentLong('long-adv0');
       Timer(
@@ -74,21 +73,6 @@ class _LoadingBeforeGameMPState extends State<LoadingBeforeGameMP> {
                 style: TextStyle(fontSize: 30, color: textBright),
               )
             ]))));
-  }
-
-  void setDifficultyAndLength() async {
-    await FirebaseFirestore.instance
-        .collection('games')
-        .doc(gameID)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        difficulty = documentSnapshot.data()['gameDifficulty'];
-        adventureLength = documentSnapshot.data()['gameLength'];
-      } else {
-        print("document snapshot doesn't exist!");
-      }
-    });
   }
 
   void updateGameContentLong(String questName) async {
