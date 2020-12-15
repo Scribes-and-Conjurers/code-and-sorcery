@@ -7,7 +7,7 @@ import '../../global_variables/global_variables.dart';
 import '../homepage/colors.dart';
 import '../homepage/homepage.dart';
 
-String dropdownValue = guild;
+String dropdownValue = "";
 
 class Guild extends StatefulWidget {
   Guild({this.title, this.someText});
