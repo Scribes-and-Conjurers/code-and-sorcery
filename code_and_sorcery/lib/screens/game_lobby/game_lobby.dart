@@ -264,7 +264,8 @@ Widget buildUser(BuildContext context) {
           return Text("Loading");
         }
         var userDocument = snapshot.data;
-
+        difficulty = userDocument["gameDifficulty"];
+        adventureLength = userDocument["gameLength"];
         return Text(
           'Party Health: ' +
               userDocument["partyHealth"].toString() +
