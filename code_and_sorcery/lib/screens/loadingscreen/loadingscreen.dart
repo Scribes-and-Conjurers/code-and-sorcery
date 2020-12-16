@@ -1,6 +1,5 @@
 import 'package:code_and_sorcery/screens/homepage/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
 import 'dart:async';
 import '../homepage/colors.dart';
 
