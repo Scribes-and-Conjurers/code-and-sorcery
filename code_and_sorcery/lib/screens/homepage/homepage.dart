@@ -265,7 +265,7 @@ class Homepage extends StatelessWidget {
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
       'finished': false,
-      'partyHealth': 3,
+      'partyHealth': 10,
       'partyWisdom': 0.6,
       'player1': username,
       'player1Points': 0,
@@ -298,7 +298,7 @@ class Homepage extends StatelessWidget {
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
       'finished': false,
-      'partyHealth': 4,
+      'partyHealth': 10,
       'partyWisdom': 0.5,
       'player1': username,
       'player1Points': 0,
@@ -409,7 +409,14 @@ class Homepage extends StatelessWidget {
                     }
                   }
                 },
-              )
+              ),
+              MaterialButton(
+                  elevation: 5.0,
+                  child: Text('Cancel', style: TextStyle(fontSize: 23)),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pop(gameLinkController.text.toString());
+                  })
             ],
           );
         });

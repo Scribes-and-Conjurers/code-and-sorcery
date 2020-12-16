@@ -129,79 +129,9 @@ class GuildView extends State<Guild> {
     child: Center(
       child: Text('Current Guild Points:',
           style: TextStyle(fontSize: 20, color: Colors.white)),
-      // Text('[76,432]', style: TextStyle(fontSize: 20)),
     ),
     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
   );
-
-  // Widget guildNameSection = Container(
-  //   padding: EdgeInsets.all(40),
-  //   child: Center(
-  //     child: Column(
-  //       children: [
-  //         Text(
-  //           'The Microtask Ascendancy',
-  //           style: TextStyle(fontSize: 20, color: color1),
-  //         ),
-  //         Divider(
-  //           thickness: 5,
-  //         ),
-  //       ],
-  //     ),
-  //   ),
-  // );
-
-  // Widget userRanking = Container(
-  //     padding: EdgeInsets.all(40),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(
-  //           'Your Current Rank:',
-  //           style: TextStyle(fontSize: 20),
-  //         ),
-  //         Text(
-  //           '1',
-  //           style: TextStyle(fontSize: 20),
-  //         ),
-  //       ],
-  //     ));
-
-  // Widget guildRanking = Container(
-  //     padding: EdgeInsets.all(40),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(
-  //           'Current Guild Global Rank:',
-  //           style: TextStyle(fontSize: 20, color: color1),
-  //         ),
-  //         // Text('1', style: TextStyle(fontSize: 20),),
-  //       ],
-  //     ));
-
-  // Widget changeGuildButton = Container(
-  //   padding: EdgeInsets.all(30),
-  //   child: Center(
-  //     child: Column(
-  //       children: [
-  //         MaterialButton(
-  //           onPressed: () {
-  //             // changeGuildPopUp(context);
-  //           },
-  //           color: Colors.blueGrey,
-  //           textColor: Colors.white,
-  //           child: Text(
-  //             'Change Guild',
-  //             style: TextStyle(fontSize: 20),
-  //           ),
-  //         ),
-  //         Text('Warning: changing your guild will reset your personal score',
-  //             style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic)),
-  //       ],
-  //     ),
-  //   ),
-  // );
 
   void changeGuild() async {
     await FirebaseFirestore.instance.collection("users").doc(uID).update({
@@ -209,110 +139,165 @@ class GuildView extends State<Guild> {
     });
   }
 
-  Future<String> changeGuildPopUp(BuildContext context) {
-    TextEditingController gameLinkController = TextEditingController();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Select your new guild"),
-            content: Center(
-                child: Column(children: <Widget>[
-              SizedBox(height: 50),
-              DropdownButton<String>(
-                value: dropdownValue,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                    guild = dropdownValue;
-                  });
-                },
-                items: <String>[
-                  'The Scarlet Authenticators',
-                  'The Callback Crusade',
-                  'The Microtask Ascendancy'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+  String _hintText = 'Select your new guild';
+
+  void changeGuildPopUp(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Select your new guild"),
+          content: Container(
+            height: 100,
+            width: 200,
+            child: Column(
+              children: <Widget>[
+                StatefulBuilder(
+                    builder: (BuildContext context, StateSetter dropDownState) {
+                  return DropdownButton<String>(
+                    value: _hintText,
+                    underline: Container(),
+                    items: <String>[
+                      'Select your new guild',
+                      'The Scarlet Authenticators',
+                      'The Callback Crusade',
+                      'The Microtask Ascendancy'
+                    ].map((String value) {
+                      return new DropdownMenuItem<String>(
+                        value: value,
+                        child: new Text(
+                          value,
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String value) {
+                      dropDownState(() {
+                        _hintText = value;
+                      });
+                    },
                   );
-                }).toList(),
-              ),
-            ])),
-            actions: <Widget>[
-              MaterialButton(
-                  elevation: 5.0,
-                  child: Text('Send', style: TextStyle(fontSize: 23)),
-                  onPressed: () {
-                    changeGuild();
-                    Navigator.of(context)
-                        .pop(gameLinkController.text.toString());
-                  })
-            ],
+                }),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            MaterialButton(
+                elevation: 5.0,
+                child: Text('Send', style: TextStyle(fontSize: 23)),
+                onPressed: () {
+                  setState(() {
+                    guild = _hintText;
+                  });
+                  changeGuild();
+                  Navigator.of(context).pop();
+                }),
+            MaterialButton(
+                elevation: 5.0,
+                child: Text('Cancel', style: TextStyle(fontSize: 23)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+    );
+  }
+
+//     void changeGuildPopUp{
+//         context: context,
+//         builder: (context) {
+//           return AlertDialog(
+//             title: Text("Select your new guild"),
+//             content: SingleChildScrollView(
+//                 child: ListBody(children: <Widget>[
+//               SizedBox(height: 10),
+//               DropdownButton<String>(
+//                 value: dropdownValue,
+//                 icon: Icon(Icons.arrow_downward),
+//                 iconSize: 24,
+//                 elevation: 16,
+//                 style: TextStyle(color: Colors.deepPurple),
+//                 underline: Container(
+//                   height: 2,
+//                   color: Colors.deepPurpleAccent,
+//                 ),
+//                 onChanged: (String newValue) {
+//                   setState(() {
+//                     dropdownValue = newValue;
+//                     guild = dropdownValue;
+//                   });
+//                 },
+//                 items: <String>[
+//                   'The Scarlet Authenticators',
+//                   'The Callback Crusade',
+//                   'The Microtask Ascendancy'
+//                 ].map<DropdownMenuItem<String>>((String value) {
+//                   return DropdownMenuItem<String>(
+//                     value: value,
+//                     child: Text(value),
+//                   );
+//                 }).toList(),
+//               ),
+//             ])),
+//             actions: <Widget>[
+//               MaterialButton(
+//                   elevation: 5.0,
+//                   child: Text('Send', style: TextStyle(fontSize: 23)),
+//                   onPressed: () {
+//                     setState(() {
+//                       guild = dropdownValue;
+//                     });
+//                     changeGuild();
+//                     Navigator.of(context)
+//                         .pop(gameLinkController.text.toString());
+//                   }),
+//               MaterialButton(
+//                   elevation: 5.0,
+//                   child: Text('Cancel', style: TextStyle(fontSize: 23)),
+//                   onPressed: () {
+//                     Navigator.of(context)
+//                         .pop(gameLinkController.text.toString());
+//                   })
+//             ],
+//           );
+//         };);
+//   }
+// }
+
+// this function fetches guild points live
+  Widget guildPointsGetter(BuildContext context) {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('guilds')
+            .doc(guild)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading");
+          }
+          var guildDocument = snapshot.data;
+          return Text(guildDocument['totalPoints'].toString(),
+              style: TextStyle(fontSize: 50, color: Colors.white));
+        });
+  }
+
+// this function fetches guild name live
+  Widget guildNameGetter(BuildContext context) {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('guilds')
+            .doc(guild)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text("Loading");
+          }
+          var guildDocument = snapshot.data;
+          return Text(
+            guildDocument['name'].toString(),
+            style: TextStyle(fontSize: 25, color: Colors.white),
           );
         });
   }
 }
-
-// this function fetches guild points live
-Widget guildPointsGetter(BuildContext context) {
-  return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('guilds')
-          .doc(guild)
-          .snapshots(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return Text("Loading");
-        }
-        var guildDocument = snapshot.data;
-        return Text(guildDocument['totalPoints'].toString(),
-            style: TextStyle(fontSize: 50, color: Colors.white));
-      });
-}
-
-// this function fetches guild name live
-Widget guildNameGetter(BuildContext context) {
-  return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('guilds')
-          .doc(guild)
-          .snapshots(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return Text("Loading");
-        }
-        var guildDocument = snapshot.data;
-        return Text(
-          guildDocument['name'].toString(),
-          style: TextStyle(fontSize: 25, color: Colors.white),
-        );
-      });
-}
-
-// // this function fetches guild ranking live
-// Widget guildRankGetter(BuildContext context) {
-//   return StreamBuilder(
-//       stream: FirebaseFirestore.instance
-//           .collection('guilds')
-//           .doc(guild)
-//           .snapshots(),
-//       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (!snapshot.hasData) {
-//           return Text("Loading");
-//         }
-//         var guildDocument = snapshot.data;
-//         return Text(
-//           guildDocument['guildRanking'].toString(),
-//           style: TextStyle(fontSize: 20),
-//         );
-//       });
-// }
