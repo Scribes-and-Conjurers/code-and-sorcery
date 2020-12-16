@@ -22,7 +22,7 @@ class QuestLongMP extends StatefulWidget {
 }
 
 class QuestLongMPState extends State<QuestLongMP> {
-  int counter = 5;
+  int counter = 15;
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -47,7 +47,7 @@ class QuestLongMPState extends State<QuestLongMP> {
             }
             updateQuestion();
             setPlayerFalse();
-            counter = 5;
+            counter = 15;
           }
         });
       }

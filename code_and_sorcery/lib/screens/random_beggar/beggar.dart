@@ -62,7 +62,7 @@ class _BeggarState extends State<Beggar> {
                         style: TextStyle(fontSize: 20, color: textDark),
                       ),
                       onPressed: () {
-                        if (finalScore > 2) {
+                        if (finalScore >= 2) {
                           decreasePlayerPoints();
                           openChest();
                         }
