@@ -69,7 +69,7 @@ class GameLobbySL extends State<GameLobby> {
                         left: 64, right: 64, bottom: 20, top: 20),
                     decoration: BoxDecoration(color: color2),
                     child: Column(children: [
-                      Text("Game link: ",
+                      Text("Room code: ",
                           style: TextStyle(
                               fontSize: 25,
                               color: Colors.white,
