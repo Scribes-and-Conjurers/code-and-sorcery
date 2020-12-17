@@ -26,6 +26,9 @@ Code & Sorcery combines the educational and fun aspects of a quiz game with exci
 
 ---
 
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e6bcbbf-bd0b-4c87-85f7-6d6526616d61/screenshots_for_readme.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e6bcbbf-bd0b-4c87-85f7-6d6526616d61/screenshots_for_readme.png)
+
+
 # Technology and Architecture
 
 ---
