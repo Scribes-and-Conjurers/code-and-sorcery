@@ -5,7 +5,7 @@ This project was created during our time at Code Chrysalis
 
 Code & Sorcery is a bite-sized multiplayer quiz experience that lets users test their developer knowledge. You can download it for free from the Google Play store by following this link:
 
-LINK
+https://play.google.com/store/apps/details?id=com.the_conjuring_scribes.code_and_sorcery
 
 ### Overview
 
