@@ -23,7 +23,7 @@ class FailureBeggar extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                    "The beggar never came back...",
+                    "The Old Man never came back...",
                     style: TextStyle(fontSize: 20, color: textBright),
                   )),
               Padding(
