@@ -265,7 +265,7 @@ class Homepage extends StatelessWidget {
       'createdAt': FieldValue.serverTimestamp(),
       'startedAt': null,
       'finished': false,
-      'partyHealth': 12,
+      'partyHealth': 11,
       'partyWisdom': 0.6,
       'player1': username,
       'player1Points': 0,
