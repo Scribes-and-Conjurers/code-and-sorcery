@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:code_and_sorcery/buttons/share_link_rename.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
@@ -8,6 +9,7 @@ import 'dart:async';
 import '../../global_variables/global_variables.dart';
 import '../homepage/colors.dart';
 import '../homepage/homepage.dart';
+import '../../buttons/share_link_rename.dart';
 
 String gameLinkValue = "";
 bool pushedGo;
@@ -74,11 +76,19 @@ class GameLobbySL extends State<GameLobby> {
                               fontSize: 25,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)),
-                      Text(gameID,
-                          style: TextStyle(
-                              fontSize: 50,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(gameID,
+                                style: TextStyle(
+                                    fontSize: 50,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            createShareIcon(gameID)
+                          ]),
                       SizedBox(height: 16),
                       startCountdownStream(context),
                       SizedBox(height: 16),
@@ -313,8 +323,7 @@ Widget startCountdownStream(BuildContext context) {
             Navigator.pop(context);
             Navigator.pushNamed(context, '/gameLoadingMP');
           });
-          return Text(
-            "Game starting in 1...",
+          return Text("Game starting in 1...",
               style: TextStyle(
                   fontSize: 20, color: color3, fontWeight: FontWeight.bold));
         } else if (snapshot.data['startCountdown'] == 5) {
