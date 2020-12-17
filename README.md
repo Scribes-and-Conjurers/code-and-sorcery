@@ -27,6 +27,8 @@ Code & Sorcery combines the educational and fun aspects of a quiz game with exci
 ---
 
 A sample of how the game looks:
+
+
 <img width="423" alt="screenshots_for_readme" src="https://user-images.githubusercontent.com/65750361/102456339-545a5900-4084-11eb-8a81-5e07c36705b5.png">
 
 
@@ -63,6 +65,8 @@ In the future, we plan to:
 - increase the number of people who can particiapate in a multiplayer game, first to 8, later to 12 people
 - include soundtrack for game sessions
 - additional color palettes changeable for users
+
+... and much more!
 
 
 # Team
