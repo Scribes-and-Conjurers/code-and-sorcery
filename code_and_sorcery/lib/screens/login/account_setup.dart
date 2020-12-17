@@ -17,6 +17,7 @@ class AccountSetupState extends State<AccountSetup> {
   final guildController = TextEditingController();
   String usernameValue = "";
   String dropdownGuildValue = "The Scarlet Authenticators";
+  String _hintText = "Select your guild";
 
   // set the default guild and class
   @override
@@ -84,7 +85,7 @@ class AccountSetupState extends State<AccountSetup> {
                         data: Theme.of(context).copyWith(canvasColor: color2),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            value: "The Scarlet Authenticators",
+                            value: _hintText,
                             // icon: Icon(Icons.arrow_downward),
                             //iconSize: 20,
                             elevation: 8,
@@ -116,10 +117,8 @@ class AccountSetupState extends State<AccountSetup> {
                       ),
                     ),
                     SizedBox(height: 50),
-                    Text(
-                      "CLASS:",
-                        style: TextStyle(fontSize: 18, color: textBright)
-                    ),
+                    Text("CLASS:",
+                        style: TextStyle(fontSize: 18, color: textBright)),
                     SizedBox(height: 5),
                     Divider(thickness: 5.0, color: color3),
                     Row(

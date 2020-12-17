@@ -204,67 +204,6 @@ class GuildView extends State<Guild> {
     );
   }
 
-//     void changeGuildPopUp{
-//         context: context,
-//         builder: (context) {
-//           return AlertDialog(
-//             title: Text("Select your new guild"),
-//             content: SingleChildScrollView(
-//                 child: ListBody(children: <Widget>[
-//               SizedBox(height: 10),
-//               DropdownButton<String>(
-//                 value: dropdownValue,
-//                 icon: Icon(Icons.arrow_downward),
-//                 iconSize: 24,
-//                 elevation: 16,
-//                 style: TextStyle(color: Colors.deepPurple),
-//                 underline: Container(
-//                   height: 2,
-//                   color: Colors.deepPurpleAccent,
-//                 ),
-//                 onChanged: (String newValue) {
-//                   setState(() {
-//                     dropdownValue = newValue;
-//                     guild = dropdownValue;
-//                   });
-//                 },
-//                 items: <String>[
-//                   'The Scarlet Authenticators',
-//                   'The Callback Crusade',
-//                   'The Microtask Ascendancy'
-//                 ].map<DropdownMenuItem<String>>((String value) {
-//                   return DropdownMenuItem<String>(
-//                     value: value,
-//                     child: Text(value),
-//                   );
-//                 }).toList(),
-//               ),
-//             ])),
-//             actions: <Widget>[
-//               MaterialButton(
-//                   elevation: 5.0,
-//                   child: Text('Send', style: TextStyle(fontSize: 23)),
-//                   onPressed: () {
-//                     setState(() {
-//                       guild = dropdownValue;
-//                     });
-//                     changeGuild();
-//                     Navigator.of(context)
-//                         .pop(gameLinkController.text.toString());
-//                   }),
-//               MaterialButton(
-//                   elevation: 5.0,
-//                   child: Text('Cancel', style: TextStyle(fontSize: 23)),
-//                   onPressed: () {
-//                     Navigator.of(context)
-//                         .pop(gameLinkController.text.toString());
-//                   })
-//             ],
-//           );
-//         };);
-//   }
-// }
-
 // this function fetches guild points live
   Widget guildPointsGetter(BuildContext context) {
     return StreamBuilder(
