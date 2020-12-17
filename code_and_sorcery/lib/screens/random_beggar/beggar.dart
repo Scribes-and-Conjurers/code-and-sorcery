@@ -79,7 +79,7 @@ class _BeggarState extends State<Beggar> {
                             MaterialStateProperty.resolveWith(getColor3),
                       ),
                       child: Text(
-                        "LEAVE THE BEGGAR ALONE",
+                        "LEAVE THE MAN ALONE",
                         style: TextStyle(fontSize: 20, color: textDark),
                       ),
                       onPressed: () {
@@ -95,17 +95,19 @@ class _BeggarState extends State<Beggar> {
   Widget notEnoughText() {
     return finalScore < 2
         ? Text(
-      "You don't have enough points either!",
-          style: TextStyle(
-            fontSize: 16,
-            color: textBright,
-          ),)
+            "You don't have enough points either!",
+            style: TextStyle(
+              fontSize: 16,
+              color: textBright,
+            ),
+          )
         : Text(
-          '',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          ),);
+            '',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          );
   }
 
   void openChest() {
