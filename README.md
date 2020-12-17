@@ -64,7 +64,7 @@ In the future, we plan to
 
 Tech lead:  tlightk
 
-Multiplayer mechanics: JulienTromas
+Multiplayer, database & timed mechanics: JulienTromas
 
 Quiz mechanics and UI: ninamatti
 
