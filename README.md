@@ -73,7 +73,7 @@ In the future, we plan to:
 
 ---
 
-Tech lead:  tlightk
+Tech lead, user authentication, game settings:  tlightk
 
 Multiplayer, database & timed mechanics: JulienTromas
 
