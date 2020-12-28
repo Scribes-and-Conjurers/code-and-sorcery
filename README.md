@@ -62,7 +62,7 @@ Currently, users enjoy the following features:
 ---
 
 In the future, we plan to:
-- increase the number of people who can particiapate in a multiplayer game, first to 8, later to 12 people
+- increase the number of people who can participate in a multiplayer game, first to 8, later to 12 people
 - include soundtrack for game sessions
 - additional color palettes changeable for users
 
